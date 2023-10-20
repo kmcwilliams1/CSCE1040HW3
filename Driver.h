@@ -48,17 +48,18 @@ public:
     float updateDriverRating( float driverRating);
     bool toggleAvailability();
     void getSchedule();
+    void deleteCancelledAndCompletedRides() const;
 
 
     // Getter and setter methods
     int getVehicleCapacity() const;
     void setVehicleCapacity(int capacity);
     bool isHandicappedCapable() const;
-    void setHandicappedCapable(bool capable);
+    void setHandicappedCapable();
     VehicleType getVehicleType() const;
     void setVehicleType(VehicleType type);
     bool isPetsAllowed() const;
-    void setPetsAllowed(bool allowed);
+    void setPetsAllowed();
     const std::string& getNotes() const;
     void setNotes(const std::string& driverNotes);
     const std::string& getFirstName() const;
