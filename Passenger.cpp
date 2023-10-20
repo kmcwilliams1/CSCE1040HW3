@@ -118,3 +118,15 @@ void Passenger::printRides() const {
     }
 }
 
+void Passenger::printPassengerRides() const {
+
+}
+
+void Passenger::deleteCancelledAndCompletedRides() const {
+
+}
+
+void Passenger::printPassenger() const {
+
+}
+

@@ -7,6 +7,10 @@ Driver::Driver(int capacity, bool handicapped, VehicleType vType, bool pets, str
           lastName(lName), completedRides(0) {
 }
 
+Driver::Driver() {
+
+}
+
 Driver::~Driver() {
     // Destructor implementation
 }
@@ -47,8 +51,8 @@ bool Driver::isHandicappedCapable() const {
     return handicappedCapable;
 }
 
-void Driver::setHandicappedCapable(bool capable) {
-    handicappedCapable = capable;
+void Driver::setHandicappedCapable() {
+    handicappedCapable = !handicappedCapable;
 }
 
 Driver::VehicleType Driver::getVehicleType() const {
@@ -63,8 +67,8 @@ bool Driver::isPetsAllowed() const {
     return petsAllowed;
 }
 
-void Driver::setPetsAllowed(bool allowed) {
-    petsAllowed = allowed;
+void Driver::setPetsAllowed() {
+    petsAllowed = !petsAllowed;
 }
 
 const string& Driver::getNotes() const {
@@ -130,9 +134,8 @@ int Driver::getCancelledRides() const {
 void Driver::printDriver() const {
     cout << this->firstName << " " << this->lastName << endl;
     cout << this->driverRating << " stars." << endl;
-    cout << this->handicappedCapable;
-    cout << this->petsAllowed;
-    cout << this->vehicleCapacity;
+    this->handicappedCapable ? cout << "Handicap able" << endl : cout << "Not handicap able" << endl;
+    this->petsAllowed ? cout << "Pets allowed" << endl : cout << "No pets allowed" << endl;
 
     string vehicleTypeStr;
     switch (this->vehicleType) {
@@ -153,9 +156,16 @@ void Driver::printDriver() const {
             break;
     }
 
-    cout << "Vehicle Type: " << vehicleTypeStr << endl;
+    cout << "Vehicle Type: " << vehicleTypeStr;
+    cout << " With "<<this->vehicleCapacity << " seats." << endl;
 
 }
+
+void Driver::deleteCancelledAndCompletedRides() const {
+
+}
+
+
 
 
 
