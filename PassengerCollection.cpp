@@ -18,19 +18,3 @@ Passenger* PassengerCollection::addPassenger(int id, const string& firstName, co
     return nullptr; // Replace with actual logic
 }
 
-void PassengerCollection::updatePassenger(int id, const string& firstName, const string& lastName, float rating,
-                                          bool hasPets, Passenger::PaymentPreference paymentPreference, bool handicapped) {
-    // Implementation of updatePassenger
-}
-
-void PassengerCollection::deleteCancelledAndCompletedRides(int id) const {
-    // Implementation of deleteCancelledAndCompletedRides
-}
-
-void PassengerCollection::printPassenger(int id) const {
-    // Implementation of printPassenger
-}
-
-void PassengerCollection::printPassengerRides(int id) const {
-    // Implementation of printPassengerRides
-}

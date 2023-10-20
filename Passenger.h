@@ -43,6 +43,9 @@ public:
     void setId(int passengerId);
 
     void printRides() const;
+    void deleteCancelledAndCompletedRides() const;
+    void printPassenger() const;
+    void printPassengerRides() const;
 
 private:
     float requiredRating;

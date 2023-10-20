@@ -20,30 +20,50 @@ struct User {
 
 
 void DriverMenu(Driver *driver) {
-    char option;
-    cout << "********************************" << endl;
-    cout << "Enter Selection G: "<< endl;
-    cin >> option;
-    while (option != 'q') {
-        switch (option) {
 
+    string newFirstName, newLastName;
+    int newVehicleTypeInt = 0;
+    Driver::VehicleType newVehicleType = static_cast<Driver::VehicleType>(newVehicleTypeInt);
+
+    while (true) {
+        cout << "*************************************" << endl;
+        cout << "            Driver Menu" << endl;
+        cout << "*************************************" << endl;
+        cout << "Enter Selection: " << endl;
+        cout << "Get Schedule: a" << endl;
+        cout << "Toggle Availability: r" << endl;
+        cout << "Current Availability: " << driver->isAvailable() << endl;
+        cout << "Get Notes: b" << endl;
+        cout << "Get rides: C" << endl;
+        cout << "Get Your Rating: D" << endl;
+        cout << "Get Your Information: G" << endl;
+        cout << "Edit Car information: E" << endl;
+        cout << "Delete Account: L" << endl;
+        cout << "Logout: Q" << endl;
+
+        char option;
+        cin >> option;
+
+        switch (option) {
             case 'a':
-                cout << "Get Schedule: a" << endl;
                 //TODO passenger needs to do DriverCollection.addNewRide first
+
                 driver->getSchedule();
+                cout << endl;
                 break;
 
             case 'r':
-                cout << "Toggle Availability: r" << endl;
+
                 cout << "Current Availability: " << driver->isAvailable() << endl;
                 driver->toggleAvailability();
                 cout << "Now: " << driver->isAvailable() << endl;
-
+                cout << endl;
                 break;
 
             case 'b':
-                cout << "Get Notes: b" << endl;
+
                 driver->getNotes();
+                cout << endl;
                 break;
 
             case 'f':
@@ -52,44 +72,47 @@ void DriverMenu(Driver *driver) {
                 cin >> option;
                 //TODO currentRide is the current Ride, only 1 is allowed for Driver/Passenger anyway, so create it and then destroy it at certain places
                 //option == 'Y' ? driver->addCompletedRide(currentRide) : driver->addCancelledRide(currentRide);
-
+                cout << endl;
+                break;
 
             case 'c':
-                cout << "Get rides: C" << endl;
+
                 cout << "Completed rides: A" << endl;
                 cout << "Cancelled rides: B" << endl;
                 cin >> option;
-                option == 'A' ? driver->getCompletedRides() : driver->getCancelledRides();
-
+                if (option == 'A') {
+                    driver->getCompletedRides();
+                } else if (option == 'B') {
+                    driver->getCancelledRides();
+                }
+                cout << endl;
                 break;
 
             case 'd':
-                cout << "Get Your Rating: D" << endl;
+
                 driver->getDriverRating();
+                cout << endl;
                 break;
 
             case 'g':
-                cout << "Get Your Information: G" << endl;
-                 driver->printDriver();
+
+                driver->printDriver();
+                cout << endl;
                 break;
 
-
             case 'E':
-                cout << "Edit Car information: E" << endl;
+
                 cout << "What would you like to edit?" << endl;
                 cout << "A: Vehicle Capacity : " << driver->getVehicleCapacity() << endl;
                 cout << "B: Handicapped Capable: " << driver->isHandicappedCapable() << endl;
                 cout << "C: Pets Allowed : " << driver->isPetsAllowed() << endl;
                 cout << "D: First Name : " << driver->getFirstName() << endl;
-                cout << "D: Last Name : " << driver->getLastName() << endl;
+                cout << "E: Last Name : " << driver->getLastName() << endl;
+                cout << "F: Vehicle Type : " << static_cast<int>(driver->getVehicleType()) << endl;
 
-                //cout << "D: Vehicle Type : " << driver->getVehicleType() << endl;
+                cin >> option;
 
-
-                char editOption;
-                cin >> editOption;
                 switch (option) {
-
                     case 'A':
                         int capacity;
                         cout << "New capacity: " << endl;
@@ -97,70 +120,223 @@ void DriverMenu(Driver *driver) {
                         driver->setVehicleCapacity(capacity);
                         break;
 
-//                        bool isHandicappedCapable() const;
-//                        void setHandicappedCapable(bool capable);
-//
-//                        void setVehicleType(Driver::VehicleType type);
-//
-//                        void setPetsAllowed(bool allowed);
-//
-//                        void setFirstName(const std::string &first);
-//
-//                        void setLastName(const std::string &last);
+                    case 'B':
+                        cout << "New handicap able: " << endl;
+                        driver->setHandicappedCapable();
+                        break;
 
+                    case 'C':
+                        cout << "New pet policy: " << endl;
+                        driver->setPetsAllowed();
+                        break;
 
+                    case 'D':
+
+                        cout << "New first name: " << endl;
+                        cin >> newFirstName;
+                        driver->setFirstName(newFirstName);
+                        break;
+
+                    case 'E':
+
+                        cout << "New Last Name: " << endl;
+                        cin >> newLastName;
+                        driver->setLastName(newLastName);
+                        break;
+
+                    case 'F':
+
+                        cout << "New Vehicle Type (1-5): " << endl;
+                        cin >> newVehicleTypeInt;
+                        driver->setVehicleType(static_cast<Driver::VehicleType>(newVehicleTypeInt));
+                        break;
+
+                    case 'Q':
+                        cout << "Quitting Driver Menu" << endl;
+                        break;
+
+                    default:
+                        cout << "Invalid option, try again." << endl;
                 }
-
-
+                cout << endl;
                 break;
-
 
             case 'q':
-                cout << "Logout: Q" << endl;
+                cout << endl;
+                return;
+
+            case 'l':
+                cout << "Deleting Driver " << driver->getFirstName() << " " << driver->getLastName() << endl;
+                delete driver;
+                driver = nullptr;
                 break;
+
+            default:
+                cout << "Invalid option, try again." << endl;
+                cin >> option;
         }
-        break;
     }
+}
 
 
-    cout << "End ********************************" << endl;
+void PassengerMenu(Driver *driver) {
 
-};
+    string newFirstName, newLastName;
+    int newVehicleTypeInt = 0;
+    Driver::VehicleType newVehicleType = static_cast<Driver::VehicleType>(newVehicleTypeInt);
 
-void PassengerMenu( Driver *driver) {
-    char option;
-    cout << "********************************";
-    while (option != 'q') {
+    while (true) {
+        cout << "*************************************" << endl;
+        cout << "            Passenger Menu" << endl;
+        cout << "*************************************" << endl;
+        cout << "Enter Selection: " << endl;
+        cout << "Get Schedule: a" << endl;
+        cout << "Toggle Availability: r" << endl;
+        cout << "Current Availability: " << driver->isAvailable() << endl;
+        cout << "Get Notes: b" << endl;
+        cout << "Get rides: C" << endl;
+        cout << "Get Your Rating: D" << endl;
+        cout << "Get Your Information: G" << endl;
+        cout << "Edit Car information: E" << endl;
+        cout << "Delete Account: L" << endl;
+        cout << "Logout: Q" << endl;
+
+        char option;
+        cin >> option;
+
         switch (option) {
-
             case 'a':
+                //TODO passenger needs to do DriverCollection.addNewRide first
 
+                driver->getSchedule();
+                cout << endl;
+                break;
+
+            case 'r':
+
+                cout << "Current Availability: " << driver->isAvailable() << endl;
+                driver->toggleAvailability();
+                cout << "Now: " << driver->isAvailable() << endl;
+                cout << endl;
                 break;
 
             case 'b':
 
+                driver->getNotes();
+                cout << endl;
+                break;
+
+            case 'f':
+                cout << "Finish Ride: f" << endl;
+                cout << "Was the ride Successful?: Y/N" << endl;
+                cin >> option;
+                //TODO currentRide is the current Ride, only 1 is allowed for Driver/Passenger anyway, so create it and then destroy it at certain places
+                //option == 'Y' ? driver->addCompletedRide(currentRide) : driver->addCancelledRide(currentRide);
+                cout << endl;
                 break;
 
             case 'c':
 
+                cout << "Completed rides: A" << endl;
+                cout << "Cancelled rides: B" << endl;
+                cin >> option;
+                if (option == 'A') {
+                    driver->getCompletedRides();
+                } else if (option == 'B') {
+                    driver->getCancelledRides();
+                }
+                cout << endl;
                 break;
 
             case 'd':
 
+                driver->getDriverRating();
+                cout << endl;
                 break;
 
+            case 'g':
+
+                driver->printDriver();
+                cout << endl;
+                break;
+
+            case 'E':
+
+                cout << "What would you like to edit?" << endl;
+                cout << "A: Vehicle Capacity : " << driver->getVehicleCapacity() << endl;
+                cout << "B: Handicapped Capable: " << driver->isHandicappedCapable() << endl;
+                cout << "C: Pets Allowed : " << driver->isPetsAllowed() << endl;
+                cout << "D: First Name : " << driver->getFirstName() << endl;
+                cout << "E: Last Name : " << driver->getLastName() << endl;
+                cout << "F: Vehicle Type : " << static_cast<int>(driver->getVehicleType()) << endl;
+
+                cin >> option;
+
+                switch (option) {
+                    case 'A':
+                        int capacity;
+                        cout << "New capacity: " << endl;
+                        cin >> capacity;
+                        driver->setVehicleCapacity(capacity);
+                        break;
+
+                    case 'B':
+                        cout << "New handicap able: " << endl;
+                        driver->setHandicappedCapable();
+                        break;
+
+                    case 'C':
+                        cout << "New pet policy: " << endl;
+                        driver->setPetsAllowed();
+                        break;
+
+                    case 'D':
+
+                        cout << "New first name: " << endl;
+                        cin >> newFirstName;
+                        driver->setFirstName(newFirstName);
+                        break;
+
+                    case 'E':
+
+                        cout << "New Last Name: " << endl;
+                        cin >> newLastName;
+                        driver->setLastName(newLastName);
+                        break;
+
+                    case 'F':
+
+                        cout << "New Vehicle Type (1-5): " << endl;
+                        cin >> newVehicleTypeInt;
+                        driver->setVehicleType(static_cast<Driver::VehicleType>(newVehicleTypeInt));
+                        break;
+
+                    case 'Q':
+                        cout << "Quitting Driver Menu" << endl;
+                        break;
+
+                    default:
+                        cout << "Invalid option, try again." << endl;
+                }
+                cout << endl;
+                break;
 
             case 'q':
-                cout << "Logout: Q" << endl;
+                cout << endl;
+                return;
+
+            case 'l':
+                cout << "Deleting Driver " << driver->getFirstName() << " " << driver->getLastName() << endl;
+                delete driver;
+                driver = nullptr;
                 break;
+
+            default:
+                cout << "Invalid option, try again." << endl;
+                cin >> option;
         }
-        break;
     }
-
-
-    cout << "********************************";
-
-};
+}
 
 int main() {
     User user;
@@ -237,7 +413,7 @@ int main() {
                 // Implement driver-specific functionality here
                 cout << "Accessing Driver Features for " << user.driver->getFirstName() << " "
                      << user.driver->getLastName() << endl;
-                cout << "Accessing Menu "<< endl;
+                cout << "Accessing Driver Menu " << endl;
                 DriverMenu(user.driver);
 
             } else if (user.role == "Passenger" && user.passenger != nullptr) {
@@ -253,11 +429,8 @@ int main() {
             cin >> logout;
 
             if (logout == "yes") {
-                delete user.driver;
-                delete user.passenger;
-                user.driver = nullptr;
-                user.passenger = nullptr;
                 isLoggedIn = false;
+
             }
         }
     }
