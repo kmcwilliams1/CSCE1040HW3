@@ -6,6 +6,7 @@
 #include "DriverCollection.h"
 #include "PassengerCollection.h"
 #include "RideCollection.h"
+#include <fstream>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ struct User {
     string role;
 
 
-    User() : driver(nullptr), passenger(nullptr), role("") {}
+    User() : driver(nullptr), passenger(nullptr) {}
 };
 
 bool isLoggedIn = false;
@@ -25,7 +26,8 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection) {
 
     string newFirstName, newLastName;
     int newVehicleTypeInt = 0;
-    Driver::VehicleType newVehicleType = static_cast<Driver::VehicleType>(newVehicleTypeInt);
+    int rideIndex;
+
 
     while (true) {
         cout << "*************************************" << endl;
@@ -35,7 +37,6 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection) {
         cout << "Get Current Schedule: A" << endl;
         cout << "Toggle Availability: B" << endl;
         cout << "Current Availability: " << driver->isAvailable() << endl;
-        cout << "Get Notes: C" << endl;
         cout << "Get past rides: D" << endl;
         cout << "Get Your Information: E" << endl;
         cout << "Edit Car information: F" << endl;
@@ -47,7 +48,19 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection) {
 
         switch (option) {
             case 'A':
-                //TODO passenger needs to do DriverCollection.addNewRide first
+
+
+                for (Ride ride : rideCollection.rides) {
+                    if(ride.includesPets && driver->petsAllowed) {
+                        if(ride.handicapped && driver->handicappedCapable) {
+                            if(ride.sizeOfParty < driver->vehicleCapacity) {
+                                if(ride.rating >= driver->driverRating) {
+                                    driver->rides.push_back(ride);
+                                }
+                            }
+                        }
+                    }
+                }
 
                 driver->getSchedule();
                 cout << endl;
@@ -61,20 +74,25 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection) {
                 cout << endl;
                 break;
 
-            case 'C':
-
-                driver->getNotes();
-                cout << endl;
-                break;
 
             case 'D':
-                cout << "Finish Ride: f" << endl;
+                cout << "Which ride number would you like to complete?" << endl;
+                driver->getSchedule();
+                cin >> option;
+                cin >> rideIndex;
+
                 cout << "Was the ride Successful?: Y/N" << endl;
                 cin >> option;
-                //TODO currentRide is the current Ride, only 1 is allowed for Driver/Passenger anyway, so create it and then destroy it at certain places
-                //option == 'Y' ? driver->addCompletedRide(currentRide) : driver->addCancelledRide(currentRide);
+
+                if (rideIndex >= 0 && rideIndex < driver->rides.size()) {
+                    driver->rides.erase(driver->rides.begin() + rideIndex);
+                    cout << "Ride Cancelled" << endl;
+                }
+
+                (option == 'Y' || option == 'y') ? driver->addCompletedRide() : driver->addCancelledRide();
                 cout << endl;
                 break;
+
 
             case 'E':
 
@@ -181,7 +199,6 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
     string newFirstName, newLastName;
     float newRating;
     int newPaymentPreferenceInt = 0;
-    Passenger::PaymentPreference newPaymentPreference = static_cast<Passenger::PaymentPreference>(newPaymentPreferenceInt);
 
     while (true) {
         cout << "*************************************" << endl;
@@ -190,41 +207,82 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
         cout << "Enter Selection: " << endl;
         cout << "Generate New Ride: A" << endl;
         cout << "Get Rides: B" << endl;
+        cout << "Cancel Ride: D" << endl;
         cout << "Get My Information: C" << endl;
         cout << "Edit My information: E" << endl;
         cout << "Logout: Q" << endl;
 
+        Ride newRide;
         char option;
         int sizeOfParty;
         bool thesePets = true;
+        bool handicapable = false;
         string pickupLocation;
         string dropOffLocation;
-        int pickupTime;
+        string note;
+        int hour, minute;
+        char inputChar;
+        int month = 0;
+        time_t userTime;
+        struct tm timeInfo{};
 
-        Ride newRide;
 
+        int rideIndex = 0;
 
         cin >> option;
 
         switch (option) {
             case 'A':
-
                 cout << "How many passengers would you like?" << endl;
                 cin >> sizeOfParty;
                 cout << "Enter pickup location: " << endl;
                 cin >> pickupLocation;
                 cout << "Enter drop off location: " << endl;
                 cin >> dropOffLocation;
-                cout << "Enter pickup time: " << endl;
-                cin >> pickupTime;
+                cout << "Enter note: " << endl;
+                cin >> note;
 
-                rideCollection.addRide(sizeOfParty, thesePets, pickupLocation, dropOffLocation, pickupTime );
+                cout << "Ride Information Below: " << endl;
+                cout << "Do you need a handicapable vehicle: " << handicapable << endl;
+                cout << "Is it this month (Y/N): ";
+                cin >> inputChar;
+                if (inputChar == 'N' || inputChar == 'n') {
+                    cout << "Enter month (1-12): ";
+                    cin >> month;
+                }
+
+                cout << "Pickup Hour (0-23): ";
+                cin >> hour;
+
+                cout << "Pickup Minute (0-59): ";
+                cin >> minute;
+
+
+                time_t now;
+                time(&now);
+                timeInfo = *localtime(&now);
+
+                if (inputChar == 'N' || inputChar == 'n') {
+                    if (month < timeInfo.tm_mon + 1) {
+
+                        timeInfo.tm_year++;
+                    }
+                    timeInfo.tm_mon = month - 1;
+                }
+
+                timeInfo.tm_hour = hour;
+                timeInfo.tm_min = minute;
+                timeInfo.tm_sec = 0;
+                timeInfo.tm_isdst = -1;
+
+                userTime = mktime(&timeInfo);
+                rideCollection.addRide(sizeOfParty, thesePets, pickupLocation, dropOffLocation, userTime, note, handicapable);
                 newRide = rideCollection.rides.back();
                 passenger->addRide(newRide);
                 passenger->printRides();
-
-
+                cout << endl;
                 break;
+
 
             case 'B':
                 passenger->printRides();
@@ -235,10 +293,49 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
                 break;
 
 
+            case 'D':
+                cout << "Which ride number would you like to cancel?" << endl;
+                passenger->printRides();
+                cin >> rideIndex;
+
+                if (rideIndex >= 0 && rideIndex < passenger->rides.size()) {
+                    passenger->rides.erase(passenger->rides.begin() + rideIndex);
+                    cout << "Ride Cancelled" << endl;
+                } else {
+                    cout << "Invalid ride number. No ride was canceled." << endl;
+                }
+                break;
+
+            case 'F':
+                cout << "Which ride would you like to rate?" << endl;
+
+                if(passenger->rides.empty()) {
+                    cout << "You have no rides to rate." << endl;
+                    break;
+                }
+
+                for (Ride ride : passenger->rides) {
+                    if(static_cast<int>(ride.status) == 13 || static_cast<int>(ride.status)  == 14 ) {
+                        passenger->printRides();
+                    }
+                }
+
+                cin >> rideIndex;
+                if ((rideIndex >= 0 && rideIndex < passenger->rides.size())) {
+                    cout << "Enter new rating: " << endl;
+                    cin >> newRating;
+                    passenger->rides.at(rideIndex).setRating(newRating);
+                    rideCollection.rides.at(rideIndex).setRating(newRating);
+                    cout << "Ride Rated" << endl;
+                }
+
+                cout << endl;
+                break;
+
+
             case 'E':
                 cout << "What would you like to edit?" << endl;
                 cout << "A: Required Rating : " << passenger->getRequiredRating() << endl;
-                cout << "B: Handicapped Capable: " << passenger->getHandicapped() << endl;
                 cout << "C: Pets Allowed : " << passenger->getHasPets() << endl;
                 cout << "D: First Name : " << passenger->getFirstName() << endl;
                 cout << "E: Last Name : " << passenger->getLastName() << endl;
@@ -251,11 +348,6 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
                         cout << "New Required Rating: " << endl;
                         cin >> newRating;
                         passenger->setRequiredRating(newRating);
-                        break;
-
-                    case 'B':
-                        cout << "New handicapable: " << endl;
-                        passenger->setHandicapped();
                         break;
 
                     case 'C':
@@ -320,6 +412,15 @@ int main() {
     RideCollection rideCollection;
 
 
+    ofstream fout("RideShareData.dat", ios::app);
+    ifstream fin ("RideShareData.dat");
+
+    string driverSearchWord = "Drivers";
+    string passengerSearchWord = "Passengers";
+    string rideSearchWord = "Rides";
+    string readingLine;
+
+
     while (true) {
 
         if (!isLoggedIn && (user.driver != nullptr || user.passenger != nullptr)) {
@@ -352,7 +453,7 @@ int main() {
                     break;
                 case 'C':
                     cout << "Exiting" << endl;
-                    return 0;
+                    break;
                 default:
                     cout << "Invalid option, try again." << endl;
                     cin >> option;
@@ -373,6 +474,7 @@ int main() {
                 bool petsAllowed;
                 string firstName;
                 string lastName;
+                int id = rand() % 1000000000 + 1000;
 
                 cout << "Enter Vehicle Capacity: ";
                 cin >> vehicleCapacity;
@@ -390,6 +492,31 @@ int main() {
                 user.driver = driverCollection.addDriver(vehicleCapacity, handicappedCapable,
                                                          static_cast<Driver::VehicleType>(vehicleType), petsAllowed,
                                                          firstName, lastName);
+
+
+                while (getline(fin, readingLine)) {
+                    fout << readingLine << endl;
+
+                    if (readingLine.find(driverSearchWord) != string::npos) {
+                        // Insert the new data after the word
+                        fout << "Driver: " ;
+                        fout << " " << user.driver->getFirstName();
+                        fout <<  " " <<user.driver->getLastName();
+                        fout <<  " id " << id;
+                        fout <<  " vehicleCapacity: " << user.driver->getVehicleCapacity();
+                        fout <<  " isHandicapable: " << user.driver->isHandicappedCapable();
+                        fout <<  " vehicleType " << static_cast<int>(user.driver->getVehicleType());
+                        fout <<  " petsAllowed: " << user.driver->isPetsAllowed();
+                        fout <<  " driverRating: " << 0;
+                        for (Ride ride : user.driver->rides) {
+                            fout <<  " rideIds: ";
+                        }
+                        break;
+
+                    }
+
+                }
+
                 cout << "Results:  " << user.driver->getFirstName() << endl;
                 isLoggedIn = true;
             } else if (user.role == "Passenger") {
@@ -399,25 +526,44 @@ int main() {
                 bool hasPets;
                 int paymentPreference;
                 bool handicapped;
+                int id = rand() % 1000000000 + 1000;
 
 
                 cout << "Enter First Name: ";
                 cin >> firstName;
                 cout << "Enter Last Name: ";
                 cin >> lastName;
-                cout << "Enter Rating: ";
+                cout << "Enter Minimum Driver Rating: ";
                 cin >> rating;
                 cout << "Has Pets (1 for true, 0 for false): ";
                 cin >> hasPets;
                 cout << "Payment Preference (1 for Cash, 2 for Credit, 3 for Debit): ";
                 cin >> paymentPreference;
-                cout << "Is Handicapped (1 for true, 0 for false): ";
-                cin >> handicapped;
+
 
                 user.passenger = passengerCollection.addPassenger(firstName, lastName, rating, hasPets,
-                                                                  static_cast<Passenger::PaymentPreference>(paymentPreference),
-                                                                  handicapped);
-                cout << "Results: " << user.passenger->getFirstName() << endl;
+                                                                  static_cast<Passenger::PaymentPreference>(paymentPreference));
+               cout << "Results:  " << user.passenger->getFirstName() << endl;
+
+               while (getline(fin, readingLine)) {
+                    fout << readingLine << endl;
+
+                    if (readingLine.find(passengerSearchWord) != string::npos) {
+                        // Insert the new data after the word
+                        fout << "Passenger: " ;
+                        fout << " " << firstName;
+                        fout <<  " " <<lastName;
+                        fout <<  " id " << id;
+                        fout <<  " requiredRating: " << rating;
+                        fout <<  " hasPets: " << hasPets;
+                        fout <<  " paymentPreference " << paymentPreference;
+                        for (Ride ride : user.passenger->rides) {
+                            fout <<  " rideIds: ";
+                        }
+                        break;
+                    }
+                }
+
                 isLoggedIn = true;
             } else {
                 cout << "Invalid role. Please try again." << endl;
@@ -433,12 +579,16 @@ int main() {
                      << user.driver->getLastName() << endl;
                 cout << "Accessing Driver Menu " << endl;
                 DriverMenu(user.driver, rideCollection);
+
+
             } else if (user.role == "Passenger" && user.passenger != nullptr) {
                 cout << "Accessing Passenger Features for " << user.passenger->getFirstName() << " "
                      << user.passenger->getLastName() << endl;
                 cout << "Accessing Passenger Menu " << endl;
                 PassengerMenu(user.passenger, rideCollection);
             }
+
+
 
             cout << "Do you want to log out? (yes/no): ";
             string logout;

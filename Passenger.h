@@ -17,7 +17,7 @@ public:
     };
 
     Passenger(const string& first, const string& last, float rating,
-              bool pets, PaymentPreference paymentPref, bool isHandicapped);
+              bool pets, PaymentPreference paymentPref);
     Passenger();
     ~Passenger();
 
@@ -30,8 +30,7 @@ public:
     PaymentPreference getPaymentPreference() const;
     void setPaymentPreference(PaymentPreference pref);
 
-    bool getHandicapped() const;
-    void setHandicapped();
+
 
     string getFirstName() const;
     void setFirstName(const string& first);
@@ -40,7 +39,7 @@ public:
     void setLastName(const string& last);
 
     void printRides() const;
-    void deleteCancelledAndCompletedRides() const;
+    void deleteCancelledAndCompletedRides() ;
     void printPassenger() const;
 
     void addRide(Ride ride);
@@ -49,7 +48,6 @@ public:
     float requiredRating;
     bool hasPets;
     PaymentPreference paymentPreference;
-    bool handicapped;
     string firstName;
     string lastName;
     int id;

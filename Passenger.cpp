@@ -3,9 +3,9 @@
 #include "Ride.h"
 
 Passenger::Passenger(const string &first, const string &last, float rating,
-                     bool pets, PaymentPreference paymentPref, bool isHandicapped)
+                     bool pets, PaymentPreference paymentPref)
         : requiredRating(rating), hasPets(pets), paymentPreference(paymentPref),
-          handicapped(isHandicapped), firstName(first), lastName(last) {
+           firstName(first), lastName(last) {
 }
 
 Passenger::Passenger() {
@@ -40,14 +40,6 @@ void Passenger::setPaymentPreference(PaymentPreference pref) {
     paymentPreference = pref;
 }
 
-bool Passenger::getHandicapped() const {
-    return handicapped;
-}
-
-void Passenger::setHandicapped() {
-    handicapped = !handicapped;
-}
-
 string Passenger::getFirstName() const {
     return firstName;
 }
@@ -69,22 +61,28 @@ void Passenger::printRides() const {
 
     if (!rides.empty()) {
         cout << " Rides:" << endl;
-        for (const Ride ride: rides) {
+        for (const Ride ride : rides) {
             cout << "Pickup Location: " << ride.getPickupLocation() << endl;
             cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
             cout << "Pickup Time: " << ride.getPickupTime() << endl;
-            cout << "Status: ";
+
+            string statusString;
             switch (ride.getStatus()) {
                 case Ride::RideStatus::Active:
-                    cout << "Active" << endl;
+                    statusString = "Active";
                     break;
                 case Ride::RideStatus::Completed:
-                    cout << "Completed" << endl;
+                    statusString = "Completed";
                     break;
                 case Ride::RideStatus::Cancelled:
-                    cout << "Cancelled" << endl;
+                    statusString = "Cancelled";
+                    break;
+                default:
+                    statusString = "Unknown";
                     break;
             }
+
+            cout << "Passenger.cpp::printRides status: " << static_cast<int>(ride.status) << endl;
             cout << "---------------------------------------" << endl;
         }
     } else {
@@ -93,8 +91,17 @@ void Passenger::printRides() const {
 }
 
 
-void Passenger::deleteCancelledAndCompletedRides() const {
+void Passenger::deleteCancelledAndCompletedRides()  {
 
+    auto it = rides.begin();
+
+    while (it != rides.end()) {
+        if (it->getStatus() == Ride::RideStatus::Cancelled || it->getStatus() == Ride::RideStatus::Completed) {
+            it = rides.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
 void Passenger::printPassenger() const {
@@ -115,12 +122,9 @@ void Passenger::printPassenger() const {
             cout << "Debit" << endl;
             break;
     }
-    cout << "Handicapped: " << (handicapped ? "Yes" : "No") << endl;
-
 }
 
 void Passenger::addRide(Ride ride) {
     rides.push_back(ride);
 }
-
 
