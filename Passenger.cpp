@@ -2,14 +2,18 @@
 #include "RideCollection.h"
 #include "Ride.h"
 
-Passenger::Passenger(int passengerId, const string& first, const string& last, float rating,
+Passenger::Passenger(const string &first, const string &last, float rating,
                      bool pets, PaymentPreference paymentPref, bool isHandicapped)
         : requiredRating(rating), hasPets(pets), paymentPreference(paymentPref),
-          handicapped(isHandicapped), firstName(first), lastName(last), id(passengerId) {
+          handicapped(isHandicapped), firstName(first), lastName(last) {
+}
+
+Passenger::Passenger() {
+
 }
 
 Passenger::~Passenger() {
-    // Implement the destructor if needed.
+    rides.clear();
 }
 
 float Passenger::getRequiredRating() const {
@@ -24,8 +28,8 @@ bool Passenger::getHasPets() const {
     return hasPets;
 }
 
-void Passenger::setHasPets(bool pets) {
-    hasPets = pets;
+void Passenger::setHasPets() {
+    hasPets = !hasPets;
 }
 
 Passenger::PaymentPreference Passenger::getPaymentPreference() const {
@@ -40,15 +44,15 @@ bool Passenger::getHandicapped() const {
     return handicapped;
 }
 
-void Passenger::setHandicapped(bool isHandicapped) {
-    handicapped = isHandicapped;
+void Passenger::setHandicapped() {
+    handicapped = !handicapped;
 }
 
 string Passenger::getFirstName() const {
     return firstName;
 }
 
-void Passenger::setFirstName(const string& first) {
+void Passenger::setFirstName(const string &first) {
     firstName = first;
 }
 
@@ -56,19 +60,44 @@ string Passenger::getLastName() const {
     return lastName;
 }
 
-void Passenger::setLastName(const string& last) {
+void Passenger::setLastName(const string &last) {
     lastName = last;
 }
 
-int Passenger::getId() const {
-    return id;
-}
-
-void Passenger::setId(int passengerId) {
-    id = passengerId;
-}
 
 void Passenger::printRides() const {
+
+    if (!rides.empty()) {
+        cout << " Rides:" << endl;
+        for (const Ride ride: rides) {
+            cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+            cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+            cout << "Pickup Time: " << ride.getPickupTime() << endl;
+            cout << "Status: ";
+            switch (ride.getStatus()) {
+                case Ride::RideStatus::Active:
+                    cout << "Active" << endl;
+                    break;
+                case Ride::RideStatus::Completed:
+                    cout << "Completed" << endl;
+                    break;
+                case Ride::RideStatus::Cancelled:
+                    cout << "Cancelled" << endl;
+                    break;
+            }
+            cout << "---------------------------------------" << endl;
+        }
+    } else {
+        cout << "No rides available for this passenger." << endl;
+    }
+}
+
+
+void Passenger::deleteCancelledAndCompletedRides() const {
+
+}
+
+void Passenger::printPassenger() const {
     cout << "Passenger Information:" << endl;
     cout << "ID: " << id << endl;
     cout << "Name: " << firstName << " " << lastName << endl;
@@ -88,45 +117,10 @@ void Passenger::printRides() const {
     }
     cout << "Handicapped: " << (handicapped ? "Yes" : "No") << endl;
 
-    if (!rides.empty()) {
-        cout << " Rides:" << endl;
-        for (const Ride* ride : rides) {
-            cout << "Ride ID: " << ride->getId() << endl;
-            cout << "Pickup Location: " << ride->getPickupLocation() << endl;
-            cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
-
-
-
-            //TODO implement
-           // cout << "Pickup Time: " << ctime(&ride->getPickupTime());
-            cout << "Status: ";
-            switch (ride->getStatus()) {
-                case Ride::RideStatus::Active:
-                    cout << "Active" << endl;
-                    break;
-                case Ride::RideStatus::Completed:
-                    cout << "Completed" << endl;
-                    break;
-                case Ride::RideStatus::Cancelled:
-                    cout << "Cancelled" << endl;
-                    break;
-            }
-            cout << "---------------------------------------" << endl;
-        }
-    } else {
-        cout << "No rides available for this passenger." << endl;
-    }
 }
 
-void Passenger::printPassengerRides() const {
-
+void Passenger::addRide(Ride ride) {
+    rides.push_back(ride);
 }
 
-void Passenger::deleteCancelledAndCompletedRides() const {
-
-}
-
-void Passenger::printPassenger() const {
-
-}
 

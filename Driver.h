@@ -36,7 +36,6 @@ public:
 
     int getId() const;
     void setId(int newId);
-    float getDriverRating() const;
     void setDriverRating(float rating);
     bool isAvailable() const;
     void setAvailable(bool status);

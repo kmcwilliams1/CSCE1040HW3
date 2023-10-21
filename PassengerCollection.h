@@ -14,7 +14,7 @@ public:
     ~PassengerCollection();
 
     void getPassenger() const;
-    Passenger* addPassenger(int id, const string& firstName, const string& lastName, float rating,
+    Passenger* addPassenger(const string& firstName, const string& lastName, float rating,
                             bool hasPets, Passenger::PaymentPreference paymentPreference, bool handicapped);
 
 
