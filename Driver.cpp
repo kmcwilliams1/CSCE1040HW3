@@ -23,10 +23,6 @@ void Driver::setId(int newId) {
     id = newId;
 }
 
-float Driver::getDriverRating() const {
-    return driverRating;
-}
-
 void Driver::setDriverRating(float rating) {
     driverRating = rating;
 }
@@ -100,7 +96,9 @@ int Driver::getCompletedRides() const {
 }
 
 void Driver::getSchedule() {
-
+    for (Ride* ride : rides) {
+        ride->getPickupTime();
+    }
 }
 
 

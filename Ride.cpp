@@ -1,6 +1,13 @@
 #include "Ride.h"
 #include <iostream>
 
+
+Ride::Ride(int sizeOfParty, bool includesPets, string pickupLocation, string dropoffLocation, time_t pickupTime)
+        : sizeOfParty(sizeOfParty), includesPets(includesPets), pickupLocation(pickupLocation),
+          dropOffLocation(dropoffLocation), pickupTime(pickupTime) {
+
+}
+
 Ride::Ride() {
     // Initialize your Ride instance if needed
 }
@@ -53,7 +60,7 @@ string Ride::getPickupLocation() const {
     return pickupLocation;
 }
 
-void Ride::setPickupLocation(const string& location) {
+void Ride::setPickupLocation(const string &location) {
     pickupLocation = location;
 }
 
@@ -61,7 +68,7 @@ string Ride::getDropOffLocation() const {
     return dropOffLocation;
 }
 
-void Ride::setDropOffLocation(const string& location) {
+void Ride::setDropOffLocation(const string &location) {
     dropOffLocation = location;
 }
 
@@ -81,7 +88,11 @@ void Ride::setDropOffTime(time_t time) {
     dropOffTime = time;
 }
 
-void Ride::printCurrentAssignment(time_t pickupTime) const {
-    // Implement this function to print information about the current ride assignment
-    // You can access the ride's properties using the getter methods
+void Ride::getPickupLocationAndTime() const {
+
 }
+
+void Ride::completeRide() {
+
+}
+
