@@ -12,9 +12,10 @@ void PassengerCollection::getPassenger() const {
     // Implementation of getPassenger
 }
 
-Passenger* PassengerCollection::addPassenger(int id, const string& firstName, const string& lastName, float rating,
+Passenger* PassengerCollection::addPassenger(const string& firstName, const string& lastName, float rating,
                                              bool hasPets, Passenger::PaymentPreference paymentPreference, bool handicapped) {
-    // Implementation of addPassenger
-    return nullptr; // Replace with actual logic
+    Passenger* passenger = new Passenger(firstName, lastName, rating, hasPets, paymentPreference, handicapped);
+    passengers.push_back(*passenger);
+    return passenger;
 }
 

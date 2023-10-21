@@ -18,15 +18,11 @@ public:
     ~RideCollection();
 
     void getRide() const;
-    void addRide(int sizeOfParty, bool includesPets, string pickupLocation, string dropOffLocation, time_t pickupTime);
-    void updateRide(string pickupLocation, string dropOffLocation, time_t pickupTime, time_t dropOffTime);
+    Ride* addRide(int sizeOfParty, bool includesPets, string pickupLocation, string dropOffLocation, time_t pickupTime);
     int showActiveRides(RideStatus status);
-    void completeRide(int id, string dropOffLocation, time_t dropOffTime, RideStatus status);
-    void getPickupLocationAndTime() const;
-    void printCurrentAssignments(time_t pickupTime) const;
 
-private:
-    vector<Ride> rides;
+
+    std::vector<Ride> rides;
 };
 
 #endif // INC_1040HOMEWORK_RIDECOLLECTION_H

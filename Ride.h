@@ -9,12 +9,13 @@ using namespace std;
 
 class Ride {
 public:
+
     enum class RideStatus {
         Active,
         Completed,
         Cancelled
     };
-
+    Ride(int sizeOfParty, bool includesPets, string pickupLocation, string dropoffLocation, time_t pickupTime);
     Ride();
     ~Ride();
 
@@ -45,7 +46,9 @@ public:
     time_t getDropOffTime() const;
     void setDropOffTime(time_t time);
 
-    void printCurrentAssignment(time_t pickupTime) const;
+    void completeRide();
+    void getPickupLocationAndTime() const;
+
 
 private:
     int sizeOfParty;

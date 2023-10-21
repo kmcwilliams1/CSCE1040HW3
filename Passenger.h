@@ -16,7 +16,7 @@ public:
         Debit
     };
 
-    Passenger(int passengerId, const string& first, const string& last, float rating,
+    Passenger(const string& first, const string& last, float rating,
               bool pets, PaymentPreference paymentPref, bool isHandicapped);
     Passenger();
     ~Passenger();
@@ -25,13 +25,13 @@ public:
     void setRequiredRating(float rating);
 
     bool getHasPets() const;
-    void setHasPets(bool pets);
+    void setHasPets();
 
     PaymentPreference getPaymentPreference() const;
     void setPaymentPreference(PaymentPreference pref);
 
     bool getHandicapped() const;
-    void setHandicapped(bool isHandicapped);
+    void setHandicapped();
 
     string getFirstName() const;
     void setFirstName(const string& first);
@@ -39,15 +39,13 @@ public:
     string getLastName() const;
     void setLastName(const string& last);
 
-    int getId() const;
-    void setId(int passengerId);
-
     void printRides() const;
     void deleteCancelledAndCompletedRides() const;
     void printPassenger() const;
-    void printPassengerRides() const;
 
-private:
+    void addRide(Ride ride);
+
+
     float requiredRating;
     bool hasPets;
     PaymentPreference paymentPreference;
@@ -55,7 +53,7 @@ private:
     string firstName;
     string lastName;
     int id;
-    vector<Ride*> rides;
+    vector<Ride> rides;
 };
 
 #endif // INC_1040HOMEWORK_PASSENGER_H
