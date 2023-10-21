@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
+void PassengerMenu(Passenger passenger, RideCollection &rideCollection) {
 
     string newFirstName, newLastName;
     float newRating;
@@ -89,28 +89,28 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
                 userTime = mktime(&timeInfo);
                 rideCollection.addRide(sizeOfParty, thesePets, pickupLocation, dropOffLocation, userTime, note, handicapable);
                 newRide = rideCollection.rides.back();
-                passenger->addRide(newRide);
-                passenger->printRides();
+                passenger.addRide(newRide);
+                passenger.printRides();
                 cout << endl;
                 break;
 
 
             case 'B':
-                passenger->printRides();
+                passenger.printRides();
                 break;
 
             case 'C':
-                passenger->printPassenger();
+                passenger.printPassenger();
                 break;
 
 
             case 'D':
                 cout << "Which ride number would you like to cancel?" << endl;
-                passenger->printRides();
+                passenger.printRides();
                 cin >> rideIndex;
 
-                if (rideIndex >= 0 && rideIndex < passenger->rides.size()) {
-                    passenger->rides.erase(passenger->rides.begin() + rideIndex);
+                if (rideIndex >= 0 && rideIndex < passenger.rides.size()) {
+                    passenger.rides.erase(passenger.rides.begin() + rideIndex);
                     cout << "Ride Cancelled" << endl;
                 } else {
                     cout << "Invalid ride number. No ride was canceled." << endl;
@@ -120,22 +120,22 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
             case 'F':
                 cout << "Which ride would you like to rate?" << endl;
 
-                if(passenger->rides.empty()) {
+                if(passenger.rides.empty()) {
                     cout << "You have no rides to rate." << endl;
                     break;
                 }
 
-                for (Ride ride : passenger->rides) {
+                for (Ride ride : passenger.rides) {
                     if(static_cast<int>(ride.status) == 13 || static_cast<int>(ride.status)  == 14 ) {
-                        passenger->printRides();
+                        passenger.printRides();
                     }
                 }
 
                 cin >> rideIndex;
-                if ((rideIndex >= 0 && rideIndex < passenger->rides.size())) {
+                if ((rideIndex >= 0 && rideIndex < passenger.rides.size())) {
                     cout << "Enter new rating: " << endl;
                     cin >> newRating;
-                    passenger->rides.at(rideIndex).setRating(newRating);
+                    passenger.rides.at(rideIndex).setRating(newRating);
                     rideCollection.rides.at(rideIndex).setRating(newRating);
                     cout << "Ride Rated" << endl;
                 }
@@ -146,11 +146,11 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
 
             case 'E':
                 cout << "What would you like to edit?" << endl;
-                cout << "A: Required Rating : " << passenger->getRequiredRating() << endl;
-                cout << "C: Pets Allowed : " << passenger->getHasPets() << endl;
-                cout << "D: First Name : " << passenger->getFirstName() << endl;
-                cout << "E: Last Name : " << passenger->getLastName() << endl;
-                cout << "F: Payment Type : " << static_cast<int>(passenger->getPaymentPreference()) << endl;
+                cout << "A: Required Rating : " << passenger.getRequiredRating() << endl;
+                cout << "C: Pets Allowed : " << passenger.getHasPets() << endl;
+                cout << "D: First Name : " << passenger.getFirstName() << endl;
+                cout << "E: Last Name : " << passenger.getLastName() << endl;
+                cout << "F: Payment Type : " << static_cast<int>(passenger.getPaymentPreference()) << endl;
 
                 cin >> option;
 
@@ -158,32 +158,32 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
                     case 'A':
                         cout << "New Required Rating: " << endl;
                         cin >> newRating;
-                        passenger->setRequiredRating(newRating);
+                        passenger.setRequiredRating(newRating);
                         break;
 
                     case 'C':
                         cout << "New pet policy: " << endl;
-                        passenger->setHasPets();
+                        passenger.setHasPets();
                         break;
 
                     case 'D':
                         cout << "New first name: " << endl;
                         cin >> newFirstName;
-                        passenger->setFirstName(newFirstName);
+                        passenger.setFirstName(newFirstName);
                         break;
 
                     case 'E':
 
                         cout << "New Last Name: " << endl;
                         cin >> newLastName;
-                        passenger->setLastName(newLastName);
+                        passenger.setLastName(newLastName);
                         break;
 
                     case 'F':
 
                         cout << "New Payment Method (1-3): " << endl;
                         cin >> newPaymentPreferenceInt;
-                        passenger->setPaymentPreference(
+                        passenger.setPaymentPreference(
                                 static_cast<Passenger::PaymentPreference>(newPaymentPreferenceInt));
                         break;
 
@@ -202,9 +202,7 @@ void PassengerMenu(Passenger *passenger, RideCollection &rideCollection) {
                 return;
 
             case 'l':
-                cout << "Deleting Passenger " << passenger->getFirstName() << " " << passenger->getLastName() << endl;
-                delete passenger;
-                passenger = nullptr;
+                cout << "Deleting Passenger " << passenger.getFirstName() << " " << passenger.getLastName() << endl;
                 break;
 
             default:

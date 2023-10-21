@@ -64,6 +64,9 @@ public:
     void setLastName(const std::string& last);
     void printDriver() const;
 
+    void setDriverProperties(string basicString);
+
+
 };
 
 #endif // DRIVER_H

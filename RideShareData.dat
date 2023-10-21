@@ -4,3 +4,5 @@ Passengers:
 
 Rides:
 
+Drivers:
+Driver: driver test, id 1041, isAvailable 0, vehicleCapacity: 5, isHandicapable: 1, vehicleType 3, petsAllowed: 1, driverRating: 0, Complete Rides: 0, Cancelled Rides: 0, password: 1234

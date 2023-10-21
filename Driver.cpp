@@ -198,6 +198,52 @@ void Driver::deleteCancelledAndCompletedRides() {
     }
 }
 
+// Driver.cpp
+
+#include "Driver.h"
+
+void Driver::setDriverProperties(std::string data) {
+    size_t pos = 0;
+    while ((pos = data.find(", ")) != std::string::npos) {
+        std::string token = data.substr(0, pos);
+        data.erase(0, pos + 2);
+
+        // Extract the property name from the token
+        size_t propNameEnd = token.find(": ");
+        if (propNameEnd == std::string::npos) {
+            continue;
+        }
+        std::string propName = token.substr(0, propNameEnd);
+
+        // Now, use a switch statement to assign the token to the appropriate member variable
+        if (propName == "id") {
+            id = std::stoi(token.substr(propNameEnd + 2));
+        } else if (propName == "vehicleCapacity") {
+            vehicleCapacity = std::stoi(token.substr(propNameEnd + 2));
+        } else if (propName == "isHandicapable") {
+            handicappedCapable = (std::stoi(token.substr(propNameEnd + 2)) == 1);
+        } else if (propName == "vehicleType") {
+            vehicleType = static_cast<VehicleType>(std::stoi(token.substr(propNameEnd + 2)));
+        } else if (propName == "petsAllowed") {
+            petsAllowed = (std::stoi(token.substr(propNameEnd + 2)) == 1);
+        } else if (propName == "driverRating") {
+            driverRating = std::stof(token.substr(propNameEnd + 2));
+        } else if (propName == "Complete Rides") {
+            completedRides = std::stoi(token.substr(propNameEnd + 2));
+        } else if (propName == "Cancelled Rides") {
+            canceledRides = std::stoi(token.substr(propNameEnd + 2));
+        } else if (propName == "firstName") {
+            firstName = token.substr(propNameEnd + 2);
+        } else if (propName == "lastName") {
+            lastName = token.substr(propNameEnd + 2);
+        }
+    }
+}
+
+
+
+
+
 
 
 
