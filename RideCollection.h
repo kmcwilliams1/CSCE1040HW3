@@ -17,8 +17,8 @@ public:
     RideCollection();
     ~RideCollection();
 
-    void getRide() const;
-    Ride* addRide(int sizeOfParty, bool includesPets, string pickupLocation, string dropOffLocation, time_t pickupTime);
+    void getRides() const;
+    Ride* addRide(int sizeOfParty, bool includesPets, string pickupLocation, string dropOffLocation, time_t pickupTime, string note, bool handicapable);
     int showActiveRides(RideStatus status);
 
 

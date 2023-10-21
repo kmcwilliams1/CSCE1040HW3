@@ -13,8 +13,8 @@ void PassengerCollection::getPassenger() const {
 }
 
 Passenger* PassengerCollection::addPassenger(const string& firstName, const string& lastName, float rating,
-                                             bool hasPets, Passenger::PaymentPreference paymentPreference, bool handicapped) {
-    Passenger* passenger = new Passenger(firstName, lastName, rating, hasPets, paymentPreference, handicapped);
+                                             bool hasPets, Passenger::PaymentPreference paymentPreference) {
+    Passenger* passenger = new Passenger(firstName, lastName, rating, hasPets, paymentPreference);
     passengers.push_back(*passenger);
     return passenger;
 }

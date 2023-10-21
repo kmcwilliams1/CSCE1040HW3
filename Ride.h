@@ -10,15 +10,20 @@ using namespace std;
 class Ride {
 public:
 
+    //ride unique characteristics
     enum class RideStatus {
-        Active,
+        Active = 12,
         Completed,
         Cancelled
     };
-    Ride(int sizeOfParty, bool includesPets, string pickupLocation, string dropoffLocation, time_t pickupTime);
+    Ride(int sizeOfParty, bool includesPets, string pickupLocation, string dropoffLocation, time_t pickupTime, string note, bool handicapable);
     Ride();
     ~Ride();
 
+    void completeRide();
+    void getPickupLocationAndTime() const;
+
+    //setters and getters
     int getSizeOfParty() const;
     void setSizeOfParty(int partySize);
 
@@ -40,18 +45,23 @@ public:
     string getDropOffLocation() const;
     void setDropOffLocation(const string& location);
 
-    time_t getPickupTime() const;
+    string getPickupTime() const;
     void setPickupTime(time_t time);
 
     time_t getDropOffTime() const;
     void setDropOffTime(time_t time);
 
-    void completeRide();
-    void getPickupLocationAndTime() const;
+    const string& getNote() const;
+    void setNote(const string &note);
+
+    bool getHandicapped() const;
+    void setHandicapped();
 
 
-private:
+
+//variables
     int sizeOfParty;
+    bool handicapped;
     bool includesPets;
     RideStatus status;
     float rating;
@@ -60,6 +70,8 @@ private:
     string dropOffLocation;
     time_t pickupTime;
     time_t dropOffTime;
+    string note;
+    bool handicapable;
 };
 
 #endif // INC_1040HOMEWORK_RIDE_H

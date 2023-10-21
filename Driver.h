@@ -24,13 +24,12 @@ public:
     float driverRating;
     bool petsAllowed;
     bool available;
-    std::string notes;
     int id;
     std::string firstName;
     std::string lastName;
     int completedRides;
     int canceledRides;
-    std::vector<Ride*> rides;
+    std::vector<Ride> rides;
 
     Driver(int capacity, bool handicapped, VehicleType vType, bool pets, string fName, string lName);
 
@@ -40,14 +39,14 @@ public:
     bool isAvailable() const;
     void setAvailable(bool status);
     void addNewRide(Ride* ride);
-    void addCompletedRide( Ride* ride);
-    void addCancelledRide( Ride* ride);
+    void addCompletedRide( );
+    void addCancelledRide( );
     int getCompletedRides() const;
     int getCancelledRides() const;
-    float updateDriverRating( float driverRating);
+    float updateDriverRating();
     bool toggleAvailability();
     void getSchedule();
-    void deleteCancelledAndCompletedRides() const;
+    void deleteCancelledAndCompletedRides() ;
 
 
     // Getter and setter methods
@@ -59,8 +58,6 @@ public:
     void setVehicleType(VehicleType type);
     bool isPetsAllowed() const;
     void setPetsAllowed();
-    const std::string& getNotes() const;
-    void setNotes(const std::string& driverNotes);
     const std::string& getFirstName() const;
     void setFirstName(const std::string& first);
     const std::string& getLastName() const;

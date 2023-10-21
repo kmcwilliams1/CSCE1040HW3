@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Driver.h"
 #include "Ride.h"
 
@@ -7,13 +8,9 @@ Driver::Driver(int capacity, bool handicapped, VehicleType vType, bool pets, str
           lastName(lName), completedRides(0) {
 }
 
-Driver::Driver() {
+Driver::Driver() {}
 
-}
-
-Driver::~Driver() {
-    // Destructor implementation
-}
+Driver::~Driver() {}
 
 int Driver::getId() const {
     return id;
@@ -67,13 +64,6 @@ void Driver::setPetsAllowed() {
     petsAllowed = !petsAllowed;
 }
 
-const string& Driver::getNotes() const {
-    return notes;
-}
-
-void Driver::setNotes(const string& driverNotes) {
-    notes = driverNotes;
-}
 
 const string& Driver::getFirstName() const {
     return firstName;
@@ -96,32 +86,62 @@ int Driver::getCompletedRides() const {
 }
 
 void Driver::getSchedule() {
-    for (Ride* ride : rides) {
-        ride->getPickupTime();
+
+    sort(rides.begin(), rides.end(), [](const Ride& a, const Ride&) {
+        return a.getPickupTime() < a.getPickupTime();
+    });
+
+    for (Ride ride : rides) {
+        cout << "Party size: " << ride.getSizeOfParty() << endl;
+        cout << "Pick up at: " << ride.getPickupLocation() << endl;
+        cout << "By: " << ride.getPickupTime() << endl;
+        cout << "Drop off at: " << ride.getDropOffLocation() << endl;
+        cout << "Notes: " << ride.getNote() << endl;
+        string statusString;
+        switch (ride.getStatus()) {
+            case Ride::RideStatus::Active:
+                statusString = "Active";
+                break;
+            case Ride::RideStatus::Completed:
+                statusString = "Completed";
+                break;
+            case Ride::RideStatus::Cancelled:
+                statusString = "Cancelled";
+                break;
+            default:
+                statusString = "Unknown";
+                break;
+        }
+
+        cout << "Driver.cpp::getSchedule Status: " << statusString << endl;
+       cout << "----------------------------------------" << endl;
+
     }
 }
 
 
-float Driver::updateDriverRating(float driverRating) {
-    // Implementation of updateDriverRating
-    return 0.0; // Replace with actual logic
+float Driver::updateDriverRating() {
+    float currentRating;
+    for(Ride ride : this->rides) {
+        ride.rating++;
+        currentRating = ride.rating ++;
+    }
+    return currentRating;
 }
 
 bool Driver::toggleAvailability() {
-    // Implementation of toggleAvailability
-    return false; // Replace with actual logic
+    return !this->available;
 }
 
 void Driver::addNewRide(Ride* ride) {
-    // Implementation of addNewRide
 }
 
-void Driver::addCompletedRide(Ride* ride) {
-    // Implementation of addCompletedRide
+void Driver::addCompletedRide() {
+    completedRides++;
 }
 
-void Driver::addCancelledRide(Ride* ride) {
-    // Implementation of addCancelledRide
+void Driver::addCancelledRide() {
+    canceledRides++;
 }
 
 
@@ -156,12 +176,28 @@ void Driver::printDriver() const {
 
     cout << "Vehicle Type: " << vehicleTypeStr;
     cout << " With "<<this->vehicleCapacity << " seats." << endl;
-
+    float currentRating;
+    for(Ride ride : this->rides) {
+        ride.rating++;
+        currentRating = ride.rating ++;
+    }
+    cout << "Rating: " << currentRating << endl;
 }
 
-void Driver::deleteCancelledAndCompletedRides() const {
 
+
+void Driver::deleteCancelledAndCompletedRides() {
+    auto it = rides.begin();
+
+    while (it != rides.end()) {
+        if (it->getStatus() == Ride::RideStatus::Cancelled || it->getStatus() == Ride::RideStatus::Completed) {
+            it = rides.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
+
 
 
 
