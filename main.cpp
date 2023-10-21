@@ -22,8 +22,8 @@ bool isLoggedIn = false;
 
 
 int main() {
-    Driver *driver;
-    Passenger *passenger;
+    Driver driver;
+    Passenger passenger;
     User user;
     DriverCollection driverCollection;
     PassengerCollection passengerCollection;
@@ -76,15 +76,21 @@ int main() {
                         cin >> enteredPassword;
                         cin.ignore();
                         while (getline(fin, readingLine)) {
-                            cout << "Reading line: " << readingLine << endl;
                             if (readingLine.find("password: " + enteredPassword) != string::npos) {
+                                cout << "readingLine: " << readingLine << endl;
+
                                 cout << "Accessing Driver Menu " << endl;
+
+                                driver.setDriverProperties(readingLine);
+
+
+
+                                cout << "Logging in as " << driver.getFirstName() << endl;
                                 DriverMenu(driver, rideCollection);
                                 break;
-                            } else cout << "Incorrect password. Try again." << endl;
+                            }
                         }
-                        break;
-
+                        cout << "Incorrect password. Try again." << endl;
 
                     case 'B':
                         cout << "Enter password: ";
@@ -128,7 +134,7 @@ int main() {
                 cout << "Enter Password: ";
                 cin >> password;
 
-                driver = driverCollection.addDriver(vehicleCapacity, handicappedCapable,
+                driver = *driverCollection.addDriver(vehicleCapacity, handicappedCapable,
                                                     static_cast<Driver::VehicleType>(vehicleType), petsAllowed,
                                                     firstName, lastName);
 
@@ -144,21 +150,21 @@ int main() {
                         fout << ", isAvailable " << false;
                         fout << ", vehicleCapacity: " << vehicleCapacity;
                         fout << ", isHandicapable: " << handicappedCapable;
-                        fout << ", vehicleType " << static_cast<int>(driver->getVehicleType());
-                        fout << ", petsAllowed: " << driver->isPetsAllowed();
+                        fout << ", vehicleType " << static_cast<int>(driver.getVehicleType());
+                        fout << ", petsAllowed: " << driver.isPetsAllowed();
                         fout << ", driverRating: " << 0;
-                        for (Ride ride: driver->rides) {
+                        for (Ride ride: driver.rides) {
                             fout << " rideIds: " << ride.getId() << " , ";
                         }
-                        fout << ", Complete Rides: " << 0 << endl;
-                        fout << ", Cancelled Rides: " << 0 << endl;
+                        fout << ", Complete Rides: " << 0;
+                        fout << ", Cancelled Rides: " << 0;
                         fout << ", password: " << password << " " << endl;
                         fout.flush();
                         break;
                     }
                 }
-                cout << "Accessing Driver Features for " << driver->getFirstName() << " "
-                     << driver->getLastName() << endl;
+                cout << "Accessing Driver Features for " << driver.getFirstName() << " "
+                     << driver.getLastName() << endl;
                 cout << "Accessing Driver Menu " << endl;
                 DriverMenu(driver, rideCollection);
                 break;
@@ -175,7 +181,7 @@ int main() {
                 cout << "Payment Preference (1 for Cash, 2 for Credit, 3 for Debit): ";
                 cin >> paymentPreference;
 
-                passenger = passengerCollection.addPassenger(firstName, lastName, rating, hasPets,
+                passenger = *passengerCollection.addPassenger(firstName, lastName, rating, hasPets,
                                                              static_cast<Passenger::PaymentPreference>(paymentPreference));
 
                 while (getline(fin, readingLine)) {
@@ -190,14 +196,14 @@ int main() {
                         fout << " requiredRating: " << rating;
                         fout << " hasPets: " << hasPets;
                         fout << " paymentPreference " << paymentPreference;
-                        for (Ride ride: passenger->rides) {
+                        for (Ride ride: passenger.rides) {
                             fout << " rideIds: " << ride.getId();
                         }
                         break;
                     }
                 }
-                cout << "Accessing Passenger Features for " << passenger->getFirstName() << " "
-                     << passenger->getLastName() << endl;
+                cout << "Accessing Passenger Features for " << passenger.getFirstName() << " "
+                     << passenger.getLastName() << endl;
                 cout << "Accessing Passenger Menu " << endl;
                 PassengerMenu(passenger, rideCollection);
                 break;
