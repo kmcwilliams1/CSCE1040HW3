@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Passenger.h"
 #include "RideCollection.h"
 #include "Ride.h"
@@ -5,7 +6,7 @@
 Passenger::Passenger(const string &first, const string &last, float rating,
                      bool pets, PaymentPreference paymentPref)
         : requiredRating(rating), hasPets(pets), paymentPreference(paymentPref),
-           firstName(first), lastName(last) {
+          firstName(first), lastName(last) {
 }
 
 Passenger::Passenger() {
@@ -61,7 +62,7 @@ void Passenger::printRides() const {
 
     if (!rides.empty()) {
         cout << " Rides:" << endl;
-        for (const Ride ride : rides) {
+        for (const Ride ride: rides) {
             cout << "Pickup Location: " << ride.getPickupLocation() << endl;
             cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
             cout << "Pickup Time: " << ride.getPickupTime() << endl;
@@ -91,7 +92,7 @@ void Passenger::printRides() const {
 }
 
 
-void Passenger::deleteCancelledAndCompletedRides()  {
+void Passenger::deleteCancelledAndCompletedRides() {
 
     auto it = rides.begin();
 
@@ -128,3 +129,61 @@ void Passenger::addRide(Ride ride) {
     rides.push_back(ride);
 }
 
+void Passenger::setPassengerProperties(string basicString) {
+    istringstream dataStream(basicString);
+    string temp;
+
+    getline(dataStream, temp, ',');
+    {
+        cout << "current role " << temp << endl;
+    };
+    getline(dataStream, temp, ',');
+    {
+        cout << "first name " << temp << endl;
+        this->firstName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        cout << "last name " << temp << endl;
+        this->lastName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        cout << "id " << temp << endl;
+        this->id = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        cout << "required rating " << temp << endl;
+        this->requiredRating = stof(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->hasPets = (temp == "true");
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->paymentPreference = static_cast<PaymentPreference>(stoi(temp));
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->password = temp;
+    }
+
+
+//    getline(dataStream, temp, '\n');
+//    {
+//        cout << "trip id " << temp << endl;
+//        for(int i = 0; i < temp.length(); i++) {}
+//    };
+
+
+}
+
+int Passenger::getId() const {
+    return 0;
+}
+
+void Passenger::setId(int id) {
+
+}
