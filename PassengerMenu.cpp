@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "Passenger.h"
 #include "RideCollection.h"
 
@@ -10,6 +11,8 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection) {
     string newFirstName, newLastName;
     float newRating;
     int newPaymentPreferenceInt = 0;
+    ofstream fout("RideShareData.dat", ios::app);
+    ifstream fin("RideShareData.dat");
 
     while (true) {
         cout << "*************************************" << endl;
@@ -26,17 +29,17 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection) {
         Ride newRide;
         char option;
         int sizeOfParty;
-        bool thesePets = true;
-        bool handicapable = false;
+        bool thesePets;
+        bool handicapable;
         string pickupLocation;
         string dropOffLocation;
         string note;
-        int hour, minute;
+        int month, day, hour, minute;
         char inputChar;
-        int month = 0;
         time_t userTime;
         struct tm timeInfo{};
 
+        string temp;
 
         int rideIndex = 0;
 
@@ -53,18 +56,26 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection) {
                 cout << "Enter note: " << endl;
                 cin >> note;
 
+
                 cout << "Ride Information Below: " << endl;
-                cout << "Do you need a handicapable vehicle: " << handicapable << endl;
+                cout << "Do you need a handicapable vehicle (Y/N): " << endl;
+                cin >> inputChar;
+                (inputChar == 'Y' || inputChar == 'y') ? handicapable = true : handicapable = false;
+                cout << "Do you have pets (Y/N): " << endl;
+                cin >> inputChar;
+                (inputChar == 'Y' || inputChar == 'y')? thesePets = true : thesePets = false;
+
+
                 cout << "Is it this month (Y/N): ";
                 cin >> inputChar;
                 if (inputChar == 'N' || inputChar == 'n') {
                     cout << "Enter month (1-12): ";
                     cin >> month;
                 }
-
+                cout << "Enter Day: ";
+                cin >> day;
                 cout << "Pickup Hour (0-23): ";
                 cin >> hour;
-
                 cout << "Pickup Minute (0-59): ";
                 cin >> minute;
 
@@ -73,14 +84,15 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection) {
                 time(&now);
                 timeInfo = *localtime(&now);
 
+                //previous months are 'next year', so add +1 to year
                 if (inputChar == 'N' || inputChar == 'n') {
                     if (month < timeInfo.tm_mon + 1) {
-
                         timeInfo.tm_year++;
                     }
                     timeInfo.tm_mon = month - 1;
                 }
 
+                timeInfo.tm_mday = day;
                 timeInfo.tm_hour = hour;
                 timeInfo.tm_min = minute;
                 timeInfo.tm_sec = 0;
@@ -167,35 +179,51 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection) {
                         break;
 
                     case 'D':
+
                         cout << "New first name: " << endl;
                         cin >> newFirstName;
+
+                        while(getline(fin, temp)) {
+                            cout << "temp " << temp << endl;
+                            if(temp.find(passenger.getFirstName()) != string::npos) {
+                                cout << "Found " << passenger.getFirstName()<< endl;
+                                size_t pos = temp.find(passenger.getFirstName());
+                                cout << "pos " << pos << endl;
+                                cout << "length " << passenger.getFirstName().length() << endl;
+                                cout << "adding "<< newFirstName << endl;
+                                temp.replace(pos, passenger.getFirstName().length(), newFirstName);
+                                cout << "temp after update " << temp << endl;
+                            }
+                        }
                         passenger.setFirstName(newFirstName);
+
+                        fout.flush();
+
                         break;
 
                     case 'E':
-
                         cout << "New Last Name: " << endl;
                         cin >> newLastName;
                         passenger.setLastName(newLastName);
                         break;
 
                     case 'F':
-
                         cout << "New Payment Method (1-3): " << endl;
                         cin >> newPaymentPreferenceInt;
-                        passenger.setPaymentPreference(
-                                static_cast<Passenger::PaymentPreference>(newPaymentPreferenceInt));
+                        passenger.setPaymentPreference(static_cast<Passenger::PaymentPreference>(newPaymentPreferenceInt));
                         break;
 
                     case 'Q':
-                        cout << "Quitting Passenger Menu" << endl;
+                        cout << "Quitting Edit Menu" << endl;
                         break;
 
                     default:
                         cout << "Invalid option, try again." << endl;
                 }
-                cout << endl;
+
+
                 break;
+
 
             case 'Q':
                 cout << endl;

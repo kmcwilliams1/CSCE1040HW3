@@ -30,7 +30,8 @@ public:
     PaymentPreference getPaymentPreference() const;
     void setPaymentPreference(PaymentPreference pref);
 
-
+    int getId() const;
+    void setId(int id);
 
     string getFirstName() const;
     void setFirstName(const string& first);
@@ -51,7 +52,10 @@ public:
     string firstName;
     string lastName;
     int id;
+    string password;
     vector<Ride> rides;
+
+    void setPassengerProperties(string basicString);
 };
 
 #endif // INC_1040HOMEWORK_PASSENGER_H

@@ -28,8 +28,9 @@ public:
     std::string firstName;
     std::string lastName;
     int completedRides;
-    int canceledRides;
+    int cancelledRides;
     std::vector<Ride> rides;
+    string password;
 
     Driver(int capacity, bool handicapped, VehicleType vType, bool pets, string fName, string lName);
 
@@ -64,7 +65,7 @@ public:
     void setLastName(const std::string& last);
     void printDriver() const;
 
-    void setDriverProperties(string basicString);
+    void setDriverProperties(const string& basicString);
 
 
 };

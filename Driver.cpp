@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <sstream>
 #include "Driver.h"
 #include "Ride.h"
 
@@ -65,19 +66,19 @@ void Driver::setPetsAllowed() {
 }
 
 
-const string& Driver::getFirstName() const {
+const string &Driver::getFirstName() const {
     return firstName;
 }
 
-void Driver::setFirstName(const string& first) {
+void Driver::setFirstName(const string &first) {
     firstName = first;
 }
 
-const string& Driver::getLastName() const {
+const string &Driver::getLastName() const {
     return lastName;
 }
 
-void Driver::setLastName(const string& last) {
+void Driver::setLastName(const string &last) {
     lastName = last;
 }
 
@@ -87,11 +88,11 @@ int Driver::getCompletedRides() const {
 
 void Driver::getSchedule() {
 
-    sort(rides.begin(), rides.end(), [](const Ride& a, const Ride&) {
+    sort(rides.begin(), rides.end(), [](const Ride &a, const Ride &) {
         return a.getPickupTime() < a.getPickupTime();
     });
 
-    for (Ride ride : rides) {
+    for (Ride ride: rides) {
         cout << "Party size: " << ride.getSizeOfParty() << endl;
         cout << "Pick up at: " << ride.getPickupLocation() << endl;
         cout << "By: " << ride.getPickupTime() << endl;
@@ -114,7 +115,7 @@ void Driver::getSchedule() {
         }
 
         cout << "Driver.cpp::getSchedule Status: " << statusString << endl;
-       cout << "----------------------------------------" << endl;
+        cout << "----------------------------------------" << endl;
 
     }
 }
@@ -122,9 +123,9 @@ void Driver::getSchedule() {
 
 float Driver::updateDriverRating() {
     float currentRating;
-    for(Ride ride : this->rides) {
+    for (Ride ride: this->rides) {
         ride.rating++;
-        currentRating = ride.rating ++;
+        currentRating = ride.rating++;
     }
     return currentRating;
 }
@@ -133,7 +134,7 @@ bool Driver::toggleAvailability() {
     return !this->available;
 }
 
-void Driver::addNewRide(Ride* ride) {
+void Driver::addNewRide(Ride *ride) {
 }
 
 void Driver::addCompletedRide() {
@@ -141,18 +142,18 @@ void Driver::addCompletedRide() {
 }
 
 void Driver::addCancelledRide() {
-    canceledRides++;
+    cancelledRides++;
 }
 
 
 int Driver::getCancelledRides() const {
-    return canceledRides;
+    return cancelledRides;
 }
 
 void Driver::printDriver() const {
     cout << this->firstName << " " << this->lastName << endl;
     cout << this->driverRating << " stars." << endl;
-    this->handicappedCapable ? cout << "Handicap able" << endl : cout << "Not handicap able" << endl;
+    this->handicappedCapable ? cout << "Handicapable" << endl : cout << "Not handicap able" << endl;
     this->petsAllowed ? cout << "Pets allowed" << endl : cout << "No pets allowed" << endl;
 
     string vehicleTypeStr;
@@ -175,15 +176,8 @@ void Driver::printDriver() const {
     }
 
     cout << "Vehicle Type: " << vehicleTypeStr;
-    cout << " With "<<this->vehicleCapacity << " seats." << endl;
-    float currentRating;
-    for(Ride ride : this->rides) {
-        ride.rating++;
-        currentRating = ride.rating ++;
-    }
-    cout << "Rating: " << currentRating << endl;
+    cout << " With " << this->vehicleCapacity << " seats." << endl;
 }
-
 
 
 void Driver::deleteCancelledAndCompletedRides() {
@@ -202,44 +196,66 @@ void Driver::deleteCancelledAndCompletedRides() {
 
 #include "Driver.h"
 
-void Driver::setDriverProperties(std::string data) {
-    size_t pos = 0;
-    while ((pos = data.find(", ")) != std::string::npos) {
-        std::string token = data.substr(0, pos);
-        data.erase(0, pos + 2);
+void Driver::setDriverProperties(const string &data) {
+    istringstream dataStream(data);
+   string temp;
 
-        // Extract the property name from the token
-        size_t propNameEnd = token.find(": ");
-        if (propNameEnd == std::string::npos) {
-            continue;
-        }
-        std::string propName = token.substr(0, propNameEnd);
+    getline(dataStream, temp, ',');
+    {
+        cout << "current role " << temp << endl;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->firstName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->lastName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->id = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->available = true;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->vehicleCapacity = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->vehicleType = static_cast<Driver::VehicleType>(stoi(temp));
+    };
+    getline(dataStream, temp, ',');
+    {
+        temp = 1 ? this->petsAllowed = true : this->petsAllowed = false;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->driverRating = stof(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->completedRides = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->cancelledRides = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->password = temp;
+    };
+//    getline(dataStream, temp, '\n');
+//    {
+//        cout << "trip id " << temp << endl;
+//        for(int i = 0; i < temp.length(); i++) {}
+//    };
 
-        // Now, use a switch statement to assign the token to the appropriate member variable
-        if (propName == "id") {
-            id = std::stoi(token.substr(propNameEnd + 2));
-        } else if (propName == "vehicleCapacity") {
-            vehicleCapacity = std::stoi(token.substr(propNameEnd + 2));
-        } else if (propName == "isHandicapable") {
-            handicappedCapable = (std::stoi(token.substr(propNameEnd + 2)) == 1);
-        } else if (propName == "vehicleType") {
-            vehicleType = static_cast<VehicleType>(std::stoi(token.substr(propNameEnd + 2)));
-        } else if (propName == "petsAllowed") {
-            petsAllowed = (std::stoi(token.substr(propNameEnd + 2)) == 1);
-        } else if (propName == "driverRating") {
-            driverRating = std::stof(token.substr(propNameEnd + 2));
-        } else if (propName == "Complete Rides") {
-            completedRides = std::stoi(token.substr(propNameEnd + 2));
-        } else if (propName == "Cancelled Rides") {
-            canceledRides = std::stoi(token.substr(propNameEnd + 2));
-        } else if (propName == "firstName") {
-            firstName = token.substr(propNameEnd + 2);
-        } else if (propName == "lastName") {
-            lastName = token.substr(propNameEnd + 2);
-        }
-    }
+
 }
-
 
 
 

@@ -12,11 +12,6 @@
 
 using namespace std;
 
-struct User {
-
-    string role;
-
-};
 
 bool isLoggedIn = false;
 
@@ -24,12 +19,11 @@ bool isLoggedIn = false;
 int main() {
     Driver driver;
     Passenger passenger;
-    User user;
     DriverCollection driverCollection;
     PassengerCollection passengerCollection;
     RideCollection rideCollection;
     char option;
-    string enteredPassword = " ";
+    string enteredPassword;
 
     ofstream fout("RideShareData.dat", ios::app);
     ifstream fin("RideShareData.dat");
@@ -71,43 +65,37 @@ int main() {
             case 'A':
                 switch (option) {
 
-                    case 'A':
+                    case 'A': //Login
                         cout << "Enter password: ";
                         cin >> enteredPassword;
                         cin.ignore();
                         while (getline(fin, readingLine)) {
-                            if (readingLine.find("password: " + enteredPassword) != string::npos) {
-                                cout << "readingLine: " << readingLine << endl;
+                            cout << "Reading Line " << readingLine << endl;
 
+                            if (readingLine.find("Driver") != string::npos &&
+                                readingLine.find(enteredPassword) != string::npos) {
+                                cout << "found password at : " << enteredPassword << endl;
                                 cout << "Accessing Driver Menu " << endl;
-
-                                driver.setDriverProperties(readingLine);
-
-
-
+                                driver.setDriverProperties(readingLine); // Pass the entire line
                                 cout << "Logging in as " << driver.getFirstName() << endl;
                                 DriverMenu(driver, rideCollection);
                                 break;
                             }
-                        }
-                        cout << "Incorrect password. Try again." << endl;
 
-                    case 'B':
-                        cout << "Enter password: ";
-                        cin >> enteredPassword;
-                        while (getline(fin, readingLine)) {
-                            size_t pos = readingLine.find("password: ");
-                            if (pos != string::npos) {
-                                string savedPassword = readingLine.substr(pos + 9);
-                                if (enteredPassword == savedPassword) {
-                                    cout << "Accessing Passenger Menu " << endl;
-                                    PassengerMenu(passenger, rideCollection);
-                                    break;
-                                } else cout << "Incorrect password. Try again." << endl;
+                            if (readingLine.find("Passenger") != string::npos &&
+                                readingLine.find(enteredPassword) != string::npos) {
+                                cout << "found password at : " << readingLine << endl;
+                                cout << "Accessing Passenger Menu " << endl;
+                                passenger.setPassengerProperties(readingLine);
+                                cout << "Logging in as " << passenger.getFirstName() << endl;
+                                PassengerMenu(passenger, rideCollection);
+                                break;
+
                             }
                         }
-
+                        cout << "Incorrect password. Try again." << endl;
                         break;
+
 
                     case 'C':
                         cout << "Exiting" << endl;
@@ -118,7 +106,7 @@ int main() {
                 }
                 break;
 
-            case 'B':
+            case 'B': // Add Driver
                 cout << "Enter Vehicle Capacity: ";
                 cin >> vehicleCapacity;
                 cout << "Is Handicapped Capable (1 for true, 0 for false): ";
@@ -135,30 +123,27 @@ int main() {
                 cin >> password;
 
                 driver = *driverCollection.addDriver(vehicleCapacity, handicappedCapable,
-                                                    static_cast<Driver::VehicleType>(vehicleType), petsAllowed,
-                                                    firstName, lastName);
+                                                     static_cast<Driver::VehicleType>(vehicleType), petsAllowed,
+                                                     firstName, lastName);
 
                 while (getline(fin, readingLine)) {
-                    fout << readingLine << endl;
+                    cout << "looking to add driver readingLine: " << readingLine << endl;
 
-                    if (readingLine.find(driverSearchWord) != string::npos) {
-                        // Insert the new data after the word
-                        fout << "Driver: ";
-                        fout << firstName;
-                        fout << " " << lastName;
-                        fout << ", id " << id;
-                        fout << ", isAvailable " << false;
-                        fout << ", vehicleCapacity: " << vehicleCapacity;
-                        fout << ", isHandicapable: " << handicappedCapable;
-                        fout << ", vehicleType " << static_cast<int>(driver.getVehicleType());
-                        fout << ", petsAllowed: " << driver.isPetsAllowed();
-                        fout << ", driverRating: " << 0;
-                        for (Ride ride: driver.rides) {
-                            fout << " rideIds: " << ride.getId() << " , ";
-                        }
-                        fout << ", Complete Rides: " << 0;
-                        fout << ", Cancelled Rides: " << 0;
-                        fout << ", password: " << password << " " << endl;
+                    if (readingLine.find(driverSearchWord)) {
+
+                        fout << "Driver, ";
+                        fout << firstName << ",";
+                        fout << lastName << ",";
+                        fout << id << ",";
+                        fout << false << ","; // isAvailable
+                        fout << vehicleCapacity << ",";
+                        fout << handicappedCapable << ",";
+                        fout << static_cast<int>(driver.getVehicleType()) << ",";
+                        fout << driver.isPetsAllowed() << ",";
+                        fout << 0 << ","; // driverRating
+                        fout << 0 << ","; //completed rides
+                        fout << 0 << ","; // cancelled rides
+                        fout << password << "," << endl;
                         fout.flush();
                         break;
                     }
@@ -169,7 +154,7 @@ int main() {
                 DriverMenu(driver, rideCollection);
                 break;
 
-            case 'C':
+            case 'C': // Add Passenger
                 cout << "Enter First Name: ";
                 cin >> firstName;
                 cout << "Enter Last Name: ";
@@ -180,25 +165,26 @@ int main() {
                 cin >> hasPets;
                 cout << "Payment Preference (1 for Cash, 2 for Credit, 3 for Debit): ";
                 cin >> paymentPreference;
+                cout << "Enter Password: ";
+                cin >> password;
 
                 passenger = *passengerCollection.addPassenger(firstName, lastName, rating, hasPets,
-                                                             static_cast<Passenger::PaymentPreference>(paymentPreference));
+                                                              static_cast<Passenger::PaymentPreference>(paymentPreference));
 
                 while (getline(fin, readingLine)) {
-                    fout << readingLine << endl;
+
 
                     if (readingLine.find(passengerSearchWord) != string::npos) {
-                        // Insert the new data after the word
-                        fout << "Passenger: ";
-                        fout << " " << firstName;
-                        fout << " " << lastName;
-                        fout << " id " << id;
-                        fout << " requiredRating: " << rating;
-                        fout << " hasPets: " << hasPets;
-                        fout << " paymentPreference " << paymentPreference;
-                        for (Ride ride: passenger.rides) {
-                            fout << " rideIds: " << ride.getId();
-                        }
+
+                        fout << "Passenger, ";
+                        fout << firstName << ",";
+                        fout << lastName << ",";
+                        fout << id << ",";
+                        fout << rating << ",";
+                        fout << hasPets << ",";
+                        fout << paymentPreference << ",";
+                        fout << password << ",";
+                        fout.flush();
                         break;
                     }
                 }
@@ -217,12 +203,6 @@ int main() {
         }
 
     }
-
-    return 0;
 }
 
 
-void
-mainMenu(DriverCollection &driverCollection, PassengerCollection &passengerCollection, RideCollection &rideCollection) {
-
-}
