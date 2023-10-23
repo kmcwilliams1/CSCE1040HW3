@@ -16,6 +16,7 @@ public:
     void getPassenger() const;
     Passenger* addPassenger(const string& firstName, const string& lastName, float rating,
                             bool hasPets, Passenger::PaymentPreference paymentPreference);
+    Passenger* addPassenger(Passenger passenger);
 
 
 private:

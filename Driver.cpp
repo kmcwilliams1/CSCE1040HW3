@@ -29,8 +29,8 @@ bool Driver::isAvailable() const {
     return available;
 }
 
-void Driver::setAvailable(bool status) {
-    available = status;
+void Driver::setAvailable() {
+    available = !available;
 }
 
 int Driver::getVehicleCapacity() const {
@@ -255,6 +255,22 @@ void Driver::setDriverProperties(const string &data) {
 //    };
 
 
+}
+
+void Driver::setCancelledRides(int cancelledRides) {
+        this->cancelledRides = cancelledRides;
+}
+
+string Driver::getPassword() const {
+    return password;
+}
+
+void Driver::setPassword(string password) {
+    this->password = password;
+}
+
+void Driver::setCompletedRides(int completedRides) {
+        this->completedRides = completedRides;
 }
 
 

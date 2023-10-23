@@ -21,3 +21,7 @@ Driver* DriverCollection::addDriver(int vehicleCapacity, bool handicappedCapable
     return driver;
 }
 
+Driver *DriverCollection::addDriver(Driver driver) {
+    return nullptr;
+}
+
