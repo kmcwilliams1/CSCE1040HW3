@@ -38,10 +38,16 @@ public:
     void setId(int newId);
     void setDriverRating(float rating);
     bool isAvailable() const;
-    void setAvailable(bool status);
+    void setAvailable();
     void addNewRide(Ride* ride);
-    void addCompletedRide( );
-    void addCancelledRide( );
+    void addCompletedRide();
+    void addCancelledRide();
+    void setPassword(string password);
+    string getPassword() const;
+    void setCompletedRides(int completedRides);
+    void setCancelledRides(int cancelledRides);
+
+
     int getCompletedRides() const;
     int getCancelledRides() const;
     float updateDriverRating();

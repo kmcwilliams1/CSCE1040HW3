@@ -28,7 +28,7 @@ public:
     void setSizeOfParty(int partySize);
 
     bool getIncludesPets() const;
-    void setIncludesPets(bool pets);
+    void setIncludesPets();
 
     RideStatus getStatus() const;
     void setStatus(RideStatus rideStatus);

@@ -39,6 +39,9 @@ public:
     string getLastName() const;
     void setLastName(const string& last);
 
+    string getPassword() const;
+    void setPassword(const string& password);
+
     void printRides() const;
     void deleteCancelledAndCompletedRides() ;
     void printPassenger() const;

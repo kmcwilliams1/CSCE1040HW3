@@ -28,8 +28,8 @@ bool Ride::getIncludesPets() const {
     return includesPets;
 }
 
-void Ride::setIncludesPets(bool pets) {
-    includesPets = pets;
+void Ride::setIncludesPets() {
+    includesPets = !includesPets;
 }
 
 Ride::RideStatus Ride::getStatus() const {

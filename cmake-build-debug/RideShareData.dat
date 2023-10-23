@@ -1,7 +1,4 @@
-Drivers:
-
-Passengers:
-
-Rides:
-
-Passenger, testpass,hiu,1041,1,1,1,4321,
+Ride,1,first,first,1698121380,first,1,1,18467,
+Ride,1,second,second,1698121380,first,1,1,18464,
+Passenger,testPassenger,Testtest,1041,1,1,1,4321,18467,18464,
+Driver,testDriver,testlastname,4323,3,1,1,1,0,0,0,1234,

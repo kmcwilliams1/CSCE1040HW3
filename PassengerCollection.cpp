@@ -19,3 +19,8 @@ Passenger* PassengerCollection::addPassenger(const string& firstName, const stri
     return passenger;
 }
 
+Passenger *PassengerCollection::addPassenger(Passenger passenger) {
+    passengers.push_back(passenger);
+    return nullptr;
+}
+
