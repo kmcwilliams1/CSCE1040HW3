@@ -2,9 +2,9 @@
 #include <iostream>
 
 
-Ride::Ride(int sizeOfParty, bool includesPets, string pickupLocation, string dropoffLocation, time_t pickupTime)
+Ride::Ride(int sizeOfParty, bool includesPets, string pickupLocation, string dropoffLocation, time_t pickupTime, string note, bool handicapable)
         : sizeOfParty(sizeOfParty), includesPets(includesPets), pickupLocation(pickupLocation),
-          dropOffLocation(dropoffLocation), pickupTime(pickupTime) {
+          dropOffLocation(dropoffLocation), pickupTime(pickupTime), note(note), handicapable(handicapable) {
 
 }
 
@@ -28,8 +28,8 @@ bool Ride::getIncludesPets() const {
     return includesPets;
 }
 
-void Ride::setIncludesPets(bool pets) {
-    includesPets = pets;
+void Ride::setIncludesPets() {
+    includesPets = !includesPets;
 }
 
 Ride::RideStatus Ride::getStatus() const {
@@ -72,8 +72,12 @@ void Ride::setDropOffLocation(const string &location) {
     dropOffLocation = location;
 }
 
-time_t Ride::getPickupTime() const {
-    return pickupTime;
+string Ride::getPickupTime() const {
+    struct tm* timeInfo;
+    timeInfo = localtime(&pickupTime);
+    char buffer[80];
+    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeInfo);
+    return string(buffer);
 }
 
 void Ride::setPickupTime(time_t time) {
@@ -93,6 +97,23 @@ void Ride::getPickupLocationAndTime() const {
 }
 
 void Ride::completeRide() {
+
+}
+
+const string &Ride::getNote() const {
+    return note;
+}
+
+void Ride::setNote(const string &note) {
+    this->note = note;
+}
+
+bool Ride::getHandicapped() const {
+    return handicapped;
+}
+
+void Ride::setHandicapped() {
+    handicapped = !handicapped;
 
 }
 

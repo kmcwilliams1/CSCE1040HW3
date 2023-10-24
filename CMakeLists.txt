@@ -3,5 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(untitled main.cpp Driver.cpp DriverCollection.cpp Passenger.cpp PassengerCollection.cpp Ride.cpp
-        RideCollection.cpp)
+add_executable(untitled main.cpp Driver.cpp DriverCollection.cpp  PassengerCollection.cpp Passenger.cpp  RideCollection.cpp Ride.cpp)
