@@ -1,0 +1,12 @@
+
+
+#ifndef CSCE1040HW4_BASICDRIVER_H
+#define CSCE1040HW4_BASICDRIVER_H
+
+
+class BasicDriver {
+
+};
+
+
+#endif //CSCE1040HW4_BASICDRIVER_H

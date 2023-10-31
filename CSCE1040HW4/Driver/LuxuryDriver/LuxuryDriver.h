@@ -1,0 +1,11 @@
+
+#ifndef CSCE1040HW4_LUXURYDRIVER_H
+#define CSCE1040HW4_LUXURYDRIVER_H
+
+
+class LuxuryDriver {
+
+};
+
+
+#endif //CSCE1040HW4_LUXURYDRIVER_H
