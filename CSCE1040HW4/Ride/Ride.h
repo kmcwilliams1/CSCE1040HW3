@@ -31,6 +31,8 @@ public:
     time_t dropOffTime;
     string note;
     bool handicapable;
+    int assignedDriverId;
+    int assignedPassengerId;
 
 
     //methods
@@ -70,6 +72,12 @@ public:
 
     bool getHandicapped() const;
     void setHandicapped();
+
+     int getAssignedDriverId() const;
+     void setAssignedDriverId();
+
+     int getAssignedPassengerId() const;
+     void setAssignedPassengerId();
 
 
 };

@@ -110,5 +110,21 @@ void Ride::writeRideProperties(ostream &dataFile) {
 
 }
 
+int Ride::getAssignedDriverId() const {
+    return assignedDriverId;
+}
+
+void Ride::setAssignedDriverId() {
+
+}
+
+int Ride::getAssignedPassengerId() const {
+    return assignedPassengerId;
+}
+
+void Ride::setAssignedPassengerId() {
+
+}
+
 
 

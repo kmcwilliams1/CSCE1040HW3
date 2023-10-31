@@ -18,6 +18,9 @@ void Passenger::writePassengerProperties(ostream &dataFile) {
 
 void Passenger::addRide(Ride ride) {
 
+
+    ride.assignedPassengerId = this->id;
+
 }
 
 void Passenger::getInfo() const {
@@ -77,6 +80,30 @@ void Passenger::setLastName(const string &last) {
 }
 
 void Passenger::getRides() const {
+
+}
+
+void Passenger::cancelRide() {
+
+}
+
+
+void Passenger::rateRide(const Passenger& passenger) {
+    float flo;
+    for (const Ride& ride: passenger.rides) {
+        cout << ride.pickupLocation << "-> " << ride.dropOffLocation << endl;
+        cout << ride.id << endl;
+    }
+
+    cout << "Enter Ride ID: " << endl;
+    cin >> flo;
+
+    for (Ride ride: passenger.rides) {
+        if (flo == ride.id) {
+            ride.setRating(flo);
+        }
+    }
+
 
 }
 

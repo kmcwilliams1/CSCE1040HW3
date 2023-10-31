@@ -33,9 +33,7 @@ int main() {
     string rideSearchWord = "Ride";
 
     while (fin >> readingLine) {
-        cout <<"Reading Line: " << readingLine<< endl;
         role = readingLine.substr(0, readingLine.find(','));
-        cout << "Role: " << role << endl;
 
         if (role == driverSearchWord) {
 
@@ -87,14 +85,14 @@ int main() {
                         cout << "Accessing Driver Menu " << endl;
                         driver.readDriverProperties(readingLine);
                         cout << "Logging in as " << driver.getFirstName() << endl;
-                        DriverMenu(driver, rideCollection);
+                        DriverMenu(driver, rideCollection, driverCollection);
                         break;
                     } else if (readingLine.find("Passenger") != string::npos &&
                         readingLine.find(enteredPassword) != string::npos) {
                         cout << "Accessing Passenger Menu " << endl;
                         passenger.readPassengerProperties(readingLine);
                         cout << "Logging in as " << passenger.getFirstName() << endl;
-                        PassengerMenu(passenger, rideCollection);
+                        PassengerMenu(passenger, rideCollection, passengerCollection);
                         break;
 
                     } else cout << "Incorrect password. Try again." << endl;
@@ -119,6 +117,7 @@ int main() {
 
             case 'd':
             case 'D'://Exit
+
 //                if(!fout){
 //                    cerr << "Failed to open output file"<< endl;
 //                    return 1;
