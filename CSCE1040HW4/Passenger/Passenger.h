@@ -40,7 +40,9 @@ public:
     void writePassengerProperties(ostream& dataFile);
     void getInfo() const;
     void deleteCancelledAndCompletedRides();
-
+    void getRides() const;
+    void cancelRide();
+    void rateRide(const Passenger &passenger);
 
 
     //getters and setters
@@ -61,9 +63,6 @@ public:
 
     string getLastName() const;
     void setLastName(const string& last);
-
-    void getRides() const;
-
 
 
 };

@@ -8,8 +8,9 @@
 
 void RideCollection::addRide(Passenger passenger) {
 
-    ofstream fout("RideShareData.dat", ios::app);
     Ride newRide;
+    ofstream fout("RideShareData.dat", ios::app);
+
 
     int i;
     string string1;
@@ -149,7 +150,7 @@ void RideCollection::addRide(Passenger passenger) {
 
     userTime = mktime(&timeInfo);
 
-    newRide = this->rides.back();
+    this->rides.push_back(newRide);
 
     passenger.addRide(newRide);
 
