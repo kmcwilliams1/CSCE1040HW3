@@ -1,0 +1,11 @@
+
+#ifndef CSCE1040HW4_GROUPDRIVER_H
+#define CSCE1040HW4_GROUPDRIVER_H
+
+
+class GroupDriver {
+
+};
+
+
+#endif //CSCE1040HW4_GROUPDRIVER_H

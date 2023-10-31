@@ -1,0 +1,12 @@
+
+
+#ifndef CSCE1040HW4_ECONOMYDRIVER_H
+#define CSCE1040HW4_ECONOMYDRIVER_H
+
+
+class EconomyDriver {
+
+};
+
+
+#endif //CSCE1040HW4_ECONOMYDRIVER_H

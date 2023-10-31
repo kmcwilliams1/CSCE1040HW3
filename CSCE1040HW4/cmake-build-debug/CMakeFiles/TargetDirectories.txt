@@ -1,0 +1,3 @@
+C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug/CMakeFiles/CSCE1040HW4.dir
+C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
