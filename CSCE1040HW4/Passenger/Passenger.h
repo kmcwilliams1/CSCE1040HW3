@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include "../Ride/Ride.h"
+#include "../Ride/RideCollection.h"
 
 using namespace std;
 
@@ -24,18 +25,19 @@ public:
         Debit
     };
 
-    float requiredRating{};
-    bool hasPets{};
-    PaymentPreference paymentPreference{};
+    float requiredRating;
+    bool hasPets;
+    PaymentPreference paymentPreference;
     string firstName;
     string lastName;
-    int id{};
+    int id;
     string password;
+    vector<int> rideIds;
     vector<Ride> rides;
 
 
     //methods
-    void addRide(Ride ride);
+    void addRide(const Ride& ride);
     void readPassengerProperties(string &readingLine);
     void writePassengerProperties(ostream& dataFile);
     void getInfo() const;
@@ -66,6 +68,8 @@ public:
 
 
     void editRide();
+
+    void editInfo();
 };
 
 
