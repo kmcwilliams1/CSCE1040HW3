@@ -42,7 +42,7 @@ public:
     void deleteCancelledAndCompletedRides();
     void getRides() const;
     void cancelRide();
-    void rateRide(const Passenger &passenger);
+    void rateRide();
 
 
     //getters and setters
@@ -65,6 +65,7 @@ public:
     void setLastName(const string& last);
 
 
+    void editRide();
 };
 
 

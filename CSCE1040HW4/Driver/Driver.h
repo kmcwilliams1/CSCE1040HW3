@@ -81,10 +81,10 @@ public:
     void setLastName(const string &last);
 
     int getCompletedRides() const;
-    void setCompletedRides(int i);
+    void setCompletedRides();
 
     int getCancelledRides() const;
-    void setCancelledRides(int i);
+    void setCancelledRides();
 
     const vector<Ride> &getRides() const;
 
