@@ -35,6 +35,7 @@ public:
     string lastName;
     int completedRides;
     int cancelledRides;
+    vector<int> rideIds;
     vector<Ride> rides;
     string password;
 

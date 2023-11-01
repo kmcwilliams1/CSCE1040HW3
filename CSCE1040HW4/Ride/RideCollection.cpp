@@ -6,9 +6,8 @@
 #include "Ride.h"
 #include "../Passenger/Passenger.h"
 
-void RideCollection::addRide(Passenger passenger) {
+void RideCollection::addRide(Ride newRide) {
 
-    Ride newRide;
     ofstream fout("RideShareData.dat", ios::app);
 
 
@@ -70,13 +69,10 @@ void RideCollection::addRide(Passenger passenger) {
 
 
 
-
     //time
     newRide.setPickupTime();
 
     this->rides.push_back(newRide);
-
-    passenger.addRide(newRide);
 
     newRide.writeRideProperties(fout);
 

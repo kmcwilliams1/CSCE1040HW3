@@ -129,7 +129,7 @@ void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection 
 
                         cout << "New Vehicle Type (1-5): " << endl;
                         cin >> i;
-                        driver.setVehicleType(static_cast<Driver::VehicleType>(i);
+                        driver.setVehicleType(static_cast<Driver::VehicleType>(i));
                         break;
 
                     case 'Q':
@@ -162,4 +162,3 @@ void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection 
 
 }
 
-}

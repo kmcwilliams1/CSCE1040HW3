@@ -53,6 +53,31 @@ int main() {
         }
     }
 
+    fin.clear();
+    fin.seekg(0, ios::beg);
+
+    for(Passenger& currentPassenger : passengerCollection.passengers) {
+        for(int rideId : currentPassenger.rideIds) {
+            for(auto & currentRide : rideCollection.rides) {
+                if(rideId == currentRide.id) {
+                   currentPassenger.rides.push_back(currentRide);
+                }
+            }
+        }
+    }
+
+    for(Driver& currentDriver : driverCollection.drivers) {
+        for(int rideId : currentDriver.rideIds) {
+            for(auto & currentRide : rideCollection.rides) {
+                if(rideId == currentRide.id) {
+                   currentDriver.rides.push_back(currentRide);
+                }
+            }
+        }
+    }
+
+
+
     cout << "List of driver collection is: " << driverCollection.drivers.size() << endl;
     cout << "List of passenger collection is: " << passengerCollection.passengers.size() << endl;
     cout << "List of ride collection is: " << rideCollection.rides.size() << endl << endl;
@@ -91,13 +116,16 @@ int main() {
                         readingLine.find(enteredPassword) != string::npos) {
                         cout << "Accessing Passenger Menu " << endl;
                         passenger.readPassengerProperties(readingLine);
-                        cout << "Logging in as " << passenger.getFirstName() << endl;
+                        cout << "Logging in as " << passenger.firstName << endl;
                         PassengerMenu(passenger, rideCollection, passengerCollection);
                         break;
 
                     } else cout << "Incorrect password. Try again." << endl;
 
                 }
+
+                fin.clear();
+                fin.seekg(0, ios::beg);
 
                 break;
 

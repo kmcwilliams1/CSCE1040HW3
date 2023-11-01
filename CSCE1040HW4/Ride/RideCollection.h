@@ -4,13 +4,12 @@
 #define CSCE1040HW4_RIDECOLLECTION_H
 
 
-#include "../Passenger/Passenger.h"
 #include "../Driver/Driver.h"
 
 class RideCollection {
 
 public:
-    void addRide(Passenger passenger);
+    void addRide(Ride newRide);
     vector<Ride> rides;
 
     void assignSchedule(const Driver& driver);
