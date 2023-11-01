@@ -11,6 +11,8 @@ class DriverCollection {
 public:
     void addDriver();
     vector<Driver> drivers;
+
+    void removeDriver(const Driver& driver);
 };
 
 

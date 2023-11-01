@@ -23,6 +23,7 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
         cout << "E: Edit Information" << endl;
         cout << "F: Rate a Ride" << endl;
         cout << "G: Delete Information" << endl;
+        cout << "H: Edit Rides" << endl;
         cout << "Q: Quit" << endl;
 
         char option;
@@ -112,7 +113,7 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
 
             case 'F': //Rate
 
-                passenger.rateRide(passenger);
+                passenger.rateRide();
 
 
                 break;
@@ -125,6 +126,11 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
                     passengerCollection.deletePassenger(passenger);
                 }
 
+                break;
+
+
+            case 'H': // Edit
+                passenger.editRide();
                 break;
 
             case 'Q': //Quit

@@ -62,7 +62,7 @@ public:
     void setDropOffLocation(const string& location);
 
     string getPickupTime() const;
-    void setPickupTime(time_t time);
+    void setPickupTime();
 
     time_t getDropOffTime() const;
     void setDropOffTime(time_t time);

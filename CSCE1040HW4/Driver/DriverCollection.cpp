@@ -8,7 +8,6 @@
 using namespace std;
 
 
-
 void DriverCollection::addDriver() {
     Driver newDriver;
     enum class VehicleType {
@@ -40,8 +39,7 @@ void DriverCollection::addDriver() {
             cout << "Invalid input. Please enter a non-negative integer for Vehicle Capacity." << endl;
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else {
+        } else {
             break;
         }
     }
@@ -55,8 +53,7 @@ void DriverCollection::addDriver() {
             cout << "Invalid input. Please enter either 0 for false or 1 for true." << endl;
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else {
+        } else {
             break;
         }
     }
@@ -70,8 +67,7 @@ void DriverCollection::addDriver() {
             cout << "Invalid input. Please enter a number between 1 and 5." << endl;
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else {
+        } else {
             break;
         }
     }
@@ -85,8 +81,7 @@ void DriverCollection::addDriver() {
             cout << "Invalid input. Please enter either 0 for false or 1 for true." << endl;
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else {
+        } else {
             break;
         }
     }
@@ -107,5 +102,19 @@ void DriverCollection::addDriver() {
 
     this->drivers.push_back(newDriver);
 
+
+}
+
+void DriverCollection::removeDriver(const Driver& driver) {
+
+    for (auto it = this->drivers.begin(); it != this->drivers.end(); it++) {
+        if (it->id == driver.id) {
+            this->drivers.erase(it);
+            break;
+        } else {
+            it++;
+        }
+
+    }
 
 }

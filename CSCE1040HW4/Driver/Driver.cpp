@@ -86,16 +86,45 @@ int Driver::getCompletedRides() const {
     return completedRides;
 }
 
-void Driver::setCompletedRides(int i) {
-    completedRides = i;
+void Driver::setCompletedRides() {
+    int i;
+    for(Ride &ride : rides) {
+        if(ride.getStatus() == Ride::RideStatus::Active){
+            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << ride.id << endl;
+        }
+    }
+    cout << "Which ride ID do you want to complete?" << endl;
+    cin >> i;
+
+    for(Ride &ride : rides) {
+        if(ride.id == i) {
+            ride.setStatus(Ride::RideStatus::Completed);
+        }
+    }
+
 }
 
 int Driver::getCancelledRides() const {
     return cancelledRides;
 }
 
-void Driver::setCancelledRides(int i) {
-    cancelledRides = i;
+void Driver::setCancelledRides() {
+    int i;
+    for(Ride &ride : rides) {
+        if(ride.getStatus() == Ride::RideStatus::Active){
+            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << ride.id << endl;
+        }
+    }
+    cout << "Which ride ID do you want to cancel?" << endl;
+    cin >> i;
+
+    for(Ride &ride : rides) {
+        if(ride.id == i) {
+            ride.setStatus(Ride::RideStatus::Cancelled);
+        }
+    }
 }
 
 const vector<Ride> &Driver::getRides() const {
