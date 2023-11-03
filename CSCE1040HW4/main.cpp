@@ -21,7 +21,6 @@ int main() {
     RideCollection rideCollection;
 
     ifstream fin("RideShareData.dat");
-  //  ofstream fout("RideShareData.dat");
 
 
     char option;
@@ -53,38 +52,38 @@ int main() {
         }
     }
 
+    cout << "Size of rideCollection is: " << rideCollection.rides.size() << endl;
+    cout << "Size of driverCollection is: " << driverCollection.drivers.size() << endl;
+    cout << "Size of passengerCollection is: " << passengerCollection.passengers.size() << endl << endl;
+
+
     fin.clear();
     fin.seekg(0, ios::beg);
 
-    for(Passenger& currentPassenger : passengerCollection.passengers) {
-        for(int rideId : currentPassenger.rideIds) {
-            for(auto & currentRide : rideCollection.rides) {
-                if(rideId == currentRide.id) {
-                   currentPassenger.rides.push_back(currentRide);
-                }
+
+    /*populates the passengers and drivers with ride objects*/
+    for (auto &currentRide: rideCollection.rides) {
+        for (auto &currentPassenger: passengerCollection.passengers) {
+            if (currentRide.assignedPassengerId == currentPassenger.id) {
+                currentPassenger.rides.push_back(currentRide);
             }
         }
     }
 
-    for(Driver& currentDriver : driverCollection.drivers) {
-        for(int rideId : currentDriver.rideIds) {
-            for(auto & currentRide : rideCollection.rides) {
-                if(rideId == currentRide.id) {
-                   currentDriver.rides.push_back(currentRide);
-                }
+    for (auto &currentRide: rideCollection.rides) {
+        for (auto &currentDriver: driverCollection.drivers) {
+            if (currentRide.assignedDriverId == currentDriver.id) {
+                currentDriver.rides.push_back(currentRide);
             }
         }
     }
 
+    fin.close();
 
-
-    cout << "List of driver collection is: " << driverCollection.drivers.size() << endl;
-    cout << "List of passenger collection is: " << passengerCollection.passengers.size() << endl;
-    cout << "List of ride collection is: " << rideCollection.rides.size() << endl << endl;
 
     while (true) {
 
-        cout << "********* Main Menu **********" << endl;
+        cout << "********* Main Menu *********" << endl;
         cout << "** What do you want to do? **" << endl;
         cout << "** A. Login                **" << endl;
         cout << "** B. Add Driver           **" << endl;
@@ -101,80 +100,77 @@ int main() {
                 cin >> enteredPassword;
                 cin.ignore();
 
-                while (getline(fin, readingLine)) {
 
 
-                    /*search the datasheet for the password, then again, read the values from the datasheet*/
-                    if (readingLine.find("Driver") != string::npos &&
-                        readingLine.find(enteredPassword) != string::npos) {
-                        cout << "Accessing Driver Menu " << endl;
-                        driver.readDriverProperties(readingLine);
-                        cout << "Logging in as " << driver.getFirstName() << endl;
-                        DriverMenu(driver, rideCollection, driverCollection);
-                        break;
-                    } else if (readingLine.find("Passenger") != string::npos &&
-                        readingLine.find(enteredPassword) != string::npos) {
-                        cout << "Accessing Passenger Menu " << endl;
-                        passenger.readPassengerProperties(readingLine);
-                        cout << "Logging in as " << passenger.firstName << endl;
-                        PassengerMenu(passenger, rideCollection, passengerCollection);
-                        break;
+                /*search the datasheet for the password, then again, read the values from the datasheet*/
 
-                    } else cout << "Incorrect password. Try again." << endl;
-
+                for (auto &currentDriver: driverCollection.drivers) {
+                    if (currentDriver.password == enteredPassword) {
+                        DriverMenu(currentDriver, rideCollection, driverCollection);
+                    }
                 }
 
-                fin.clear();
-                fin.seekg(0, ios::beg);
+                for (auto &currentPassenger: passengerCollection.passengers) {
+                    if (currentPassenger.password == enteredPassword) {
+                        PassengerMenu(currentPassenger, rideCollection, passengerCollection);
+                    } else {
+                        cout << "Incorrect password, try again." << endl;
+                        cin >> enteredPassword;
+                    }
+                }
+
 
                 break;
 
             case 'b':
             case 'B'://Add Driver
 
-                driverCollection.addDriver();
+                driver = driverCollection.addDriver(driver);
+                cout << "Loading driver " << driver.firstName << endl;
+                DriverMenu(driver, rideCollection, driverCollection);
 
                 break;
 
             case 'c':
             case 'C'://Add Passenger
 
-                passengerCollection.addPassenger();
+                passenger = passengerCollection.addPassenger(passenger);
+                cout << "Loading passenger " << passenger.firstName << endl;
+                PassengerMenu(passenger, rideCollection, passengerCollection);
 
                 break;
 
             case 'd':
             case 'D'://Exit
+                ofstream fout("RideShareData.dat");
 
-//                if(!fout){
-//                    cerr << "Failed to open output file"<< endl;
-//                    return 1;
-//                }
-//
-//                for (Ride &ride1: rideCollection.rides) {
-//                    ride1.writeRideProperties(fout);
-//                }
-//                for (Driver &driver1: driverCollection.drivers) {
-//                    driver1.writeDriverProperties(fout);
-//                }
-//                for (Passenger &passenger1: passengerCollection.passengers) {
-//                    passenger1.writePassengerProperties(fout);
-//                }
-//
-//                fout.close();
+                /*all data from sheet was already copied, any new data has already been stored in a
+                 * collection, hence the datasheet can be rewritten with all existing collection data*/
+
+                if (!fout) {
+                    cerr << "Failed to open output file" << endl;
+                    return 1;
+                }
+
+                for (Ride &currentRide: rideCollection.rides) {
+                    cout << "Ride " << currentRide.pickupLocation << endl;
+                    currentRide.writeRideProperties(fout);
+                }
+                for (Driver &currentDriver: driverCollection.drivers) {
+                    currentDriver.writeDriverProperties(fout);
+                }
+                for (Passenger &currentPassenger: passengerCollection.passengers) {
+                    cout << "Passenger " << currentPassenger.firstName << endl;
+                    currentPassenger.writePassengerProperties(fout);
+                }
+
+                fout.close();
 
                 cout << "Goodbye" << endl;
 
                 return 0;
 
-            default:
-                cout << "Invalid option, try again" << endl;
-                cin >> option;
-
         }
 
     }
-
-
-    return 0;
 }

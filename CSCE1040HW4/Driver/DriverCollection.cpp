@@ -8,8 +8,8 @@
 using namespace std;
 
 
-void DriverCollection::addDriver() {
-    Driver newDriver;
+Driver DriverCollection::addDriver(Driver newDriver) {
+
     enum class VehicleType {
         BasicDriver = 1,
         EconomyDriver,
@@ -23,7 +23,7 @@ void DriverCollection::addDriver() {
     float driverRating = 0;
     bool petsAllowed;
     bool available = false;
-    int id = rand() % 1000000;
+    int id;
     string firstName;
     string lastName;
     int completedRides = 0;
@@ -101,6 +101,8 @@ void DriverCollection::addDriver() {
     newDriver.password = password;
 
     this->drivers.push_back(newDriver);
+
+    return newDriver;
 
 
 }

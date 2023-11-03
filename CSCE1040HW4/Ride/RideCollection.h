@@ -9,7 +9,7 @@
 class RideCollection {
 
 public:
-    void addRide(Ride newRide);
+    Ride addRide(Ride newRide);
     vector<Ride> rides;
 
     void assignSchedule(const Driver& driver);

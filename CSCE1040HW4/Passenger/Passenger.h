@@ -25,12 +25,12 @@ public:
         Debit
     };
 
-    float requiredRating;
-    bool hasPets;
-    PaymentPreference paymentPreference;
+    float requiredRating{};
+    bool hasPets{};
+    PaymentPreference paymentPreference{};
     string firstName;
     string lastName;
-    int id;
+    int id{};
     string password;
     vector<int> rideIds;
     vector<Ride> rides;
@@ -58,7 +58,7 @@ public:
     void setPaymentPreference(PaymentPreference pref);
 
     int getId() const;
-    void setId(int id);
+    void setId();
 
     string getFirstName() const;
     void setFirstName(const string& first);
