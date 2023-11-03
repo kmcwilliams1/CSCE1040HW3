@@ -2,14 +2,12 @@
 
 #include <limits>
 #include <fstream>
+#include <random>
 #include "RideCollection.h"
 #include "Ride.h"
 #include "../Passenger/Passenger.h"
 
-void RideCollection::addRide(Ride newRide) {
-
-    ofstream fout("RideShareData.dat", ios::app);
-
+Ride RideCollection::addRide(Ride newRide) {
 
     int i;
     string string1;
@@ -28,7 +26,6 @@ void RideCollection::addRide(Ride newRide) {
         cin >> i;
     }
 
-
     cout << "Enter pickup location: " << endl;
     cin >> string1;
     newRide.pickupLocation = string1;
@@ -40,8 +37,6 @@ void RideCollection::addRide(Ride newRide) {
     cout << "Enter note: " << endl;
     cin >> string1;
     newRide.note = string1;
-
-    cout << "Ride Information Below: " << endl;
 
     cout << "Do you need a handicapable vehicle (Y/N): " << endl;
     cin >> inputChar;
@@ -67,18 +62,30 @@ void RideCollection::addRide(Ride newRide) {
 
     newRide.includesPets = (inputChar == 'Y' || inputChar == 'y');
 
-
+    newRide.assignedDriverId = 0;
+    newRide.rideStatus = Ride::RideStatus::Active;
 
     //time
     newRide.setPickupTime();
 
+    //true random number generator
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(1, 20000);
+    int random_number = distribution(generator);
+    newRide.id = random_number;
+
+
     this->rides.push_back(newRide);
 
-    newRide.writeRideProperties(fout);
 
     cout << "Ride Added" << endl;
+    cout << newRide.pickupLocation << " -> " << newRide.dropOffLocation << endl;
+    cout << newRide.pickupTime << endl;
+
+
     cout << endl;
-    fout.flush();
+    return newRide;
 }
 
 void RideCollection::assignSchedule(const Driver &driver) {

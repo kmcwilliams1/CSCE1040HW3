@@ -1,5 +1,6 @@
 
 #include <sstream>
+#include <random>
 #include "Passenger.h"
 
 using namespace std;
@@ -47,10 +48,10 @@ void Passenger::readPassengerProperties(string &readingLine) {
     }
 
     getline(dataStream, temp, '\n');
-    cout << "Temp " << temp << endl;
 
 
     string rideId;
+    this->rideIds.clear();
     char currentChar;
 
     for (char i: temp) {
@@ -62,7 +63,6 @@ void Passenger::readPassengerProperties(string &readingLine) {
             rideId = "";
         }
     };
-    cout << "RideIDs size " << this->rideIds.size() << endl;
 
 }
 
@@ -85,11 +85,27 @@ void Passenger::addRide(const Ride &ride) {
 }
 
 void Passenger::getInfo() const {
+    cout << "First Name: " << firstName << endl;
+    cout << "Last Name: " << lastName << endl;
+    cout << "Required Rating: " << requiredRating << endl;
+    cout << "Has Pets: " << (hasPets ? "true" : "false") << endl;
+    cout << "Payment Preference: " << static_cast<int>(paymentPreference) << endl;
+    cout << "Password: " << password << endl;
+    int count = 0;
+    for (auto &ride: rides) {
+        count++;
+    }
+    cout << "Total Rides: " << count << endl;
+    cout << endl;
 
 }
 
 void Passenger::deleteCancelledAndCompletedRides() {
-
+    for (auto it = rides.begin(); it != rides.end();) {
+        if (it->rideStatus == Ride::RideStatus::Completed || it->rideStatus == Ride::RideStatus::Cancelled) {
+            this->rides.erase(it);
+        }
+    }
 }
 
 float Passenger::getRequiredRating() const {
@@ -120,8 +136,12 @@ int Passenger::getId() const {
     return id;
 }
 
-void Passenger::setId(int id) {
-
+void Passenger::setId() {
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(1, 20000);
+    int random_number = distribution(generator);
+    id = random_number;
 }
 
 string Passenger::getFirstName() const {
@@ -141,10 +161,62 @@ void Passenger::setLastName(const string &last) {
 }
 
 void Passenger::getRides() const {
+    if (!rides.empty()) {
+        cout << "Rides:" << endl;
+        cout << "---------------------------------------" << endl;
+        for (const Ride &ride: rides) {
+            string status;
+            if (ride.rideStatus == Ride::RideStatus::Active) {
+                status = "Active";
+            } else if (ride.rideStatus == Ride::RideStatus::Cancelled) {
+                status = "Cancelled";
+            } else if (ride.rideStatus == Ride::RideStatus::Completed) {
+                status = "Completed";
+            }
 
+
+            cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+            cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+            cout << "Pickup Time: " << ride.getPickupTime() << endl;
+            cout << "Ride Status: " << status << endl;
+            cout << "---------------------------------------" << endl;
+        }
+    } else {
+        cout << "No rides available for this passenger." << endl;
+    }
 }
 
+
 void Passenger::cancelRide() {
+    if (!rides.empty()) {
+        for (const Ride &ride: rides) {
+            cout << "Current Active Rides:" << endl;
+            cout << "---------------------------------------" << endl;
+            if (ride.rideStatus == Ride::RideStatus::Active) {
+
+                cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride.getPickupTime() << endl;
+                cout << "ID: " << ride.id << endl;
+                cout << "---------------------------------------" << endl;
+
+            }
+        }
+
+        cout << "Which ride id would you like to cancel?" << endl;
+        int rideId;
+        cin >> rideId;
+
+        for (Ride &ride: rides) {
+            if (ride.id == rideId) {
+                ride.rideStatus = Ride::RideStatus::Cancelled;
+            }
+        }
+
+
+    } else {
+        cout << "No rides available for this passenger." << endl;
+    }
 
 }
 

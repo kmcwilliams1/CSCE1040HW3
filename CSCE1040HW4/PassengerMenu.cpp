@@ -8,7 +8,7 @@ using namespace std;
 
 
 void PassengerMenu(Passenger passenger, RideCollection &rideCollection, PassengerCollection &passengerCollection) {
-
+    Ride newRide;
 
     while (true) {
 
@@ -30,14 +30,15 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
         float flo;
         int i;
         string string1;
-        Ride newRide;
+
 
 
         cin >> option;
 
         switch (option) {
             case 'A':// Add New Ride
-                rideCollection.addRide(newRide);
+                newRide.assignedPassengerId = passenger.id;
+                newRide = rideCollection.addRide(newRide);
                 passenger.rides.push_back(newRide);
                 break;
 
@@ -76,15 +77,15 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
                 break;
 
             case 'Q': //Quit
-
-                break;
+                cout << "Goodbye!" << endl;
+                return;
 
             default:
                 cout << "Not an input, try again" << endl;
                 cin >> option;
 
         }
-        break;
+
 
     }
 

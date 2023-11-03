@@ -20,23 +20,23 @@ public:
         Completed,
         Cancelled
     };
-    int sizeOfParty;
-    bool includesPets;
-    RideStatus rideStatus;
-    float rating;
-    int id;
+    int sizeOfParty{};
+    bool includesPets{};
+    RideStatus rideStatus{};
+    float rating{};
+    int id{};
     string pickupLocation;
     string dropOffLocation;
-    time_t pickupTime;
-    time_t dropOffTime;
+    time_t pickupTime{};
+    time_t dropOffTime{};
     string note;
-    bool handicapable;
-    int assignedDriverId;
-    int assignedPassengerId;
+    bool handicapable{};
+    int assignedDriverId{};
+    int assignedPassengerId{};
 
 
     //methods
-    void writeRideProperties(ostream &dataFile);
+    void writeRideProperties(ostream &dataFile) const;
     void readRideProperties(string basicString);
 
     //setters and getters
@@ -73,11 +73,11 @@ public:
     bool getHandicapped() const;
     void setHandicapped();
 
-     int getAssignedDriverId() const;
-     void setAssignedDriverId();
+    int getAssignedDriverId() const;
+    void setAssignedDriverId();
 
-     int getAssignedPassengerId() const;
-     void setAssignedPassengerId();
+    int getAssignedPassengerId() const;
+    void setAssignedPassengerId();
 
 
 };

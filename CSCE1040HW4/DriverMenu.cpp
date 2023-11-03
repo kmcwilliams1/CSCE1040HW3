@@ -63,15 +63,7 @@ void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection 
                 break;
 
             case 'D':// Get past rides
-                cout << "Completed rides: A" << endl;
-                cout << "Cancelled rides: B" << endl;
-                cin >> option;
-                if (option == 'A') {
-                    driver.getCompletedRides();
-                }
-                if (option == 'B') {
-                    driver.getCancelledRides();
-                }
+
                 break;
 
             case 'E':// Get Your Information
@@ -80,66 +72,9 @@ void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection 
 
                 break;
             case 'F':// Edit Car information
-                cout << "*************************************" << endl;
-                cout << "           Driver Edit Menu          " << endl;
-                cout << "*************************************" << endl;
-                cout << "What would you like to edit?" << endl;
-                cout << "A: Vehicle Capacity : " << driver.getVehicleCapacity() << endl;
-                cout << "B: Handicapped Capable: " << driver.isHandicappedCapable() << endl;
-                cout << "C: Pets Allowed : " << driver.isPetsAllowed() << endl;
-                cout << "D: First Name : " << driver.getFirstName() << endl;
-                cout << "E: Last Name : " << driver.getLastName() << endl;
-                cout << "F: Vehicle Type : " << static_cast<int>(driver.getVehicleType()) << endl;
 
-                cin >> option;
-
-                switch (option) {
-                    case 'A':
-                        cout << "New capacity: " << endl;
-                        cin >> i;
-                        driver.setVehicleCapacity(i);
-                        break;
-
-                    case 'B':
-                        driver.setHandicappedCapable();
-                        cout << "New handicapable: " << endl;
-                        driver.isHandicappedCapable();
-                        break;
-
-                    case 'C':
-                        cout << "New pet policy: " << endl;
-                        driver.setPetsAllowed();
-                        break;
-
-                    case 'D':
-
-                        cout << "New first name: " << endl;
-                        cin >> str;
-                        driver.setFirstName(str);
-                        break;
-
-                    case 'E':
-
-                        cout << "New Last Name: " << endl;
-                        cin >> str;
-                        driver.setLastName(str);
-                        break;
-
-                    case 'F':
-
-                        cout << "New Vehicle Type (1-5): " << endl;
-                        cin >> i;
-                        driver.setVehicleType(static_cast<Driver::VehicleType>(i));
-                        break;
-
-                    case 'Q':
-                        cout << "Quitting Driver Menu" << endl;
-                        break;
-
-                    default:
-                        cout << "Invalid option, try again." << endl;
-                        break;
-                }
+                driver.editInfo();
+                cout << endl;
 
             case 'G':// Delete Account
 
@@ -151,10 +86,15 @@ void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection 
                 }
 
                 break;
+            case 'Q':
+                cout << "Quitting Driver Menu" << endl;
+                return;
 
             default:
                 cout << "Invalid option, try again." << endl;
-                cin >> option;
+                break;
+
+
         }
 
 

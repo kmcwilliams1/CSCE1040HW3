@@ -24,17 +24,15 @@ public:
         LuxuryDriver,
         Other
     };
-    int vehicleCapacity;
-    bool handicappedCapable;
-    VehicleType vehicleType;
-    float driverRating;
-    bool petsAllowed;
-    bool available;
-    int id;
+    int vehicleCapacity{};
+    bool handicappedCapable{};
+    VehicleType vehicleType{};
+    float driverRating{};
+    bool petsAllowed{};
+    bool available{};
+    int id{};
     string firstName;
     string lastName;
-    int completedRides;
-    int cancelledRides;
     vector<int> rideIds;
     vector<Ride> rides;
     string password;
@@ -43,8 +41,7 @@ public:
     //methods
     void writeDriverProperties(ostream &dataFile);
     void readDriverProperties(const string &basicString);
-    void addCompletedRide(){completedRides++;};
-    void addCancelledRide(){cancelledRides++;};
+
     void addNewRide(Ride *ride);
     void getSchedule();
     void getInfo();
@@ -61,12 +58,12 @@ public:
     void setHandicappedCapable();
 
     void setVehicleType(VehicleType type);
-    VehicleType getVehicleType();
+    VehicleType getVehicleType() const;
 
     float getDriverRating() const;
     void setDriverRating(float rating);
 
-    bool isPetsAllowed();
+    bool isPetsAllowed() const;
     void setPetsAllowed();
 
     bool isAvailable() const;
@@ -81,10 +78,10 @@ public:
     const string &getLastName() const;
     void setLastName(const string &last);
 
-    int getCompletedRides() const;
+    void getCompletedRides() const;
     void setCompletedRides();
 
-    int getCancelledRides() const;
+    void getCancelledRides() const;
     void setCancelledRides();
 
     const vector<Ride> &getRides() const;
@@ -92,6 +89,7 @@ public:
     const string &getPassword() const;
     void setPassword(const string &pass);
 
+    void editInfo();
 };
 
 

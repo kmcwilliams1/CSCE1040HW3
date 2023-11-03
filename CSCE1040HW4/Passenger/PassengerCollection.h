@@ -9,11 +9,12 @@
 class PassengerCollection {
 
 public:
-    void addPassenger();
 
     vector <Passenger> passengers;
 
     void deletePassenger(const Passenger& passenger);
+
+    Passenger addPassenger(Passenger passenger);
 };
 
 

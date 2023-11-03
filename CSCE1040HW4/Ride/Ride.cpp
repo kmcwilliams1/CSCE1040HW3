@@ -1,13 +1,13 @@
 
 
 #include <limits>
+#include <sstream>
 #include "Ride.h"
 
 
 Ride::Ride() = default;
 
 Ride::~Ride() = default;
-
 
 
 int Ride::getSizeOfParty() const {
@@ -182,12 +182,76 @@ void Ride::setHandicapped() {
 }
 
 void Ride::readRideProperties(string basicString) {
+    istringstream dataStream(basicString);
+    string temp;
 
+    getline(dataStream, temp, ',');
+    {
+    };
+    getline(dataStream, temp, ',');
+        if (temp == "12") {
+            this->rideStatus = RideStatus::Active;
+        } else if (temp == "13") {
+            this->rideStatus = RideStatus::Completed;
+        } else {
+            this->rideStatus = RideStatus::Cancelled;
+        }
+    getline(dataStream, temp, ',');
+    {
+        this->sizeOfParty = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->pickupLocation = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->dropOffLocation = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->pickupTime = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->note = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        temp == "1" ? this->handicapable = true : this->handicapable = false;
+    };
+    getline(dataStream, temp, ',');
+    {
+        temp == "1" ? this->includesPets = true : this->includesPets = false;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->id = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->assignedPassengerId = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->assignedDriverId = stoi(temp);
+    };
 }
 
 
-void Ride::writeRideProperties(ostream &dataFile) {
-
+void Ride::writeRideProperties(ostream &dataFile) const {
+    dataFile << "Ride,";
+    dataFile << static_cast<int>(rideStatus) << ",";
+    dataFile << sizeOfParty << ",";
+    dataFile << pickupLocation << ",";
+    dataFile << dropOffLocation << ",";
+    dataFile << pickupTime << ",";
+    dataFile << note << ",";
+    dataFile << (handicapable ? "1" : "0") << ","; // Convert to "1" or "0"
+    dataFile << (includesPets ? "1" : "0") << ","; // Convert to "1" or "0"
+    dataFile << id << ",";
+    dataFile << assignedPassengerId << ",";
+    dataFile << assignedDriverId<< ",\n" << endl;
 }
 
 int Ride::getAssignedDriverId() const {
