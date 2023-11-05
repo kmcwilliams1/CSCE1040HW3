@@ -1,4 +1,5 @@
 
+#include <sstream>
 #include "Driver.h"
 
 
@@ -9,14 +10,6 @@ Driver::Driver() = default;
 
 
 
-
-int Driver::getVehicleCapacity() const {
-    return vehicleCapacity;
-}
-
-void Driver::setVehicleCapacity(int capacity) {
-    vehicleCapacity = capacity;
-}
 
 bool Driver::isHandicappedCapable() const {
     return handicappedCapable;
@@ -125,10 +118,6 @@ const vector<Ride> &Driver::getRides() const {
     return rides;
 }
 
-void Driver::addNewRide(Ride *ride) {
-
-}
-
 const string &Driver::getPassword() const {
     return password;
 }
@@ -138,10 +127,24 @@ void Driver::setPassword(const string &pass) {
 }
 
 void Driver::getSchedule() {
+    if (!rides.empty()) {
+        cout << "Rides:" << endl;
+        cout << "---------------------------------------" << endl;
+        for (const Ride &ride: rides) {
+            cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+            cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+            cout << "Pickup Time: " << ride.getPickupTime() << endl;
+            cout << "---------------------------------------" << endl;
+        }
+    } else {
+        cout << "No rides available for this passenger." << endl;
+    }
 
 }
 
-void Driver::getInfo() {
+void Driver::getInfo() const {
+    cout << "--------------------------------";
+    cout << this->firstName << " " << this->lastName << endl;
 
 }
 
@@ -154,7 +157,53 @@ void Driver::deleteCancelledAndCompletedRides() {
 }
 
 void Driver::readDriverProperties(const string &basicString) {
+    istringstream dataStream(basicString);
+    string temp;
 
+    getline(dataStream, temp, ',');{};
+
+    getline(dataStream, temp, ',');
+    {
+        this->firstName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->lastName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->id = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->available = true;
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->vehicleType = static_cast<Driver::VehicleType>(stoi(temp));
+    };
+    getline(dataStream, temp, ',');
+    {
+        temp = std::to_string(1 ? this->petsAllowed = true : this->petsAllowed = false);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->driverRating = stof(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
+        this->password = temp;
+    };
+    getline(dataStream, temp, '\n');
+    {
+        for(int i = 0; i < temp.length(); i++) {}
+    };
+    while (getline(dataStream, temp, ',')) {
+        int tripID = stoi(temp);
+        if (!rides.empty()) {
+            rides.back().setId(tripID);
+        }
+    }
 }
 
 void Driver::writeDriverProperties(ostream &dataFile) {
@@ -163,15 +212,15 @@ void Driver::writeDriverProperties(ostream &dataFile) {
     dataFile << lastName << ",";
     dataFile << id << ",";
     dataFile << available << ","; // isAvailable
-    dataFile << vehicleCapacity << ",";
     dataFile << handicappedCapable << ",";
     dataFile << static_cast<int>(vehicleType) << ",";
     dataFile << petsAllowed << ",";
     dataFile << driverRating << ","; // driverRating
-    dataFile << password << "\n";
+    dataFile << password << ",";
     for (const Ride& ride : rides) {
         dataFile << ride.getId() << ",";
     }
+    dataFile << "\n";
 }
 
 void Driver::getCompletedRides() const {
@@ -200,7 +249,6 @@ void Driver::editInfo() {
     cout << "           Driver Edit Menu          " << endl;
     cout << "*************************************" << endl;
     cout << "What would you like to edit?" << endl;
-    cout << "A: Vehicle Capacity : " << this->getVehicleCapacity() << endl;
     cout << "B: Handicapped Capable: " << this->isHandicappedCapable() << endl;
     cout << "C: Pets Allowed : " << this->isPetsAllowed() << endl;
     cout << "D: First Name : " << this->getFirstName() << endl;
@@ -210,11 +258,7 @@ void Driver::editInfo() {
     cin >> option;
 
     switch (option) {
-        case 'A':
-            cout << "New capacity: " << endl;
-            cin >> i;
-            this->setVehicleCapacity(i);
-            break;
+
 
         case 'B':
             this->setHandicappedCapable();

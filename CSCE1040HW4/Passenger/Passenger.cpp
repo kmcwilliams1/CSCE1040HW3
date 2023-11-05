@@ -75,7 +75,9 @@ void Passenger::writePassengerProperties(ostream &dataFile) {
     dataFile << (hasPets ? "true" : "false") << ",";
     dataFile << static_cast<int>(paymentPreference) << ",";
     dataFile << password << ",";
+    cout << "Adding password " << password << endl;
     for (auto &ride: rides) {
+        cout << "Adding id " <<ride.id << endl;
         dataFile << ride.id << ",";
     };
 }

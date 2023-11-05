@@ -24,7 +24,6 @@ public:
         LuxuryDriver,
         Other
     };
-    int vehicleCapacity{};
     bool handicappedCapable{};
     VehicleType vehicleType{};
     float driverRating{};
@@ -42,18 +41,14 @@ public:
     void writeDriverProperties(ostream &dataFile);
     void readDriverProperties(const string &basicString);
 
-    void addNewRide(Ride *ride);
     void getSchedule();
-    void getInfo();
+    void getInfo() const;
     void deleteCancelledAndCompletedRides();
 
 
 
 
     //getters and setters
-    int getVehicleCapacity() const;
-    void setVehicleCapacity(int capacity);
-
     bool isHandicappedCapable() const;
     void setHandicappedCapable();
 

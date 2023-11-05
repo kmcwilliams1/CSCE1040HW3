@@ -88,6 +88,21 @@ Ride RideCollection::addRide(Ride newRide) {
     return newRide;
 }
 
-void RideCollection::assignSchedule(const Driver &driver) {
+void RideCollection::assignSchedule(Driver &driver) {
+    for (Ride &currentRide : this->rides) {
+        if (currentRide.rideStatus == Ride::RideStatus::Active &&
+            currentRide.assignedDriverId == 0 &&
+            currentRide.includesPets && driver.petsAllowed &&
+            currentRide.handicapable && driver.handicappedCapable &&
+            currentRide.rating >= driver.driverRating) {
 
+            driver.rides.push_back(currentRide);
+            currentRide.assignedDriverId = driver.id;
+        }
+
+    }
+
+    cout << "Rides Assigned! " << endl;
 }
+
+

@@ -92,13 +92,9 @@ void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection 
 
             default:
                 cout << "Invalid option, try again." << endl;
-                break;
-
+                cin >> option;
 
         }
-
-
     }
-
 }
 
