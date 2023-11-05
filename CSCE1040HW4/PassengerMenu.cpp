@@ -71,7 +71,6 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
 
                 break;
 
-
             case 'H': // Edit
                 passenger.editRide();
                 break;
@@ -85,8 +84,5 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
                 cin >> option;
 
         }
-
-
     }
-
 }

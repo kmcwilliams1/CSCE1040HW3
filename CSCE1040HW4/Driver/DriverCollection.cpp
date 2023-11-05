@@ -2,49 +2,64 @@
 
 #include "DriverCollection.h"
 #include "Driver.h"
+#include "LuxuryDriver/LuxuryDriver.h"
+#include "BasicDriver/BasicDriver.h"
+#include "EconomyDriver/EconomyDriver.h"
+#include "GroupDriver/GroupDriver.h"
 #include <iostream>
 #include <limits>
+#include <random>
 
 using namespace std;
 
 
 Driver DriverCollection::addDriver(Driver newDriver) {
 
-    enum class VehicleType {
-        BasicDriver = 1,
-        EconomyDriver,
-        GroupDriver,
-        LuxuryDriver,
-        Other
-    };
+
     int vehicleCapacity;
     bool handicappedCapable;
-    VehicleType vehicleType;
-    float driverRating = 0;
+    int vehicleType;
     bool petsAllowed;
-    bool available = false;
-    int id;
     string firstName;
     string lastName;
-    int completedRides = 0;
-    int cancelledRides = 0;
     vector<Ride> rides;
     string password;
 
-
     while (true) {
-        cout << "Enter Vehicle Type: ";
-        cin >> vehicleCapacity;
-        if (cin.fail() || vehicleCapacity < 0) {
-            cout << "Invalid input. Please enter a non-negative integer for Vehicle Capacity." << endl;
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        } else {
+        cout << "Enter Vehicle Type (1 for Basic, 2 for Economy, 3 for Group, 4 for Luxury): ";
+        cin >> vehicleType;
+
+        switch (vehicleType) {
+            case 1:  // Basic Driver
+            {
+                BasicDriver basicDriver;
+                break;
+            }
+            case 2:  // Economy Driver
+            {
+                EconomyDriver economyDriver;
+                break;
+            }
+            case 3:  // Group Driver
+            {
+                GroupDriver groupDriver;
+                break;
+            }
+            case 4:  // Luxury Driver
+            {
+                LuxuryDriver luxuryDriver;
+                break;
+            }
+            default:
+                cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+                cin.clear();
+                cin >> vehicleType;
+        }
+
+        if (vehicleType >= 1 && vehicleType <= 4) {
             break;
         }
     }
-    newDriver.vehicleCapacity = vehicleCapacity;
-
 
     while (true) {
         cout << "Is Handicapped Capable (1 for true, 0 for false): ";
@@ -58,21 +73,6 @@ Driver DriverCollection::addDriver(Driver newDriver) {
         }
     }
     newDriver.handicappedCapable = handicappedCapable;
-
-
-    while (true) {
-        cout << "Enter Vehicle Type (1 for Compact2Dr, 2 for Sedan4Dr, 3 for SUV, 4 for Van, 5 for Other): ";
-        cin >> reinterpret_cast<int &>(vehicleType);
-        if (cin.fail() || static_cast<int>(vehicleType) < 1 || static_cast<int>(vehicleType) > 5) {
-            cout << "Invalid input. Please enter a number between 1 and 5." << endl;
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        } else {
-            break;
-        }
-    }
-    newDriver.vehicleType = static_cast<Driver::VehicleType>(vehicleType);
-
 
     while (true) {
         cout << "Are Pets Allowed (1 for true, 0 for false): ";
@@ -99,6 +99,13 @@ Driver DriverCollection::addDriver(Driver newDriver) {
     cout << "Enter Password: ";
     cin >> password;
     newDriver.password = password;
+
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(1, 20000);
+    int random_number = distribution(generator);
+    newDriver.id = random_number;
+
 
     this->drivers.push_back(newDriver);
 

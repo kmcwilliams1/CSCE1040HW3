@@ -52,11 +52,6 @@ int main() {
         }
     }
 
-    cout << "Size of rideCollection is: " << rideCollection.rides.size() << endl;
-    cout << "Size of driverCollection is: " << driverCollection.drivers.size() << endl;
-    cout << "Size of passengerCollection is: " << passengerCollection.passengers.size() << endl << endl;
-
-
     fin.clear();
     fin.seekg(0, ios::beg);
 
@@ -100,8 +95,6 @@ int main() {
                 cin >> enteredPassword;
                 cin.ignore();
 
-
-
                 /*search the datasheet for the password, then again, read the values from the datasheet*/
 
                 for (auto &currentDriver: driverCollection.drivers) {
@@ -118,7 +111,6 @@ int main() {
                         cin >> enteredPassword;
                     }
                 }
-
 
                 break;
 
@@ -140,6 +132,12 @@ int main() {
 
                 break;
 
+            default:
+                cout << "Not a valid input, please try again." << endl;
+                cin >> option;
+                break;
+
+
             case 'd':
             case 'D'://Exit
                 ofstream fout("RideShareData.dat");
@@ -153,22 +151,25 @@ int main() {
                 }
 
                 for (Ride &currentRide: rideCollection.rides) {
-                    cout << "Ride " << currentRide.pickupLocation << endl;
                     currentRide.writeRideProperties(fout);
                 }
+                fout << endl;
+
                 for (Driver &currentDriver: driverCollection.drivers) {
                     currentDriver.writeDriverProperties(fout);
                 }
+                fout << endl;
+
                 for (Passenger &currentPassenger: passengerCollection.passengers) {
-                    cout << "Passenger " << currentPassenger.firstName << endl;
                     currentPassenger.writePassengerProperties(fout);
                 }
+                fout << endl;
+
 
                 fout.close();
-
                 cout << "Goodbye" << endl;
-
                 return 0;
+
 
         }
 

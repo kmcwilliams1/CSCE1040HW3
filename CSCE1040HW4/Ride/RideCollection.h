@@ -12,7 +12,7 @@ public:
     Ride addRide(Ride newRide);
     vector<Ride> rides;
 
-    void assignSchedule(const Driver& driver);
+    void assignSchedule(Driver& driver);
 };
 
 

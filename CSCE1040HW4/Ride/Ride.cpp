@@ -251,7 +251,7 @@ void Ride::writeRideProperties(ostream &dataFile) const {
     dataFile << (includesPets ? "1" : "0") << ","; // Convert to "1" or "0"
     dataFile << id << ",";
     dataFile << assignedPassengerId << ",";
-    dataFile << assignedDriverId<< ",\n" << endl;
+    dataFile << assignedDriverId<< "," << endl;
 }
 
 int Ride::getAssignedDriverId() const {
