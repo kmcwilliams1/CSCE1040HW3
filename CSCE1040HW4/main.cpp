@@ -12,7 +12,7 @@ using namespace std;
 
 
 int main() {
-    Driver driver;
+    Driver* driver = nullptr;
     Passenger passenger;
     Ride ride;
 
@@ -22,7 +22,7 @@ int main() {
 
     ifstream fin("RideShareData.dat");
 
-
+    bool driverLoggedIn = false;
     char option;
     string enteredPassword;
     string readingLine;
@@ -36,7 +36,8 @@ int main() {
 
         if (role == driverSearchWord) {
 
-            driver.readDriverProperties(readingLine);
+            driver = new Driver;
+            driver->readDriverProperties(readingLine);
             driverCollection.drivers.push_back(driver);
 
         } else if (role == rideSearchWord) {
@@ -67,8 +68,8 @@ int main() {
 
     for (auto &currentRide: rideCollection.rides) {
         for (auto &currentDriver: driverCollection.drivers) {
-            if (currentRide.assignedDriverId == currentDriver.id) {
-                currentDriver.rides.push_back(currentRide);
+            if (currentRide.assignedDriverId == currentDriver->id) {
+                currentDriver->rides.push_back(currentRide);
             }
         }
     }
@@ -89,39 +90,46 @@ int main() {
         cin >> option;
 
         switch (option) {
-            case 'a':
-            case 'A'://Login
+            case 'A':
+            case 'a': // Login
                 cout << "Enter password: ";
                 cin >> enteredPassword;
                 cin.ignore();
 
-                /*search the datasheet for the password, then again, read the values from the datasheet*/
 
-                for (auto &currentDriver: driverCollection.drivers) {
-                    if (currentDriver.password == enteredPassword) {
-                        DriverMenu(currentDriver, rideCollection, driverCollection);
+                for (auto &currentDriver : driverCollection.drivers) {
+                    if (currentDriver->password == enteredPassword) {
+                        DriverMenu(*currentDriver, rideCollection, driverCollection);
+                        driverLoggedIn = true;
+                        break;
                     }
                 }
 
-                for (auto &currentPassenger: passengerCollection.passengers) {
-                    if (currentPassenger.password == enteredPassword) {
-                        PassengerMenu(currentPassenger, rideCollection, passengerCollection);
-                    } else {
+                if (!driverLoggedIn) {
+                    bool passengerLoggedIn = false;
+                    for (auto &currentPassenger : passengerCollection.passengers) {
+                        if (currentPassenger.password == enteredPassword) {
+                            PassengerMenu(currentPassenger, rideCollection, passengerCollection);
+                            passengerLoggedIn = true;
+                            break;
+                        }
+                    }
+
+                    if (!passengerLoggedIn) {
                         cout << "Incorrect password, try again." << endl;
-                        cin >> enteredPassword;
                     }
                 }
-
                 break;
 
-            case 'b':
-            case 'B'://Add Driver
 
-                driver = driverCollection.addDriver(driver);
-                cout << "Loading driver " << driver.firstName << endl;
-                DriverMenu(driver, rideCollection, driverCollection);
+            case 'B':
+            case 'b': // Add Driver
 
+                driver = driverCollection.addDriver();
+                cout << "Loading driver " << driver->firstName << endl;
+                DriverMenu(*driver, rideCollection, driverCollection);
                 break;
+
 
             case 'c':
             case 'C'://Add Passenger
@@ -155,8 +163,13 @@ int main() {
                 }
                 fout << endl;
 
-                for (Driver &currentDriver: driverCollection.drivers) {
+                for (Driver* currentDriverPtr : driverCollection.drivers) {
+                    Driver& currentDriver = *currentDriverPtr;
                     currentDriver.writeDriverProperties(fout);
+                }
+
+                for (Driver* driverPtr : driverCollection.drivers) {
+                    delete driverPtr;
                 }
                 fout << endl;
 

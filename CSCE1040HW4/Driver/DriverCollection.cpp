@@ -13,9 +13,9 @@
 using namespace std;
 
 
-Driver DriverCollection::addDriver(Driver newDriver) {
+Driver * DriverCollection::addDriver() {
 
-
+    auto* newDriver = new Driver;
     int vehicleCapacity;
     bool handicappedCapable;
     int vehicleType;
@@ -72,7 +72,7 @@ Driver DriverCollection::addDriver(Driver newDriver) {
             break;
         }
     }
-    newDriver.handicappedCapable = handicappedCapable;
+    newDriver->handicappedCapable = handicappedCapable;
 
     while (true) {
         cout << "Are Pets Allowed (1 for true, 0 for false): ";
@@ -85,45 +85,42 @@ Driver DriverCollection::addDriver(Driver newDriver) {
             break;
         }
     }
-    newDriver.petsAllowed = petsAllowed;
+    newDriver->petsAllowed = petsAllowed;
 
 
     cout << "Enter First Name: ";
     cin >> firstName;
-    newDriver.firstName = firstName;
+    newDriver->firstName = firstName;
 
     cout << "Enter Last Name: ";
     cin >> lastName;
-    newDriver.lastName = lastName;
+    newDriver->lastName = lastName;
 
     cout << "Enter Password: ";
     cin >> password;
-    newDriver.password = password;
+    newDriver->password = password;
 
     random_device rd;
     mt19937 generator(rd());
     uniform_int_distribution<int> distribution(1, 20000);
     int random_number = distribution(generator);
-    newDriver.id = random_number;
+    newDriver->id = random_number;
 
 
     this->drivers.push_back(newDriver);
-
     return newDriver;
 
 
 }
 
 void DriverCollection::removeDriver(const Driver& driver) {
-
-    for (auto it = this->drivers.begin(); it != this->drivers.end(); it++) {
-        if (it->id == driver.id) {
-            this->drivers.erase(it);
-            break;
+    for (auto it = this->drivers.begin(); it != this->drivers.end(); ) {
+        if ((*it)->getId() == driver.getId()) {
+            delete *it;
+            it = this->drivers.erase(it);
         } else {
-            it++;
+            ++it;
         }
-
     }
-
 }
+
