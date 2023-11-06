@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void DriverMenu(Driver driver, RideCollection &rideCollection, DriverCollection &driverCollection) {
+void DriverMenu(Driver& driver, RideCollection &rideCollection, DriverCollection &driverCollection) {
 
 
     while (true) {
