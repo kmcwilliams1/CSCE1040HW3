@@ -42,7 +42,8 @@ public:
     void readDriverProperties(const string &basicString);
 
     void getSchedule();
-    void getInfo() const;
+    virtual void getInfo() const;
+    virtual void editInfo();
     void deleteCancelledAndCompletedRides();
 
 
@@ -84,7 +85,6 @@ public:
     const string &getPassword() const;
     void setPassword(const string &pass);
 
-    void editInfo();
 };
 
 

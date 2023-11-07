@@ -143,7 +143,7 @@ void Driver::getSchedule() {
 }
 
 void Driver::getInfo() const {
-    cout << "--------------------------------";
+    cout << "--------------------------------" << endl;
     cout << this->firstName << " " << this->lastName << endl;
 
 }
@@ -242,60 +242,6 @@ void Driver::getCancelledRides() const {
 }
 
 void Driver::editInfo() {
-    char option;
-    string str;
-    int i;
-    cout << "*************************************" << endl;
-    cout << "           Driver Edit Menu          " << endl;
-    cout << "*************************************" << endl;
-    cout << "What would you like to edit?" << endl;
-    cout << "B: Handicapped Capable: " << this->isHandicappedCapable() << endl;
-    cout << "C: Pets Allowed : " << this->isPetsAllowed() << endl;
-    cout << "D: First Name : " << this->getFirstName() << endl;
-    cout << "E: Last Name : " << this->getLastName() << endl;
-    cout << "F: Vehicle Type : " << static_cast<int>(this->getVehicleType()) << endl;
 
-    cin >> option;
-
-    switch (option) {
-
-
-        case 'B':
-            this->setHandicappedCapable();
-            cout << "New handicapable: " << endl;
-            this->isHandicappedCapable();
-            break;
-
-        case 'C':
-            cout << "New pet policy: " << endl;
-            this->setPetsAllowed();
-            break;
-
-        case 'D':
-
-            cout << "New first name: " << endl;
-            cin >> str;
-            this->setFirstName(str);
-            break;
-
-        case 'E':
-
-            cout << "New Last Name: " << endl;
-            cin >> str;
-            this->setLastName(str);
-            break;
-
-        case 'F':
-
-            cout << "New Vehicle Type (1-5): " << endl;
-            cin >> i;
-            this->setVehicleType(static_cast<Driver::VehicleType>(i));
-            break;
-
-        default:
-            cout << "Invalid option, try again." << endl;
-            cin >> option;
-
-    }
 }
 
