@@ -67,14 +67,16 @@ void DriverMenu(Driver& driver, RideCollection &rideCollection, DriverCollection
                 break;
 
             case 'E':// Get Your Information
+
                 driver.getInfo();
                 cout << endl;
-
                 break;
+
             case 'F':// Edit Car information
 
                 driver.editInfo();
                 cout << endl;
+                break;
 
             case 'G':// Delete Account
 

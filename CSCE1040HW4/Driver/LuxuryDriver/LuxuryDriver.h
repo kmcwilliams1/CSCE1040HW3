@@ -13,7 +13,7 @@ public:
 
 
 
-    int vehicleCapacity;
+    int vehicleCapacity{};
     string cargoCapacity;
     vector<string>amenities;
 
@@ -22,15 +22,17 @@ public:
 
 
     int getVehicleCapacity() const { return vehicleCapacity; };
-    void setVehicleCapacity();
+    void setVehicleCapacity(int capacity);
 
     string getCargoCapacity() const { return cargoCapacity;};
-    void setCargoCapacity();
+    void setCargoCapacity(const string& cargo);
 
-    vector<string> getAmenities() const { return amenities; };
-    void setAmenities();
+    vector<string>& getAmenities() { return amenities; };
+    void setAmenities(const string& amenity);
 
+    void getInfo() const override;
 
+    void editInfo() override;
 };
 
 

@@ -13,9 +13,9 @@
 using namespace std;
 
 
-Driver * DriverCollection::addDriver() {
+Driver *DriverCollection::addDriver() {
 
-    auto* newDriver = new Driver;
+    auto *newDriver = new Driver;
     int vehicleCapacity;
     bool handicappedCapable;
     int vehicleType;
@@ -31,30 +31,27 @@ Driver * DriverCollection::addDriver() {
 
         switch (vehicleType) {
             case 1:  // Basic Driver
-            {
-                BasicDriver basicDriver;
+                newDriver = new BasicDriver;
                 break;
-            }
             case 2:  // Economy Driver
-            {
-                EconomyDriver economyDriver;
+                newDriver = new EconomyDriver;
                 break;
-            }
             case 3:  // Group Driver
-            {
-                GroupDriver groupDriver;
+                newDriver = new GroupDriver;
                 break;
-            }
             case 4:  // Luxury Driver
             {
-                LuxuryDriver luxuryDriver;
+                auto *luxuryDriver = new LuxuryDriver;
+                luxuryDriver->addLuxuryParameters();
+                newDriver = luxuryDriver;
                 break;
             }
             default:
                 cout << "Invalid input. Please enter a number between 1 and 4." << endl;
                 cin.clear();
-                cin >> vehicleType;
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
+
 
         if (vehicleType >= 1 && vehicleType <= 4) {
             break;
@@ -113,8 +110,8 @@ Driver * DriverCollection::addDriver() {
 
 }
 
-void DriverCollection::removeDriver(const Driver& driver) {
-    for (auto it = this->drivers.begin(); it != this->drivers.end(); ) {
+void DriverCollection::removeDriver(const Driver &driver) {
+    for (auto it = this->drivers.begin(); it != this->drivers.end();) {
         if ((*it)->getId() == driver.getId()) {
             delete *it;
             it = this->drivers.erase(it);
