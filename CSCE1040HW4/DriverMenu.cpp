@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include <string>
-#include "Ride/RideCollection.h"
 #include "Driver/Driver.h"
 
 using namespace std;
@@ -74,7 +73,7 @@ void DriverMenu(Driver& driver, RideCollection &rideCollection, DriverCollection
 
             case 'F':// Edit Car information
 
-                driver.editInfo();
+                driverCollection.updateVehicleType(&driver);
                 cout << endl;
                 break;
 

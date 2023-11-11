@@ -2,7 +2,8 @@
 
 #include <limits>
 #include "LuxuryDriver.h"
-
+#include "../BasicDriver/BasicDriver.h"
+#include "../DriverCollection.h."
 
 void LuxuryDriver::setVehicleCapacity(int capacity) {
     vehicleCapacity = capacity;
@@ -160,14 +161,31 @@ void LuxuryDriver::editInfo() {
 
 
         case 'B':
-            this->setHandicappedCapable();
-            cout << "New handicapable: " << endl;
-            this->isHandicappedCapable();
+            cout << "Driving a handicapable vehicle? (Y/N): " << endl;
+            cin >> option;
+            if(option == 'Y' || option == 'y') {
+                this->setHandicappedCapable(true);
+            } else if(option == 'N' || option == 'n'){
+                this->setHandicappedCapable(false);
+
+            }else {
+                cout << "Not a proper answer, try again" << endl;
+                cin >> option;
+            }
             break;
 
         case 'C':
-            cout << "New pet policy: " << endl;
-            this->setPetsAllowed();
+            cout << "New pet policy (Y/N): " << endl;
+            cin >> option;
+            if(option == 'Y' || option == 'y') {
+                this->setPetsAllowed(true);
+            } else if(option == 'N' || option == 'n'){
+                this->setPetsAllowed(false);
+
+            }else {
+                cout << "Not a proper answer, try again" << endl;
+                cin >> option;
+            }
             break;
 
         case 'D':
@@ -184,12 +202,43 @@ void LuxuryDriver::editInfo() {
             this->setLastName(str);
             break;
 
-        case 'F':
-
+        case 'F': {
             cout << "New Vehicle Type (1-4): " << endl;
             cin >> i;
-            this->setVehicleType(static_cast<Driver::VehicleType>(i));
-            break;
+
+            if (i == 1) { // Basic Driver
+                auto* basicDriver = new BasicDriver;
+                basicDriver->addBasicParameters();
+
+
+                // Copy parameters from the old Driver to the new BasicDriver
+                basicDriver->setHandicappedCapable(this->isHandicappedCapable());
+                basicDriver->setVehicleType(static_cast<VehicleType>(i));
+                basicDriver->setPetsAllowed(this->isPetsAllowed());
+                basicDriver->setDriverRating(this->getDriverRating());
+                basicDriver->setId(this->getId());
+                basicDriver->setFirstName(this->getFirstName());
+                basicDriver->setLastName(this->getLastName());
+                basicDriver->setPassword(this->password);
+
+//                for(auto &&ride : this->getRides()) {
+//                    basicDriver->rides.push_back(ride);
+//                }
+//
+//
+//                for(auto thisDriver : driverCollection.drivers) {
+//                    if(thisDriver->id == this->getId()) {
+//                        driverCollection.removeDriver(*thisDriver);
+//                    }
+//                }
+
+
+
+
+            }
+            // Handle other cases for Economy Driver, Group Driver, etc.
+        }
+
 
         case 'G':
             cout << "New Vehicle Capacity: " << endl;

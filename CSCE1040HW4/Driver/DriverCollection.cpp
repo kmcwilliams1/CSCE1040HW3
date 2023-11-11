@@ -110,7 +110,183 @@ Driver *DriverCollection::addDriver() {
 
 }
 
-void DriverCollection::removeDriver(const Driver &driver) {
+Driver *DriverCollection::updateVehicleType(Driver *driver) {
+    char option;
+    string str;
+    int i;
+
+    cout << "*************************************" << endl;
+    cout << "           Driver Edit Menu          " << endl;
+    cout << "*************************************" << endl;
+    cout << "What would you like to edit?" << endl;
+    cout << "B: Handicapped Capable: " << driver->isHandicappedCapable() << endl;
+    cout << "C: Pets Allowed : " << driver->isPetsAllowed() << endl;
+    cout << "D: First Name : " << driver->getFirstName() << endl;
+    cout << "E: Last Name : " << driver->getLastName() << endl;
+    cout << "F: Vehicle Type : " << static_cast<int>(driver->getVehicleType()) << endl;
+
+
+    if (driver->getVehicleType() == Driver::VehicleType::LuxuryDriver) {
+        auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
+        if (luxuryDriver) {
+            cout << "G: Vehicle Capacity: " << luxuryDriver->getVehicleCapacity() << endl;
+            cout << "H: Cargo Capacity: " << luxuryDriver->getCargoCapacity() << endl;
+            cout << "I: Amenities: ";
+            for (const string &amenity: luxuryDriver->getAmenities()) {
+                cout << amenity << " ";
+            }
+        }
+    }
+
+    cin >> option;
+
+
+    switch (option) {
+
+
+        case 'B':
+            cout << "Driving a handicapable vehicle? (Y/N): " << endl;
+            cin >> option;
+            if (option == 'Y' || option == 'y') {
+                driver->setHandicappedCapable(true);
+            } else if (option == 'N' || option == 'n') {
+                driver->setHandicappedCapable(false);
+
+            } else {
+                cout << "Not a proper answer, try again" << endl;
+                cin >> option;
+            }
+            break;
+
+        case 'C':
+            cout << "New pet policy (Y/N): " << endl;
+            cin >> option;
+            if (option == 'Y' || option == 'y') {
+                driver->setPetsAllowed(true);
+            } else if (option == 'N' || option == 'n') {
+                driver->setPetsAllowed(false);
+
+            } else {
+                cout << "Not a proper answer, try again" << endl;
+                cin >> option;
+            }
+            break;
+
+        case 'D':
+
+            cout << "New first name: " << endl;
+            cin >> str;
+            driver->setFirstName(str);
+            break;
+
+        case 'E':
+
+            cout << "New Last Name: " << endl;
+            cin >> str;
+            driver->setLastName(str);
+            break;
+
+        case 'F': {
+            cout << "New Vehicle Type (1-4): " << endl;
+            cin >> i;
+            auto newVehicleType = static_cast<Driver::VehicleType>(i);
+
+            if (newVehicleType != driver->getVehicleType()) {
+                Driver *newDriver = nullptr;
+
+                switch (newVehicleType) {
+                    case Driver::VehicleType::BasicDriver:
+                        newDriver = new BasicDriver;
+                        if (auto *basicDriver = dynamic_cast<BasicDriver *>(newDriver)) {
+                            basicDriver->addBasicParameters();
+                        }
+                        break;
+                    case Driver::VehicleType::EconomyDriver:
+                        newDriver = new EconomyDriver;
+                        if (auto *economyDriver = dynamic_cast<EconomyDriver *>(newDriver)) {
+                            economyDriver->addEconomyParameters();
+                        }
+                        break;
+                    case Driver::VehicleType::GroupDriver:
+                        newDriver = new GroupDriver;
+                        if (auto *groupDriver = dynamic_cast<GroupDriver *>(newDriver)) {
+                            groupDriver->addGroupParameters();
+                        }
+                        break;
+                    case Driver::VehicleType::LuxuryDriver:
+                        newDriver = new LuxuryDriver;
+                        if (auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(newDriver)) {
+                            luxuryDriver->addLuxuryParameters();
+                        }
+                        break;
+                    default:
+                        cout << "Unknown input, please try again." << endl;
+                        cin >> i;
+                        break;
+                }
+
+                if (newDriver) {
+                    newDriver->copyPropertiesFrom(driver);
+                    this->replaceDriver(driver, newDriver);
+                    driver = newDriver;
+                }
+
+
+            } else {
+                cout << "You are already this type of vehicle!" << endl;
+            }
+            break;
+        }
+
+
+        case 'G':
+
+            if (driver->getVehicleType() == Driver::VehicleType::LuxuryDriver) {
+                auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
+                if (luxuryDriver) {
+                    cout << "New Vehicle Capacity: " << endl;
+                    cin >> i;
+                    luxuryDriver->setVehicleCapacity(i);
+                }
+            }
+
+            break;
+
+        case 'H':
+
+            if (driver->getVehicleType() == Driver::VehicleType::LuxuryDriver) {
+                auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
+                if (luxuryDriver) {
+                    cout << "New Cargo Capacity: " << endl;
+                    cin >> str;
+                    luxuryDriver->setCargoCapacity(str);
+                }
+            }
+
+            break;
+
+        default:
+            cout << "Invalid option, try again." << endl;
+            cin >> option;
+
+    }
+    return driver;
+}
+
+void DriverCollection::replaceDriver(Driver *oldDriver, Driver *newDriver) {
+
+    for (auto &driver: drivers) {
+        if (driver == oldDriver) {
+            delete driver;
+            driver = newDriver;
+            return;
+        }
+    }
+    drivers.push_back(newDriver);
+}
+
+
+void DriverCollection::removeDriver(Driver &driver) {
     for (auto it = this->drivers.begin(); it != this->drivers.end();) {
         if ((*it)->getId() == driver.getId()) {
             delete *it;

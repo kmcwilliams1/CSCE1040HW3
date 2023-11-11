@@ -12,7 +12,10 @@ public:
     Driver * addDriver();
     vector<Driver*> drivers;
 
-    void removeDriver(const Driver& driver);
+    void removeDriver(Driver& driver);
+    void replaceDriver(Driver* oldDriver, Driver* newDriver);
+
+    Driver *updateVehicleType(Driver *driver);
 };
 
 
