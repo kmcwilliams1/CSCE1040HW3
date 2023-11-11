@@ -31,7 +31,6 @@ public:
     void setAmenities(const string& amenity);
 
     void getInfo() const override;
-
     void editInfo() override;
 };
 

@@ -45,13 +45,12 @@ public:
     virtual void getInfo() const;
     virtual void editInfo();
     void deleteCancelledAndCompletedRides();
-
-
+    void copyPropertiesFrom(const Driver* otherDriver);
 
 
     //getters and setters
     bool isHandicappedCapable() const;
-    void setHandicappedCapable();
+    void setHandicappedCapable(bool isHandicappedCapable);
 
     void setVehicleType(VehicleType type);
     VehicleType getVehicleType() const;
@@ -60,7 +59,7 @@ public:
     void setDriverRating(float rating);
 
     bool isPetsAllowed() const;
-    void setPetsAllowed();
+    void setPetsAllowed(bool isPetsAllowed);
 
     bool isAvailable() const;
     void setAvailable();
