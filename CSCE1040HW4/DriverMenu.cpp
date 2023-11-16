@@ -1,14 +1,18 @@
 
 #include <iostream>
 #include <string>
-#include "Driver/Driver.h"
+#include "Driver/LuxuryDriver/LuxuryDriver.h"
+#include "Driver/BasicDriver/BasicDriver.h"
+#include "Driver/EconomyDriver/EconomyDriver.h"
+#include "Driver/GroupDriver/GroupDriver.h"
 
 using namespace std;
 
-void DriverMenu(Driver& driver, RideCollection &rideCollection, DriverCollection &driverCollection) {
+void DriverMenu(Driver &driver, RideCollection &rideCollection, DriverCollection &driverCollection) {
 
 
     while (true) {
+        cout << "Vtype " << static_cast<int>(driver.vehicleType) << endl;
         cout << "*************************************" << endl;
         cout << "            Driver Menu" << endl;
         cout << "*************************************" << endl;
@@ -66,16 +70,43 @@ void DriverMenu(Driver& driver, RideCollection &rideCollection, DriverCollection
                 break;
 
             case 'E':// Get Your Information
-
+            {
                 driver.getInfo();
                 cout << endl;
                 break;
+            }
+
 
             case 'F':// Edit Car information
+            {
+                cout << "driverMenu case F Driver type: " << driver.getTypeName() << endl;
+                cout << "driverMenu case F Driver Vtype: " << static_cast<int>(driver.getVehicleType()) << endl;
 
-                driverCollection.updateVehicleType(&driver);
+                int beforeVType = static_cast<int>(driver.getVehicleType());
+                driver.getInfo();
+                Driver* updatedDriver = driverCollection.updateVehicleType(&driver);
+
+                if (updatedDriver) {
+
+                    cout << "updatedDriver type " <<  updatedDriver->getTypeName() << endl;
+                    updatedDriver->getInfo();
+
+                    cout << "driver = *updatedDriver: "<< endl;
+                    driver = *updatedDriver;
+                    cout << "driver type " <<  driver.getTypeName() << endl;
+                    delete updatedDriver;
+
+                }
+
+                cout << "driverMenu after case F Driver type: " << driver.getTypeName() << endl;
+
+                int afterVType = static_cast<int>(driver.getVehicleType());
+
+                cout << "driverMenu case F updated Driver Vtype: " << static_cast<int>(driver.getVehicleType()) << endl;
                 cout << endl;
                 break;
+            }
+
 
             case 'G':// Delete Account
 

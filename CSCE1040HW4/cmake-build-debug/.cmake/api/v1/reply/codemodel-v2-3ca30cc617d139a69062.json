@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug",
-		"source" : "C:/Users/Other/CLionProjects/CSCE1040HW4"
+		"build" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4/cmake-build-debug",
+		"source" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4"
 	},
 	"version" : 
 	{

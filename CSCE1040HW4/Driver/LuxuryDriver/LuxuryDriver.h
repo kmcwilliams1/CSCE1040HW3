@@ -10,7 +10,9 @@ public:
 
     LuxuryDriver();
     ~LuxuryDriver();
-
+    std::string getTypeName() const override {
+        return "LuxuryDriver";
+    }
 
 
     int vehicleCapacity{};

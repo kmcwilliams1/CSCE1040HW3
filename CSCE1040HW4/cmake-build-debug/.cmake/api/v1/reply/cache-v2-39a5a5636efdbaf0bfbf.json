@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug"
+			"value" : "c:/CLion 2023.2.2/CLionProjects/CSCE1040HW4/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -575,7 +575,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -647,7 +647,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/Other/CLionProjects/CSCE1040HW4"
+			"value" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -687,7 +687,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe"
+			"value" : "C:/PROGRA~1/JETBRA~1/CLION2~1.2/bin/ninja/win/x64/ninja.exe"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug"
+			"value" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4/cmake-build-debug"
 		},
 		{
 			"name" : "CSCE1040HW4_IS_TOP_LEVEL",
@@ -1287,7 +1287,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Other/CLionProjects/CSCE1040HW4"
+			"value" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
