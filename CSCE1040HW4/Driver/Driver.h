@@ -14,6 +14,9 @@ class Driver {
 public:
     Driver();
     ~Driver();
+    virtual std::string getTypeName() const {
+        return "Driver";
+    }
 
 
     //variables
@@ -42,7 +45,7 @@ public:
     void readDriverProperties(const string &basicString);
 
     void getSchedule();
-    virtual void getInfo() const;
+    virtual void getInfo() const ;
     virtual void editInfo();
     void deleteCancelledAndCompletedRides();
     void copyPropertiesFrom(const Driver* otherDriver);

@@ -255,6 +255,7 @@ void Driver::copyPropertiesFrom(const Driver *otherDriver) {
         this->setPassword(otherDriver->password);
 
     };
+    this->rides.clear();
     for (auto &&ride: otherDriver->getRides()) {
         this->rides.push_back(ride);
     }

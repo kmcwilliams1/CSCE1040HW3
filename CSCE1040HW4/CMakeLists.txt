@@ -3,7 +3,8 @@ project(CSCE1040HW4)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(CSCE1040HW4 main.cpp
+add_executable(CSCE1040HW4
+        main.cpp
         Driver/Driver.cpp
         Driver/Driver.h
         Passenger/Passenger.cpp
@@ -24,4 +25,6 @@ add_executable(CSCE1040HW4 main.cpp
         Driver/GroupDriver/GroupDriver.cpp
         Driver/GroupDriver/GroupDriver.h
         Driver/LuxuryDriver/LuxuryDriver.cpp
-        Driver/LuxuryDriver/LuxuryDriver.h)
+        Driver/LuxuryDriver/LuxuryDriver.h
+#        testMain.cpp
+)

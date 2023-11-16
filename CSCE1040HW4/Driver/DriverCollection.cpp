@@ -16,7 +16,6 @@ using namespace std;
 Driver *DriverCollection::addDriver() {
 
     auto *newDriver = new Driver;
-    int vehicleCapacity;
     bool handicappedCapable;
     int vehicleType;
     bool petsAllowed;
@@ -31,14 +30,26 @@ Driver *DriverCollection::addDriver() {
 
         switch (vehicleType) {
             case 1:  // Basic Driver
-                newDriver = new BasicDriver;
+            {
+                auto *basicDriver = new BasicDriver;
+                basicDriver->addBasicParameters();
+                newDriver = basicDriver;
                 break;
+            }
             case 2:  // Economy Driver
-                newDriver = new EconomyDriver;
+            {
+                auto *economyDriver = new EconomyDriver;
+                economyDriver->addEconomyParameters();
+                newDriver = economyDriver;
                 break;
+            }
             case 3:  // Group Driver
-                newDriver = new GroupDriver;
+            {
+                auto *groupDriver = new GroupDriver;
+                groupDriver->addGroupParameters();
+                newDriver = groupDriver;
                 break;
+            }
             case 4:  // Luxury Driver
             {
                 auto *luxuryDriver = new LuxuryDriver;
@@ -57,6 +68,7 @@ Driver *DriverCollection::addDriver() {
             break;
         }
     }
+    newDriver->setVehicleType(static_cast<Driver::VehicleType>(vehicleType));
 
     while (true) {
         cout << "Is Handicapped Capable (1 for true, 0 for false): ";
@@ -114,7 +126,7 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
     char option;
     string str;
     int i;
-
+    cout << "updateVehicleType Driver type: " << driver->getTypeName()  << endl;
     cout << "*************************************" << endl;
     cout << "           Driver Edit Menu          " << endl;
     cout << "*************************************" << endl;
@@ -189,47 +201,33 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
         case 'F': {
             cout << "New Vehicle Type (1-4): " << endl;
             cin >> i;
-            auto newVehicleType = static_cast<Driver::VehicleType>(i);
 
-            if (newVehicleType != driver->getVehicleType()) {
-                Driver *newDriver = nullptr;
+            if (static_cast<Driver::VehicleType>(i) != driver->getVehicleType()) {
 
-                switch (newVehicleType) {
-                    case Driver::VehicleType::BasicDriver:
-                        newDriver = new BasicDriver;
-                        if (auto *basicDriver = dynamic_cast<BasicDriver *>(newDriver)) {
-                            basicDriver->addBasicParameters();
-                        }
+                Driver *newDriver = createDriverOfType(i);
+                cout << "driverCollection case F Driver type: " << driver->getTypeName() << endl;
+                cout << "driverCollection case F newDriver type: " << newDriver->getTypeName() << endl;
+                switch (i) {
+                    case 1:
+                        dynamic_cast<BasicDriver *>(newDriver)->addBasicParameters();
                         break;
-                    case Driver::VehicleType::EconomyDriver:
-                        newDriver = new EconomyDriver;
-                        if (auto *economyDriver = dynamic_cast<EconomyDriver *>(newDriver)) {
-                            economyDriver->addEconomyParameters();
-                        }
+                    case 2:
+                        dynamic_cast<EconomyDriver *>(newDriver)->addEconomyParameters();
                         break;
-                    case Driver::VehicleType::GroupDriver:
-                        newDriver = new GroupDriver;
-                        if (auto *groupDriver = dynamic_cast<GroupDriver *>(newDriver)) {
-                            groupDriver->addGroupParameters();
-                        }
+                    case 3:
+                        dynamic_cast<GroupDriver *>(newDriver)->addGroupParameters();
                         break;
-                    case Driver::VehicleType::LuxuryDriver:
-                        newDriver = new LuxuryDriver;
-                        if (auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(newDriver)) {
-                            luxuryDriver->addLuxuryParameters();
-                        }
+                    case 4:
+                        dynamic_cast<LuxuryDriver *>(newDriver)->addLuxuryParameters();
                         break;
                     default:
-                        cout << "Unknown input, please try again." << endl;
-                        cin >> i;
                         break;
                 }
-
-                if (newDriver) {
-                    newDriver->copyPropertiesFrom(driver);
-                    this->replaceDriver(driver, newDriver);
-                    driver = newDriver;
-                }
+                newDriver->copyPropertiesFrom(driver);
+                newDriver->setVehicleType(static_cast<Driver::VehicleType>(i));
+                cout << "finished updating driver" << endl;
+                delete driver;
+                return newDriver;
 
 
             } else {
@@ -273,18 +271,6 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
     return driver;
 }
 
-void DriverCollection::replaceDriver(Driver *oldDriver, Driver *newDriver) {
-
-    for (auto &driver: drivers) {
-        if (driver == oldDriver) {
-            delete driver;
-            driver = newDriver;
-            return;
-        }
-    }
-    drivers.push_back(newDriver);
-}
-
 
 void DriverCollection::removeDriver(Driver &driver) {
     for (auto it = this->drivers.begin(); it != this->drivers.end();) {
@@ -296,4 +282,25 @@ void DriverCollection::removeDriver(Driver &driver) {
         }
     }
 }
+
+Driver *DriverCollection::createDriverOfType(int type) {
+    switch (type) {
+        case 1:
+            cout << "Creating BasicDriver..." << endl;
+            return new BasicDriver;
+        case 2:
+            cout << "Creating EconomyDriver..." << endl;
+            return new EconomyDriver;
+        case 3:
+            cout << "Creating GroupDriver..." << endl;
+            return new GroupDriver;
+        case 4:
+            cout << "Creating LuxuryDriver..." << endl;
+            return new LuxuryDriver;
+        default:
+            cout << "Unsupported driver type!" << endl;
+            return nullptr; // Handle unsupported types
+    }
+}
+
 

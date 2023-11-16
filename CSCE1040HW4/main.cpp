@@ -2,6 +2,7 @@
 #include <fstream>
 #include "Driver/Driver.h"
 #include "Passenger/Passenger.h"
+#include "Ride/Ride.h"
 #include "Driver/DriverCollection.h"
 #include "Passenger/PassengerCollection.h"
 #include "Ride/RideCollection.h"

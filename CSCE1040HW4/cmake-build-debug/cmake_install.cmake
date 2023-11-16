@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Other/CLionProjects/CSCE1040HW4
+# Install script for directory: C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Other/CLionProjects/CSCE1040HW4/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
