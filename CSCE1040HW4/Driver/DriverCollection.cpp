@@ -9,6 +9,7 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <sstream>
 
 using namespace std;
 
@@ -24,96 +25,147 @@ Driver *DriverCollection::addDriver() {
     vector<Ride> rides;
     string password;
 
-    while (true) {
-        cout << "Enter Vehicle Type (1 for Basic, 2 for Economy, 3 for Group, 4 for Luxury): ";
-        cin >> vehicleType;
 
-        switch (vehicleType) {
-            case 1:  // Basic Driver
-            {
-                auto *basicDriver = new BasicDriver;
-                basicDriver->addBasicParameters();
-                newDriver = basicDriver;
-                break;
-            }
-            case 2:  // Economy Driver
-            {
-                auto *economyDriver = new EconomyDriver;
-                economyDriver->addEconomyParameters();
-                newDriver = economyDriver;
-                break;
-            }
-            case 3:  // Group Driver
-            {
-                auto *groupDriver = new GroupDriver;
-                groupDriver->addGroupParameters();
-                newDriver = groupDriver;
-                break;
-            }
-            case 4:  // Luxury Driver
-            {
-                auto *luxuryDriver = new LuxuryDriver;
-                luxuryDriver->addLuxuryParameters();
-                newDriver = luxuryDriver;
-                break;
-            }
-            default:
-                cout << "Invalid input. Please enter a number between 1 and 4." << endl;
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
+    cout << "\n\n\n\n\n\n\n\n\n";
+    cout << "********************************" << endl;
+    cout << "********************************" << endl;
+    cout << "      ___          __   __          ___  __  \n"
+            "|\\ | |__  |  |    |  \\ |__) | \\  / |__  |__) \n"
+            "| \\| |___ |/\\|    |__/ |  \\ |  \\/  |___ |  \\ \n"
+            "                                             " << endl;
+
+    cout << "********************************" << endl;
+    cout << "********************************" << endl << endl << endl;
 
 
-        if (vehicleType >= 1 && vehicleType <= 4) {
-            break;
-        }
-    }
-    newDriver->setVehicleType(static_cast<Driver::VehicleType>(vehicleType));
-
-    while (true) {
-        cout << "Is Handicapped Capable (1 for true, 0 for false): ";
-        cin >> handicappedCapable;
-        if (cin.fail() || (handicappedCapable != 0 && handicappedCapable != 1)) {
-            cout << "Invalid input. Please enter either 0 for false or 1 for true." << endl;
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        } else {
-            break;
-        }
-    }
-    newDriver->handicappedCapable = handicappedCapable;
-
-    while (true) {
-        cout << "Are Pets Allowed (1 for true, 0 for false): ";
-        cin >> petsAllowed;
-        if (cin.fail() || (petsAllowed != 0 && petsAllowed != 1)) {
-            cout << "Invalid input. Please enter either 0 for false or 1 for true." << endl;
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        } else {
-            break;
-        }
-    }
-    newDriver->petsAllowed = petsAllowed;
-
-
-    cout << "Enter First Name: ";
+    cout << "********************************" << endl;
+    cout << "*     Personal Information:    *" << endl;
+    cout << "********************************" << endl;
+    cout << "*  First Name: ";
     cin >> firstName;
     newDriver->firstName = firstName;
-
-    cout << "Enter Last Name: ";
+    cout << "*  Last Name: ";
     cin >> lastName;
     newDriver->lastName = lastName;
-
-    cout << "Enter Password: ";
+    cout << "*  Password: ";
     cin >> password;
     newDriver->password = password;
+    cout << "********************************" << endl;
+    cout << "\n";
 
+
+    while (true) {
+        cout << "********************************" << endl;
+        cout << "*      Vehicle Information:    *" << endl;
+        cout << "********************************" << endl;
+        cout << "*      Enter Vehicle Type:     *" << endl;
+        cout << "*1. Economy - (2 or less seats)*" << endl;
+        cout << "*     2. Basic - (2-4 seats)   *" << endl;
+        cout << "*    3. Group - (5-7 seats)    *" << endl;
+        cout << "*   4. Luxury - (Limo-style)   *" << endl;
+        cout << "********************************" << endl;
+        cout << "* Type: ";
+
+        // Check if input is an integer
+        if (!(cin >> vehicleType) || (vehicleType < 1 || vehicleType > 4)) {
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            break;
+        }
+    }
+
+    switch (vehicleType) {
+        case 1:  // Economy Driver
+        {
+            auto *economyDriver = new EconomyDriver;
+            economyDriver->addEconomyParameters();
+            economyDriver->copyPropertiesFrom(newDriver);
+            newDriver = economyDriver;
+            break;
+        }
+        case 2:  // Basic Driver
+        {
+            auto *basicDriver = new BasicDriver;
+            basicDriver->addBasicParameters();
+            basicDriver->copyPropertiesFrom(newDriver);
+            newDriver = basicDriver;
+            break;
+        }
+        case 3:  // Group Driver
+        {
+            auto *groupDriver = new GroupDriver;
+            groupDriver->addGroupParameters();
+            groupDriver->copyPropertiesFrom(newDriver);
+            newDriver = groupDriver;
+            break;
+        }
+        case 4:  // Luxury Driver
+        {
+            auto *luxuryDriver = new LuxuryDriver;
+            luxuryDriver->addLuxuryParameters();
+            luxuryDriver->copyPropertiesFrom(newDriver);
+            newDriver = luxuryDriver;
+            break;
+        }
+        default:
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+    }
+
+    newDriver->setVehicleType(static_cast<Driver::VehicleType>(vehicleType));
+
+
+    char option;
+
+    while (true) {
+        cout << "Is Vehicle Handicapable? (Y/N): ";
+        cin >> option;
+
+        if (option == 'Y' || option == 'y') {
+            newDriver->setHandicappedCapable(true);
+            break;
+        } else if (option == 'N' || option == 'n') {
+            newDriver->setHandicappedCapable(false);
+            break;
+        } else {
+            cout << "Not a valid input, please try again: " << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+
+    cout << "*************************************" << endl;
+
+    while (true) {
+        cout << "Are Pets Allowed? (Y/N): ";
+        cin >> option;
+
+        if (option == 'Y' || option == 'y') {
+            newDriver->setPetsAllowed(true);
+            break;
+        } else if (option == 'N' || option == 'n') {
+            newDriver->setPetsAllowed(false);
+            break;
+        } else {
+            cout << "Not a valid input, please try again: " << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+
+    cout << "************************************* \n\n\n\n\n\n";
+
+
+    /*true random number*/
     random_device rd;
     mt19937 generator(rd());
     uniform_int_distribution<int> distribution(1, 20000);
     int random_number = distribution(generator);
     newDriver->id = random_number;
+
+    newDriver->setAvailable(true);
+    newDriver->setDriverRating(0);
 
 
     this->drivers.push_back(newDriver);
@@ -122,33 +174,59 @@ Driver *DriverCollection::addDriver() {
 
 }
 
+
 Driver *DriverCollection::updateVehicleType(Driver *driver) {
     char option;
     string str;
     int i;
-    cout << "updateVehicleType Driver type: " << driver->getTypeName()  << endl;
     cout << "*************************************" << endl;
     cout << "           Driver Edit Menu          " << endl;
     cout << "*************************************" << endl;
-    cout << "What would you like to edit?" << endl;
-    cout << "B: Handicapped Capable: " << driver->isHandicappedCapable() << endl;
-    cout << "C: Pets Allowed : " << driver->isPetsAllowed() << endl;
-    cout << "D: First Name : " << driver->getFirstName() << endl;
-    cout << "E: Last Name : " << driver->getLastName() << endl;
-    cout << "F: Vehicle Type : " << static_cast<int>(driver->getVehicleType()) << endl;
+    cout << "* What would you like to edit?      *" << endl;
+    cout << "* B: Handicapped Capable:      " << driver->isHandicappedCapable() << endl;
+    cout << "* C: Pets Allowed :            " << driver->isPetsAllowed() << endl;
+    cout << "* D: First Name :              " << driver->getFirstName() << endl;
+    cout << "* E: Last Name :               " << driver->getLastName() << endl;
+    cout << "* F: Vehicle Type :            " << static_cast<int>(driver->getVehicleType()) << endl;
 
 
-    if (driver->getVehicleType() == Driver::VehicleType::LuxuryDriver) {
-        auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
-        if (luxuryDriver) {
-            cout << "G: Vehicle Capacity: " << luxuryDriver->getVehicleCapacity() << endl;
-            cout << "H: Cargo Capacity: " << luxuryDriver->getCargoCapacity() << endl;
-            cout << "I: Amenities: ";
+    switch (static_cast<int>(driver->getVehicleType())) {
+        case 1: {
+            auto *economyDriver = dynamic_cast<EconomyDriver *>(driver);
+            cout << "* G: Vehicle Capacity:         " << economyDriver->getVehicleCapacity() << endl;
+            cout << "* H: Cargo Capacity:           " << economyDriver->getCargoCapacity() << endl;
+
+            break;
+        }
+        case 2: {
+            auto *basicDriver = dynamic_cast<BasicDriver *>(driver);
+            cout << "* G: Vehicle Capacity:         " << basicDriver->getVehicleCapacity() << endl;
+            cout << "* H: Cargo Capacity:           " << basicDriver->getCargoCapacity() << endl;
+
+            break;
+        }
+
+        case 3: {
+            auto *groupDriver = dynamic_cast<GroupDriver *>(driver);
+            cout << "* G: Vehicle Capacity:         " << groupDriver->getVehicleCapacity() << endl;
+            cout << "* H: Cargo Capacity:           " << groupDriver->getCargoCapacity() << endl;
+
+            break;
+        }
+        case 4: {
+            auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
+            cout << "* G: Vehicle Capacity:         " << luxuryDriver->getVehicleCapacity() << endl;
+            cout << "* H: Cargo Capacity:           " << luxuryDriver->getCargoCapacity() << endl;
+            cout << "* I: Amenities:                ";
             for (const string &amenity: luxuryDriver->getAmenities()) {
-                cout << amenity << " ";
+                cout << amenity << ", ";
             }
+            break;
         }
     }
+
+
+    cout << "*************************************" << endl;
 
     cin >> option;
 
@@ -204,9 +282,10 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
 
             if (static_cast<Driver::VehicleType>(i) != driver->getVehicleType()) {
 
-                Driver *newDriver = createDriverOfType(i);
-                cout << "driverCollection case F Driver type: " << driver->getTypeName() << endl;
-                cout << "driverCollection case F newDriver type: " << newDriver->getTypeName() << endl;
+                Driver *newDriver;
+                newDriver->createDriverOfType(i);
+
+
                 switch (i) {
                     case 1:
                         dynamic_cast<BasicDriver *>(newDriver)->addBasicParameters();
@@ -225,7 +304,6 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
                 }
                 newDriver->copyPropertiesFrom(driver);
                 newDriver->setVehicleType(static_cast<Driver::VehicleType>(i));
-                cout << "finished updating driver" << endl;
                 delete driver;
                 return newDriver;
 
@@ -239,7 +317,7 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
 
         case 'G':
 
-            if (driver->getVehicleType() == Driver::VehicleType::LuxuryDriver) {
+            if (static_cast<int>(driver->getVehicleType()) > 0) {
                 auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
                 if (luxuryDriver) {
                     cout << "New Vehicle Capacity: " << endl;
@@ -252,7 +330,7 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
 
         case 'H':
 
-            if (driver->getVehicleType() == Driver::VehicleType::LuxuryDriver) {
+            if (static_cast<int>(driver->getVehicleType()) > 0) {
                 auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
                 if (luxuryDriver) {
                     cout << "New Cargo Capacity: " << endl;
@@ -262,6 +340,20 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
             }
 
             break;
+
+        case 'I':
+
+            if (static_cast<int>(driver->getVehicleType()) == 4) {
+                auto *luxuryDriver = dynamic_cast<LuxuryDriver *>(driver);
+                if (luxuryDriver) {
+                    cout << "New Vehicle Capacity: " << endl;
+                    cin >> i;
+                    luxuryDriver->setVehicleCapacity(i);
+                }
+            }
+
+            break;
+
 
         default:
             cout << "Invalid option, try again." << endl;
@@ -283,24 +375,51 @@ void DriverCollection::removeDriver(Driver &driver) {
     }
 }
 
-Driver *DriverCollection::createDriverOfType(int type) {
-    switch (type) {
-        case 1:
-            cout << "Creating BasicDriver..." << endl;
-            return new BasicDriver;
-        case 2:
-            cout << "Creating EconomyDriver..." << endl;
-            return new EconomyDriver;
-        case 3:
-            cout << "Creating GroupDriver..." << endl;
-            return new GroupDriver;
-        case 4:
-            cout << "Creating LuxuryDriver..." << endl;
-            return new LuxuryDriver;
-        default:
-            cout << "Unsupported driver type!" << endl;
-            return nullptr; // Handle unsupported types
-    }
+void DriverCollection::readDriverProperties(string basicString) {
+    istringstream dataStream(basicString);
+    string temp;
+
+
+    getline(dataStream, temp, ',');
+    {/*the string that says "Driver" goes here */};
+
+    getline(dataStream, temp, ',');
+    {
+        int subClass = stoi(temp);
+        switch (subClass) {
+            case 1: {
+                auto *economyDriver = new EconomyDriver;
+                economyDriver->readEconomyProperties(basicString);
+                break;
+            }
+            case 2: {
+                auto *basicDriver = new BasicDriver;
+                basicDriver->readBasicProperties(basicString);
+                this->drivers.push_back(basicDriver);
+                break;
+            }
+            case 3: {
+                auto *groupDriver = new GroupDriver;
+                groupDriver->readGroupProperties(basicString);
+                break;
+            }
+            case 4: {
+                auto *luxuryDriver = new LuxuryDriver;
+                luxuryDriver->readLuxuryProperties(basicString);
+                break;
+            }
+            default:
+                break;
+
+
+        }
+
+
+    };
+
+
 }
+
+
 
 

@@ -1,6 +1,10 @@
 
 #include <sstream>
 #include "Driver.h"
+#include "BasicDriver/BasicDriver.h"
+#include "EconomyDriver/EconomyDriver.h"
+#include "GroupDriver/GroupDriver.h"
+#include "LuxuryDriver/LuxuryDriver.h"
 
 
 Driver::~Driver() = default;
@@ -44,8 +48,8 @@ bool Driver::isAvailable() const {
     return available;
 }
 
-void Driver::setAvailable() {
-    available = !available;
+void Driver::setAvailable(bool isAvailable) {
+    available = isAvailable;
 }
 
 int Driver::getId() const {
@@ -139,11 +143,6 @@ void Driver::getSchedule() {
 
 }
 
-void Driver::getInfo() const {
-    cout << "--------------------------------" << endl;
-    cout << this->firstName << " " << this->lastName << endl;
-
-}
 
 void Driver::deleteCancelledAndCompletedRides() {
     for (auto it = rides.begin(); it != rides.end();) {
@@ -153,59 +152,14 @@ void Driver::deleteCancelledAndCompletedRides() {
     }
 }
 
-void Driver::readDriverProperties(const string &basicString) {
-    istringstream dataStream(basicString);
-    string temp;
+Driver Driver::readDriverProperties(const string &basicString) {
 
-    getline(dataStream, temp, ',');
-    {};
 
-    getline(dataStream, temp, ',');
-    {
-        this->firstName = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->lastName = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->id = stoi(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->available = true;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->vehicleType = static_cast<Driver::VehicleType>(stoi(temp));
-    };
-    getline(dataStream, temp, ',');
-    {
-        temp = std::to_string(1 ? this->petsAllowed = true : this->petsAllowed = false);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->driverRating = stof(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->password = temp;
-    };
-    getline(dataStream, temp, '\n');
-    {
-        for (int i = 0; i < temp.length(); i++) {}
-    };
-    while (getline(dataStream, temp, ',')) {
-        int tripID = stoi(temp);
-        if (!rides.empty()) {
-            rides.back().setId(tripID);
-        }
-    }
 }
 
 void Driver::writeDriverProperties(ostream &dataFile) {
     dataFile << "Driver,";
+    dataFile << static_cast<int>(vehicleType) << ",";
     dataFile << firstName << ",";
     dataFile << lastName << ",";
     dataFile << id << ",";
@@ -239,6 +193,12 @@ void Driver::getCancelledRides() const {
     }
 }
 
+void Driver::getInfo() const {
+    cout << "*************************************" << endl;
+    cout << this->firstName << " " << this->lastName << endl;
+
+}
+
 void Driver::editInfo() {
 
 }
@@ -252,7 +212,7 @@ void Driver::copyPropertiesFrom(const Driver *otherDriver) {
         this->setId(otherDriver->getId());
         this->setFirstName(otherDriver->getFirstName());
         this->setLastName(otherDriver->getLastName());
-        this->setPassword(otherDriver->password);
+        this->setPassword(otherDriver->getPassword());
 
     };
     this->rides.clear();
@@ -263,3 +223,19 @@ void Driver::copyPropertiesFrom(const Driver *otherDriver) {
 
 }
 
+
+Driver *Driver::createDriverOfType(int type) {
+    switch (type) {
+        case 1:
+            return new BasicDriver;
+        case 2:
+            return new EconomyDriver;
+        case 3:
+            return new GroupDriver;
+        case 4:
+            return new LuxuryDriver;
+        default:
+            cout << "Unsupported driver type!" << endl;
+            return nullptr;
+    }
+}

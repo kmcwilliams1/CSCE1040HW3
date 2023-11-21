@@ -32,7 +32,7 @@ void EconomyDriver::addEconomyParameters() {
 
     char option;
     string str;
-    cout << "Will you be bringing luggage? " << endl;
+    cout << "Will you be bringing luggage? (Y/N)" << endl;
     if (option == 'Y' || option == 'y'){
         cout << "Enter description of luggage: " << endl;
         cin >> str;
@@ -41,5 +41,9 @@ void EconomyDriver::addEconomyParameters() {
         cargoCapacity = "no luggage";
     };
 
+
+}
+
+void EconomyDriver::readEconomyProperties(const string &basicString) {
 
 }

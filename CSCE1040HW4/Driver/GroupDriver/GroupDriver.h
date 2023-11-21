@@ -28,6 +28,7 @@ public:
     void setAmenities();
 
 
+    void readGroupProperties(const string &basicString);
 };
 
 

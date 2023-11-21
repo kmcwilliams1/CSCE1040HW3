@@ -32,7 +32,7 @@ void GroupDriver::addGroupParameters() {
 
     char option;
     string str;
-    cout << "Will you be bringing luggage? " << endl;
+    cout << "Will you be bringing luggage? (Y/N) " << endl;
     if (option == 'Y' || option == 'y'){
         cout << "Enter description of luggage: " << endl;
         cin >> str;
@@ -44,5 +44,9 @@ void GroupDriver::addGroupParameters() {
 
 
 
+
+}
+
+void GroupDriver::readGroupProperties(const string &basicString) {
 
 }
