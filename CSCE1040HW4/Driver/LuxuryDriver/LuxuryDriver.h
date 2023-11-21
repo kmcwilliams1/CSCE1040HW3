@@ -34,6 +34,8 @@ public:
 
     void getInfo() const override;
     void editInfo() override;
+
+    void readLuxuryProperties(const string &basicString);
 };
 
 

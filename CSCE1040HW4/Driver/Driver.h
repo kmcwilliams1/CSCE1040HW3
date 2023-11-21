@@ -42,13 +42,14 @@ public:
 
     //methods
     void writeDriverProperties(ostream &dataFile);
-    void readDriverProperties(const string &basicString);
+    Driver readDriverProperties(const string &basicString);
 
     void getSchedule();
     virtual void getInfo() const ;
     virtual void editInfo();
     void deleteCancelledAndCompletedRides();
     void copyPropertiesFrom(const Driver* otherDriver);
+    Driver *createDriverOfType(int type);
 
 
     //getters and setters
@@ -65,7 +66,7 @@ public:
     void setPetsAllowed(bool isPetsAllowed);
 
     bool isAvailable() const;
-    void setAvailable();
+    void setAvailable(bool isAvailable);
 
     int getId() const;
     void setId(int newId);

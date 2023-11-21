@@ -29,6 +29,8 @@ public:
 
     vector<string> getAmenities() const { return amenities; };
     void setAmenities();
+
+    void readEconomyProperties(const string &basicString);
 };
 
 

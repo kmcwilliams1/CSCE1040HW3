@@ -13,7 +13,7 @@ using namespace std;
 
 
 int main() {
-    Driver* driver = nullptr;
+    Driver *driver = nullptr;
     Passenger passenger;
     Ride ride;
 
@@ -37,9 +37,9 @@ int main() {
 
         if (role == driverSearchWord) {
 
-            driver = new Driver;
-            driver->readDriverProperties(readingLine);
-            driverCollection.drivers.push_back(driver);
+            driverCollection.readDriverProperties(readingLine);
+            //drivers.push_back(driver);
+
 
         } else if (role == rideSearchWord) {
 
@@ -80,13 +80,27 @@ int main() {
 
     while (true) {
 
-        cout << "********* Main Menu *********" << endl;
-        cout << "** What do you want to do? **" << endl;
-        cout << "** A. Login                **" << endl;
-        cout << "** B. Add Driver           **" << endl;
-        cout << "** C. Add Passenger        **" << endl;
-        cout << "** D. Exit                 **" << endl;
+#include <iostream>
+
+        cout << "  ______            _        _            __ _   \n"
+                " |  ____|          | |      | |          / _| |  \n"
+                " | |__   __ _  __ _| | ___  | |    _   _| |_| |_ \n"
+                " |  __| / _` |/ _` | |/ _ \\ | |   | | | |  _| __|\n"
+                " | |___| (_| | (_| | |  __/ | |___| |_| | | | |_ \n"
+                " |______\\__,_|\\__, |_|\\___| |______\\__, |_|  \\__|\n"
+                "               __/ |                __/ |        \n"
+                "              |___/                |___/         \n" << endl;
+
         cout << "*****************************" << endl;
+        cout << "| ******* Main Menu ******* |" << endl;
+        cout << "| ************************* |" << endl;
+        cout << "| ** A. Login            ** |" << endl;
+        cout << "| ** B. Add Driver       ** |" << endl;
+        cout << "| ** C. Add Passenger    ** |" << endl;
+        cout << "| ** D. Exit             ** |" << endl;
+        cout << "| ************************* |" << endl;
+        cout << "*****************************" << endl;
+
 
         cin >> option;
 
@@ -98,9 +112,9 @@ int main() {
                 cin.ignore();
 
 
-                for (auto &currentDriver : driverCollection.drivers) {
+                for (auto &currentDriver: driverCollection.drivers) {
                     if (currentDriver->password == enteredPassword) {
-                        DriverMenu(*currentDriver, rideCollection, driverCollection);
+                        DriverMenu(currentDriver, rideCollection, driverCollection);
                         driverLoggedIn = true;
                         break;
                     }
@@ -108,7 +122,7 @@ int main() {
 
                 if (!driverLoggedIn) {
                     bool passengerLoggedIn = false;
-                    for (auto &currentPassenger : passengerCollection.passengers) {
+                    for (auto &currentPassenger: passengerCollection.passengers) {
                         if (currentPassenger.password == enteredPassword) {
                             PassengerMenu(currentPassenger, rideCollection, passengerCollection);
                             passengerLoggedIn = true;
@@ -118,6 +132,7 @@ int main() {
 
                     if (!passengerLoggedIn) {
                         cout << "Incorrect password, try again." << endl;
+                        cin >> enteredPassword;
                     }
                 }
                 break;
@@ -127,8 +142,7 @@ int main() {
             case 'b': // Add Driver
 
                 driver = driverCollection.addDriver();
-                cout << "Loading driver " << driver->firstName << endl;
-                DriverMenu(*driver, rideCollection, driverCollection);
+                DriverMenu(driver, rideCollection, driverCollection);
                 break;
 
 
@@ -136,7 +150,6 @@ int main() {
             case 'C'://Add Passenger
 
                 passenger = passengerCollection.addPassenger(passenger);
-                cout << "Loading passenger " << passenger.firstName << endl;
                 PassengerMenu(passenger, rideCollection, passengerCollection);
 
                 break;
@@ -164,12 +177,12 @@ int main() {
                 }
                 fout << endl;
 
-                for (Driver* currentDriverPtr : driverCollection.drivers) {
-                    Driver& currentDriver = *currentDriverPtr;
+                for (Driver *currentDriverPtr: driverCollection.drivers) {
+                    Driver &currentDriver = *currentDriverPtr;
                     currentDriver.writeDriverProperties(fout);
                 }
 
-                for (Driver* driverPtr : driverCollection.drivers) {
+                for (Driver *driverPtr: driverCollection.drivers) {
                     delete driverPtr;
                 }
                 fout << endl;
