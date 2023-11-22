@@ -10,47 +10,53 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
     string str;
 
     while (true) {
-        cout << "*************************************"<< endl;
-        cout << "*          *  Driver Menu  *        *"<< endl;
-        cout << "*          *****************        *"<< endl;
-        cout << "*          " << driver->getFirstName()<< " " << driver->getLastName()<< endl;
-        cout << "*************************************"<< endl;
+        cout << "*************************************" << endl;
+        cout << "*          *  Driver Menu  *        *" << endl;
+        cout << "*          *****************        *" << endl;
+        cout << "*             " << driver->getFirstName() << " " << driver->getLastName() << endl;
+        cout << "*************************************" << endl;
         cout << "*           Enter Selection:        *" << endl;
-        cout << "*************************************"<< endl;
-        cout << "*      A. Get Current Schedule      *" << endl;
-        cout << "*      B. Toggle Availability       *" << endl;
-        cout << "*          C. Finish Ride           *" << endl;
-        cout << "*        D. Get past rides          *" << endl;
+        cout << "*************************************" << endl;
+        cout << "*        A. Get Current Rides       *" << endl;
+        cout << "*           B. Finish Ride          *" << endl;
+        cout << "*          C. Get Past rides        *" << endl;
+        cout << "*      -----------------------      *" << endl;
+        cout << "*       D. Toggle Availability      *" << endl;
         cout << "*      E. Get Your Information      *" << endl;
-        cout << "*     F. Edit Car information       *" << endl;
+        cout << "*      F. Edit Your information     *" << endl;
+        cout << "*      -----------------------      *" << endl;
         cout << "*        G. Delete Account          *" << endl;
-        cout << "*              Q. Logout            *" << endl;
-        cout << "*************************************"<< endl;
+        cout << "*             Q. Logout             *" << endl;
+        cout << "*************************************" << endl;
         cout << "*";
 
 
-
         cin >> option;
+        cout << "*************************************" << endl;
 
         switch (option) {
-            case 'A':// Get Current Schedule
+            case 'a':
+            case 'A':// Get Current Rides
+                driver->getSchedule();
                 cout << "Add more rides to your schedule?" << endl;
                 cin >> option;
                 if (option == 'Y' || option == 'y') {
                     rideCollection.assignSchedule(*driver);
+                    driver->getSchedule();
                 };
-                driver->getSchedule();
 
                 break;
 
-            case 'B':// Toggle Availability
+            case 'd':
+            case 'D':// Toggle Availability
                 cout << "Current Availability: " << driver->isAvailable() << endl;
                 driver->setAvailable(!driver->isAvailable());
                 cout << "Now: " << driver->isAvailable() << endl;
                 cout << endl;
                 break;
 
-            case 'C':// Finish Ride
+            case 'b':
+            case 'B':// Finish Ride
 
                 cout << "Complete Ride: A" << endl;
                 cout << "Cancel Ride: B" << endl;
@@ -63,13 +69,14 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
                 } else {
                     cout << "Invalid Option" << endl;
                 }
-
                 break;
 
-            case 'D':// Get past rides
-
+            case 'c':
+            case 'C':// Get rides
+                driver->getRides();
                 break;
 
+            case 'e':
             case 'E':// Get Your Information
             {
                 driver->getInfo();
@@ -77,7 +84,7 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
                 break;
             }
 
-
+            case 'f':
             case 'F':// Edit Car information
             {
                 driver = driverCollection.updateVehicleType(driver);
@@ -85,7 +92,7 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
                 break;
             }
 
-
+            case 'g':
             case 'G':// Delete Account
 
                 cout << "Are you sure you want to delete your account?" << endl;
@@ -94,8 +101,9 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
                     driverCollection.removeDriver(*driver);
                     cout << "Account deleted" << endl;
                 }
-
                 break;
+
+            case 'q':
             case 'Q':
                 cout << "Quitting Driver Menu" << endl;
                 return;

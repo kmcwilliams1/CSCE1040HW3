@@ -42,7 +42,7 @@ public:
     void writePassengerProperties(ostream& dataFile);
     void getInfo() const;
     void deleteCancelledAndCompletedRides();
-    void getRides() const;
+    void getRides(char option) const;
     void cancelRide();
     void rateRide();
 

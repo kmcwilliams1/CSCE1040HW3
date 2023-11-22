@@ -115,8 +115,21 @@ void Driver::setCancelledRides() {
     }
 }
 
-const vector<Ride> &Driver::getRides() const {
-    return rides;
+void Driver::getRides() const {
+    if (!rides.empty()) {
+        cout << "Previous Rides:" << endl;
+        cout << "---------------------------------------" << endl;
+        for (const Ride &ride: rides) {
+            if(ride.getStatus() != Ride::RideStatus::Active) {
+                cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride.getPickupTime() << endl;
+                cout << "---------------------------------------" << endl;
+            }
+        }
+    } else {
+        cout << "No rides available for this passenger." << endl;
+    }
 }
 
 const string &Driver::getPassword() const {
@@ -132,10 +145,12 @@ void Driver::getSchedule() {
         cout << "Rides:" << endl;
         cout << "---------------------------------------" << endl;
         for (const Ride &ride: rides) {
-            cout << "Pickup Location: " << ride.getPickupLocation() << endl;
-            cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
-            cout << "Pickup Time: " << ride.getPickupTime() << endl;
-            cout << "---------------------------------------" << endl;
+            if(ride.getStatus() == Ride::RideStatus::Active) {
+                cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride.getPickupTime() << endl;
+                cout << "---------------------------------------" << endl;
+            }
         }
     } else {
         cout << "No rides available for this passenger." << endl;
@@ -152,10 +167,7 @@ void Driver::deleteCancelledAndCompletedRides() {
     }
 }
 
-Driver Driver::readDriverProperties(const string &basicString) {
 
-
-}
 
 void Driver::writeDriverProperties(ostream &dataFile) {
     dataFile << "Driver,";
@@ -216,7 +228,7 @@ void Driver::copyPropertiesFrom(const Driver *otherDriver) {
 
     };
     this->rides.clear();
-    for (auto &&ride: otherDriver->getRides()) {
+    for (auto &&ride: otherDriver->rides) {
         this->rides.push_back(ride);
     }
 

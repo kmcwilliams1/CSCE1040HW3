@@ -17,7 +17,78 @@ void LuxuryDriver::setCargoCapacity(const string &cargo) {
 
 
 void LuxuryDriver::setAmenities(const string &amenity) {
-    amenities.push_back(amenity);
+    char option;
+
+    cout << "Please choose amenities needed: " << endl;
+
+    while (true) {
+        cout << "Bottle service (Y/N): ";
+        cin >> option;
+
+        cin.ignore();
+        if (option == 'Y' || option == 'y') {
+            amenities.emplace_back("bottle");
+            break;
+        } else if (option == 'N' || option == 'n') {
+            break;
+        } else {
+            cout << "Invalid input. Please enter either Y or N." << endl;
+            cin >> option;
+            cout << "*****************************" << endl;
+
+        }
+    }
+
+    while (true) {
+        cout << "VIP Club Entrance (Y/N): ";
+        cin >> option;
+
+        cin.ignore();
+        if (option == 'Y' || option == 'y') {
+            amenities.emplace_back("club");
+            break;
+        } else if (option == 'N' || option == 'n') {
+            break;
+        } else {
+            cout << "Invalid input. Please enter either Y or N." << endl;
+            cin >> option;
+            cout << "*****************************" << endl;
+        }
+    }
+
+    while (true) {
+        cout << "Female Entertainment (Y/N): ";
+        cin >> option;
+
+        cin.ignore();
+        if (option == 'Y' || option == 'y') {
+            amenities.emplace_back("female");
+            break;
+        } else if (option == 'N' || option == 'n') {
+            break;
+        } else {
+            cout << "Invalid input. Please enter either Y or N." << endl;
+            cin >> option;
+            cout << "*****************************" << endl;
+        }
+    }
+
+    while (true) {
+        cout << "Bodyguard (Y/N): ";
+        cin >> option;
+
+        cin.ignore();
+        if (option == 'Y' || option == 'y') {
+            amenities.emplace_back("bodyguard");
+            break;
+        } else if (option == 'N' || option == 'n') {
+            break;
+        } else {
+            cout << "Invalid input. Please enter either Y or N." << endl;
+            cin >> option;
+            cout << "*****************************" << endl;
+        }
+    }
 }
 
 LuxuryDriver::LuxuryDriver() = default;
@@ -29,12 +100,12 @@ void LuxuryDriver::addLuxuryParameters() {
 
     // Input validation loop for vehicle capacity
     while (true) {
-        cout << "* Enter vehicle capacity (7+): " ;
+        cout << "* Enter vehicle capacity (7+): ";
         cin >> i;
         cout << "*****************************" << endl;
 
         if (cin.fail() || i < 7) {
-            cout << "Invalid input. Please enter a number that is 8 or greater." ;
+            cout << "Invalid input. Please enter a number that is 8 or greater.";
             cin >> i;
             cout << "*****************************" << endl;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -70,7 +141,6 @@ void LuxuryDriver::addLuxuryParameters() {
 
     cout << "Please choose amenities needed: " << endl;
 
-    // Input validation loops for amenities
     while (true) {
         cout << "Bottle service (Y/N): ";
         cin >> option;
@@ -90,7 +160,7 @@ void LuxuryDriver::addLuxuryParameters() {
     }
 
     while (true) {
-        cout << "VIP Club Entrance (Y/N): " ;
+        cout << "VIP Club Entrance (Y/N): ";
         cin >> option;
 
         cin.ignore();
@@ -144,7 +214,7 @@ void LuxuryDriver::addLuxuryParameters() {
 
 void LuxuryDriver::getInfo() const {
     Driver::getInfo();
-    cout << "LuxDriver version " <<  endl;
+    cout << "LuxDriver version " << endl;
 
     cout << "Vehicle Capacity: " << vehicleCapacity << endl;
     cout << "Cargo Capacity: " << cargoCapacity << endl;
@@ -158,95 +228,112 @@ void LuxuryDriver::getInfo() const {
 void LuxuryDriver::editInfo() {}
 
 void LuxuryDriver::readLuxuryProperties(const string &basicString) {
+
+
     istringstream dataStream(basicString);
     string temp;
 
-    getline(dataStream, temp, ',');
-    {};
-    getline(dataStream, temp, ',');
-    {
-        this->firstName = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->lastName = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->password = temp;
-        cout << "this password " << this->password << endl;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->vehicleType = static_cast<VehicleType>(stoi(temp));
+    dataStream.clear();
+    dataStream.seekg(0);
 
+    getline(dataStream, temp, ',');
+    {
     };
 
     getline(dataStream, temp, ',');
     {
-        this->vehicleType = static_cast<Driver::VehicleType>(stoi(temp));
-        cout << "Vehicle type temp: " << static_cast<int>(this->vehicleType) << endl;
+        vehicleType = static_cast<VehicleType>(stoi(temp));
+
     };
+    getline(dataStream, temp, ',');
+    {
+        firstName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        lastName = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        password = temp;
+    };
+
 
     getline(dataStream, temp, ',');
     {
-        (this)->vehicleCapacity = stoi(temp);
-        cout << "this->vehicleCapacity: " << (this)->vehicleCapacity  << endl;
+        vehicleCapacity = stoi(temp);
     };
     getline(dataStream, temp, ',');
     {
-        cout << "cargo capacity temp: " << temp << endl;
-        (this)->cargoCapacity = temp;
+        cargoCapacity = temp;
     };
-    if ((this)->cargoCapacity != "0") {
+    if (cargoCapacity != "0") {
         getline(dataStream, temp, ',');
         {
-            cout << "new cargo capacity temp: " << temp << endl;
-
-            (this)->cargoCapacity = temp;
+            cargoCapacity = temp;
         };
     }
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1")amenities.emplace_back("bottle");
+    }
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1")amenities.emplace_back("vip");
+    }
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1")amenities.emplace_back("female");
+    }
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1")amenities.emplace_back("bodyguard");
+    }
+
+
 
     getline(dataStream, temp, ',');
     {
-        this->id = stoi(temp);
+        id = stoi(temp);
     };
 
     getline(dataStream, temp, ',');
     {
-        temp = std::to_string(1 ? this->petsAllowed = true : this->petsAllowed = false);
+        if (stoi(temp) == '1') { petsAllowed = true; } else { petsAllowed = false; };
     };
     getline(dataStream, temp, ',');
     {
-        temp = std::to_string(1 ? this->handicappedCapable = true : this->handicappedCapable = false);
+        if (stoi(temp) == '1') { handicappedCapable = true; } else { handicappedCapable = false; };
     };
 
     getline(dataStream, temp, ',');
     {
-        this->available = true;
+        available = true;
     };
 
 
     getline(dataStream, temp, ',');
     {
-        this->driverRating = stof(temp);
+        driverRating = stof(temp);
     };
 
     getline(dataStream, temp, '\n');
     {
-        for (char i : temp) {
-            cout <<"adding i: "<< i << '\n';
-        }
-    };
-    while (getline(dataStream, temp, ',')) {
-        int tripID = stoi(temp);
-        cout << "tripID: " << tripID << '\n';
-        if (!rides.empty()) {
-            rides.back().setId(tripID);
+        int tripID = 0;
+        for (char i: temp) {
+            if (i != ',') {
+                tripID = tripID * 10 + (i - '0');
+            } else {
+                cout << "Adding tripID: " << tripID << '\n';
+                rideIds.push_back(tripID);
+                tripID = 0;
+
+            }
         }
     }
 
 
-    cout << "Type name " << this->getTypeName() << endl;
-
 }
+
+
+

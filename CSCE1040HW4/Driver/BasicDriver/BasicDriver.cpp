@@ -83,13 +83,11 @@ void BasicDriver::readBasicProperties(const string &basicString) {
     istringstream dataStream(basicString);
     string temp;
 
-    cout << "Input string: " << basicString << endl;
     dataStream.clear();
     dataStream.seekg(0);
 
     getline(dataStream, temp, ',');
-    {
-    };
+    {/*this line reads the word Driver*/};
 
     getline(dataStream, temp, ',');
     {
@@ -132,11 +130,11 @@ void BasicDriver::readBasicProperties(const string &basicString) {
 
     getline(dataStream, temp, ',');
     {
-        temp = to_string(1 ? petsAllowed = true : petsAllowed = false);
+        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; };
     };
     getline(dataStream, temp, ',');
     {
-        temp = to_string(1 ? handicappedCapable = true : handicappedCapable = false);
+        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; };
     };
 
     getline(dataStream, temp, ',');
@@ -157,7 +155,6 @@ void BasicDriver::readBasicProperties(const string &basicString) {
             if (i != ',') {
                 tripID = tripID * 10 + (i - '0');
             } else {
-                cout << "Adding tripID: " << tripID << '\n';
                 rideIds.push_back(tripID);
                 tripID = 0;
 

@@ -38,8 +38,6 @@ int main() {
         if (role == driverSearchWord) {
 
             driverCollection.readDriverProperties(readingLine);
-            //drivers.push_back(driver);
-
 
         } else if (role == rideSearchWord) {
 
@@ -53,6 +51,7 @@ int main() {
 
         }
     }
+
 
     fin.clear();
     fin.seekg(0, ios::beg);
@@ -80,7 +79,6 @@ int main() {
 
     while (true) {
 
-#include <iostream>
 
         cout << "  ______            _        _            __ _   \n"
                 " |  ____|          | |      | |          / _| |  \n"
@@ -132,7 +130,6 @@ int main() {
 
                     if (!passengerLoggedIn) {
                         cout << "Incorrect password, try again." << endl;
-                        cin >> enteredPassword;
                     }
                 }
                 break;
@@ -156,7 +153,6 @@ int main() {
 
             default:
                 cout << "Not a valid input, please try again." << endl;
-                cin >> option;
                 break;
 
 

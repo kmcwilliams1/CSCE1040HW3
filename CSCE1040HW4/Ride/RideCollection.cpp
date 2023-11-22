@@ -12,33 +12,36 @@ Ride RideCollection::addRide(Ride newRide) {
     int i;
     string string1;
     char inputChar;
-
-    cout << "How many passengers would you like?" << endl;
+    cout << "*************************************" << endl;
+    cout << "How many passengers? ";
     cin >> i;
     newRide.sizeOfParty = i;
+    cin.ignore();
 
-    /*this while loop protects edge cases, doesnt allow for non type specific characters*/
 
     while (cin.fail()) {
-        cout << "Requires an integer. Try again: ";
+        cout << "Requires a number. Try again: ";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin >> i;
     }
-
-    cout << "Enter pickup location: " << endl;
-    cin >> string1;
+    cout << "*************************************" << endl;
+    cout << "Enter pickup location: ";
+    getline(cin,string1);
     newRide.pickupLocation = string1;
 
-    cout << "Enter drop off location: " << endl;
-    cin >> string1;
+    cout << "*************************************" << endl;
+    cout << "Enter drop off location: ";
+    getline(cin,string1);
     newRide.dropOffLocation = string1;
 
-    cout << "Enter note: " << endl;
-    cin >> string1;
+    cout << "*************************************" << endl;
+    cout << "Enter note: ";
+    getline(cin,string1);
     newRide.note = string1;
 
-    cout << "Do you need a handicapable vehicle (Y/N): " << endl;
+    cout << "*************************************" << endl;
+    cout << "Do you need a handicapable vehicle (Y/N): ";
     cin >> inputChar;
 
     while (inputChar != 'Y' && inputChar != 'y' && inputChar != 'N' && inputChar != 'n') {
@@ -50,7 +53,8 @@ Ride RideCollection::addRide(Ride newRide) {
 
     newRide.handicapable = (inputChar == 'Y' || inputChar == 'y');
 
-    cout << "Do you have pets (Y/N): " << endl;
+    cout << "*************************************" << endl;
+    cout << "Do you have pets (Y/N): ";
     cin >> inputChar;
 
     while (inputChar != 'Y' && inputChar != 'y' && inputChar != 'N' && inputChar != 'n') {
@@ -78,13 +82,13 @@ Ride RideCollection::addRide(Ride newRide) {
 
     this->rides.push_back(newRide);
 
-
+    cout << "*************************************" << endl;
     cout << "Ride Added" << endl;
     cout << newRide.pickupLocation << " -> " << newRide.dropOffLocation << endl;
     cout << newRide.pickupTime << endl;
+    cout << "*************************************" << endl;
+    cout << "\n\n\n" ;
 
-
-    cout << endl;
     return newRide;
 }
 

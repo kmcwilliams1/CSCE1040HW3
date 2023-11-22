@@ -13,24 +13,19 @@ public:
     ~EconomyDriver();
 
 
-
     int vehicleCapacity;
     string cargoCapacity;
-    vector<string>amenities;
 
     void addEconomyParameters();
-
+    void readEconomyProperties(const string &basicString);
 
     int getVehicleCapacity() const { return vehicleCapacity; };
-    void setVehicleCapacity();
+    void setVehicleCapacity(int capacity);
 
     string getCargoCapacity() const { return cargoCapacity;};
-    void setCargoCapacity();
+    void setCargoCapacity(const string &cargo);
 
-    vector<string> getAmenities() const { return amenities; };
-    void setAmenities();
 
-    void readEconomyProperties(const string &basicString);
 };
 
 
