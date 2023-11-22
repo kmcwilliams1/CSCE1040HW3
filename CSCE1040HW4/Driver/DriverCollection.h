@@ -17,7 +17,7 @@ public:
 
     Driver *updateVehicleType(Driver *driver);
 
-    void readDriverProperties(string basicString);
+    void readDriverProperties(const string& basicString);
 };
 
 

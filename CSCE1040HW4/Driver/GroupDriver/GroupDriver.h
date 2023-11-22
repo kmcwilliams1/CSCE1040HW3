@@ -11,24 +11,19 @@ public:
     GroupDriver();
     ~GroupDriver();
 
-
     int vehicleCapacity;
     string cargoCapacity;
-    vector<string>amenities;
 
     void addGroupParameters();
+    void readGroupProperties(const string &basicString);
 
     int getVehicleCapacity() const { return vehicleCapacity; };
-    void setVehicleCapacity();
+    void setVehicleCapacity(int capacity);
 
     string getCargoCapacity() const { return cargoCapacity;};
-    void setCargoCapacity();
-
-    vector<string> getAmenities() const { return amenities; };
-    void setAmenities();
+    void setCargoCapacity(const string &cargo);
 
 
-    void readGroupProperties(const string &basicString);
 };
 
 

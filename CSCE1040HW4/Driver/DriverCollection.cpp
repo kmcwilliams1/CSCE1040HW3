@@ -221,6 +221,7 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
             for (const string &amenity: luxuryDriver->getAmenities()) {
                 cout << amenity << ", ";
             }
+            cout << endl;
             break;
         }
     }
@@ -279,35 +280,36 @@ Driver *DriverCollection::updateVehicleType(Driver *driver) {
         case 'F': {
             cout << "New Vehicle Type (1-4): " << endl;
             cin >> i;
-
             if (static_cast<Driver::VehicleType>(i) != driver->getVehicleType()) {
-
-                Driver *newDriver;
-                newDriver->createDriverOfType(i);
-
-
+                Driver *newDriver = nullptr;
                 switch (i) {
                     case 1:
+                        newDriver = new BasicDriver;
                         dynamic_cast<BasicDriver *>(newDriver)->addBasicParameters();
                         break;
                     case 2:
+                        newDriver = new EconomyDriver;
                         dynamic_cast<EconomyDriver *>(newDriver)->addEconomyParameters();
                         break;
                     case 3:
+                        newDriver = new GroupDriver;
                         dynamic_cast<GroupDriver *>(newDriver)->addGroupParameters();
                         break;
                     case 4:
+                        newDriver = new LuxuryDriver;
                         dynamic_cast<LuxuryDriver *>(newDriver)->addLuxuryParameters();
                         break;
                     default:
                         break;
                 }
-                newDriver->copyPropertiesFrom(driver);
-                newDriver->setVehicleType(static_cast<Driver::VehicleType>(i));
-                delete driver;
-                return newDriver;
-
-
+                if (newDriver) {
+                    newDriver->copyPropertiesFrom(driver);
+                    newDriver->setVehicleType(static_cast<Driver::VehicleType>(i));
+                    delete driver;
+                    return newDriver;
+                } else {
+                    cout << "Memory allocation failed." << endl;
+                }
             } else {
                 cout << "You are already this type of vehicle!" << endl;
             }
@@ -375,7 +377,7 @@ void DriverCollection::removeDriver(Driver &driver) {
     }
 }
 
-void DriverCollection::readDriverProperties(string basicString) {
+void DriverCollection::readDriverProperties(const string &basicString) {
     istringstream dataStream(basicString);
     string temp;
 
@@ -390,6 +392,7 @@ void DriverCollection::readDriverProperties(string basicString) {
             case 1: {
                 auto *economyDriver = new EconomyDriver;
                 economyDriver->readEconomyProperties(basicString);
+                this->drivers.push_back(economyDriver);
                 break;
             }
             case 2: {
@@ -401,23 +404,19 @@ void DriverCollection::readDriverProperties(string basicString) {
             case 3: {
                 auto *groupDriver = new GroupDriver;
                 groupDriver->readGroupProperties(basicString);
+                this->drivers.push_back(groupDriver);
                 break;
             }
             case 4: {
                 auto *luxuryDriver = new LuxuryDriver;
                 luxuryDriver->readLuxuryProperties(basicString);
+                this->drivers.push_back(luxuryDriver);
                 break;
             }
             default:
                 break;
-
-
         }
-
-
     };
-
-
 }
 
 

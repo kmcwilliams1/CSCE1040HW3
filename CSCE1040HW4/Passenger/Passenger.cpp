@@ -89,13 +89,32 @@ void Passenger::getInfo() const {
     cout << "Last Name: " << lastName << endl;
     cout << "Required Rating: " << requiredRating << endl;
     cout << "Has Pets: " << (hasPets ? "true" : "false") << endl;
-    cout << "Payment Preference: " << static_cast<int>(paymentPreference) << endl;
+    string stringPaymentPreference;
+    switch (static_cast<int>(paymentPreference)) {
+        case 1:
+            stringPaymentPreference = "Cash";
+            break;
+        case 2:
+            stringPaymentPreference = "Credit";
+            break;
+        case 3:
+            stringPaymentPreference = "Debit";
+            break;
+
+    }
+    cout << "Payment Preference: " << stringPaymentPreference << endl;
     cout << "Password: " << password << endl;
     int count = 0;
+    int currentRides = 0;
     for (auto &ride: rides) {
         count++;
+        if(ride.rideStatus == Ride::RideStatus::Active){
+            currentRides++;
+        }
     }
     cout << "Total Rides: " << count << endl;
+    (currentRides < 2) ?  cout << "Current Active Rides: " << currentRides << endl :  cout << "Current Active Rides: " << currentRides << ", consider cancelling " << currentRides - 1 << endl;
+
     cout << endl;
 
 }
@@ -160,31 +179,76 @@ void Passenger::setLastName(const string &last) {
 
 }
 
-void Passenger::getRides() const {
+void Passenger::getRides(char option) const {
+
     if (!rides.empty()) {
+        bool foundRides = false;
+
         cout << "Rides:" << endl;
         cout << "---------------------------------------" << endl;
+
         for (const Ride &ride: rides) {
-            string status;
-            if (ride.rideStatus == Ride::RideStatus::Active) {
-                status = "Active";
-            } else if (ride.rideStatus == Ride::RideStatus::Cancelled) {
-                status = "Cancelled";
-            } else if (ride.rideStatus == Ride::RideStatus::Completed) {
-                status = "Completed";
+            bool printRide;
+
+            switch (option) {
+                case 'C':
+                case 'c':
+                    printRide = (ride.rideStatus == Ride::RideStatus::Active);
+                    break;
+
+                case 'A':
+                case 'a':
+                    printRide = (ride.rideStatus == Ride::RideStatus::Cancelled);
+                    break;
+
+                case 'B':
+                case 'b':
+                    printRide = (ride.rideStatus == Ride::RideStatus::Completed);
+                    break;
+
+                default:
+                    cout << "Invalid option for getRides." << endl;
+                    return;
             }
 
+            if (printRide) {
+                foundRides = true;
 
-            cout << "Pickup Location: " << ride.getPickupLocation() << endl;
-            cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
-            cout << "Pickup Time: " << ride.getPickupTime() << endl;
-            cout << "Ride Status: " << status << endl;
-            cout << "---------------------------------------" << endl;
+                cout << "Pickup Location: " << ride.getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride.getPickupTime() << endl;
+                cout << "---------------------------------------" << endl;
+            }
+        }
+
+        if (!foundRides) {
+            // No rides found for the specified condition
+            switch (option) {
+                case 'C':
+                case 'c':
+                    cout << "No active rides for this passenger." << endl;
+                    break;
+
+                case 'A':
+                case 'a':
+                    cout << "No cancelled rides for this passenger." << endl;
+                    break;
+
+                case 'B':
+                case 'b':
+                    cout << "No completed rides for this passenger." << endl;
+                    break;
+
+                default:
+                    cout << "Invalid option for getRides." << endl;
+                    break;
+            }
         }
     } else {
         cout << "No rides available for this passenger." << endl;
     }
 }
+
 
 
 void Passenger::cancelRide() {
@@ -245,20 +309,37 @@ void Passenger::rateRide() {
 
 
 void Passenger::editRide() {
+    cout << "*************************************" << endl;
+    cout << "            Current Rides            " << endl;
+    cout << "*************************************" << endl;
 
-    for (const Ride &ride: rides) {
-        cout << ride.pickupLocation << "-> " << ride.dropOffLocation << endl;
-        cout << ride.id << endl;
+    if(!rides.empty()) {
+        cout << "---------------------------------" << endl;
+        for (const Ride &ride: rides) {
+
+            cout << "Destination: "  ;
+            cout <<ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << "Time: "  ;
+            cout <<ride.getPickupTime() << endl;
+            cout << "ID: ";
+            cout << ride.id << endl;
+            cout << "---------------------------------" << endl;
+
+        }
     }
 
-    cout << "Enter Ride ID: " << endl;
+    cout << endl << endl;
+
+    cout << "Enter Ride ID you wish to edit: ";
     int i;
     string str;
     char option;
     cin >> i;
 
+
     for (Ride &ride: rides) {
         if (ride.id == i) {
+            cout << "\n\n\n\n";
             while (true) {
 
                 cout << "*************************************" << endl;
@@ -268,8 +349,13 @@ void Passenger::editRide() {
                 cout << "** B: Including Pets: " << ride.includesPets << "**" << endl;
                 cout << "** C: Pickup Location: " << ride.pickupLocation << "**" << endl;
                 cout << "** D: Drop Off Location: " << ride.dropOffLocation << "**" << endl;
-                cout << "** F: Pickup Time: " << ride.pickupTime << "**" << endl;
+                cout << "** F: Pickup Time: " << ride.getPickupTime() << "**" << endl;
                 cout << "** G: Handicaped: " << ride.handicapable << "**" << endl;
+                cout << "*************************************" << endl;
+                cout << "*";
+                cin >> option;
+                cout << "*************************************" << endl;
+
                 switch (option) {
 
                     case 'A': // Size of Party
@@ -315,6 +401,8 @@ void Passenger::editRide() {
                 }
                 break;
             }
+        } else {
+            cout << "Invalid Option, please try again." << endl;
         }
     }
 }

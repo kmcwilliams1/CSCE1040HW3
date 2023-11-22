@@ -42,7 +42,6 @@ public:
 
     //methods
     void writeDriverProperties(ostream &dataFile);
-    Driver readDriverProperties(const string &basicString);
 
     void getSchedule();
     virtual void getInfo() const ;
@@ -83,7 +82,7 @@ public:
     void getCancelledRides() const;
     void setCancelledRides();
 
-    const vector<Ride> &getRides() const;
+    void getRides() const;
 
     const string &getPassword() const;
     void setPassword(const string &pass);
