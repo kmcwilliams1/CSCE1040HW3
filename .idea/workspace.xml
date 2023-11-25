@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="CSCE1040HW4" targetName="CSCE1040HW4" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="11809bdd-165e-4b68-afc3-87e330979973" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/.idea/CSCE1040HW4.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/BasicDriver/BasicDriver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/BasicDriver/BasicDriver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/Driver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/Driver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/DriverCollection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/DriverCollection.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/EconomyDriver/EconomyDriver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/EconomyDriver/EconomyDriver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/GroupDriver/GroupDriver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/GroupDriver/GroupDriver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/LuxuryDriver/LuxuryDriver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Driver/LuxuryDriver/LuxuryDriver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/DriverMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Passenger/Passenger.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Passenger/PassengerCollection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Passenger/PassengerCollection.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Passenger/PassengerMenu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/PassengerMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Ride/Ride.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Ride/RideCollection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/Ride/RideCollection.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/RideShareData.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CSCE1040HW4.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/RideShareData.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/build.ninja" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCE1040HW4/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DriverCollection.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DriverCollection.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DriverMenu.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Passenger.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Passenger.h" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/Passenger/Passenger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PassengerCollection.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PassengerCollection.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PassengerMenu.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ride.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ride.h" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/Ride/Ride.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RideCollection.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RideCollection.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RideShareData.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/.cmake/api/v1/query/cache-v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-ba2e52a058faff16a936.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-d5c424690ec86cf2612c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-e9b91b487412941ef991.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-10-22T03-21-25-0133.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-untitled-Debug-2e0a7825f1de02087587.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-e54fbf0a9784bbf33839.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/CMakeFiles/rules.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/Driver.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/DriverCollection.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/DriverMenu.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/Passenger.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/PassengerCollection.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/PassengerMenu.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/Ride.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/RideCollection.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/untitled.dir/main.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/RideShareData.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/TempRideShareData.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/CSCE1040HW4/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/untitled.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="1.5" />
+  </component>
+  <component name="ProjectId" id="2XB9XgLsfmJK2KoJXg4Bo2MMUFa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/Users/kylemcwilliams/CLionProjects/1040Homework/HW3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CSCE1040HW4" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CSCE1040HW4" TARGET_NAME="CSCE1040HW4" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CSCE1040HW4" RUN_TARGET_NAME="CSCE1040HW4">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="11809bdd-165e-4b68-afc3-87e330979973" name="Changes" comment="" />
+      <created>1698091647195</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698091647195</updated>
+      <workItem from="1698091648394" duration="523000" />
+      <workItem from="1698182110483" duration="18000" />
+      <workItem from="1698182138075" duration="2293000" />
+      <workItem from="1698781092721" duration="566000" />
+      <workItem from="1700755911368" duration="2405000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+</project>
