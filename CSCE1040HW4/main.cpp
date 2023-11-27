@@ -68,6 +68,7 @@ int main() {
 
     for (auto &currentRide: rideCollection.rides) {
         for (auto &currentDriver: driverCollection.drivers) {
+            cout << "This type is: " << currentDriver->getTypeName() << endl;
             if (currentRide.assignedDriverId == currentDriver->id) {
                 currentDriver->rides.push_back(currentRide);
             }
@@ -174,8 +175,8 @@ int main() {
                 fout << endl;
 
                 for (Driver *currentDriverPtr: driverCollection.drivers) {
-                    Driver &currentDriver = *currentDriverPtr;
-                    currentDriver.writeDriverProperties(fout);
+
+                    currentDriverPtr->writeDriverProperties(fout);
                 }
 
                 for (Driver *driverPtr: driverCollection.drivers) {

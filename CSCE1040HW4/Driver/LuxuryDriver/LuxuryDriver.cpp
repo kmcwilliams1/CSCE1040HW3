@@ -492,5 +492,27 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
 
 }
 
+void LuxuryDriver::writeDriverProperties(ostream &dataFile) {
+    dataFile << "Driver,";
+    dataFile << static_cast<int>(vehicleType) << ",";
+    dataFile << firstName << ",";
+    dataFile << lastName << ",";
+    dataFile << id << ",";
+    dataFile << vehicleCapacity << ",";
+    dataFile << cargoCapacity << ",";
+    cargoCapacity == "1" && dataFile << cargoCapacity << ",";
+    dataFile << amenities[0] << ",";
+    dataFile << amenities[1] << ",";
+    dataFile << amenities[2] << ",";
+    dataFile << amenities[3] << ",";
+    dataFile << handicappedCapable << ",";
+    dataFile << petsAllowed << ",";
+    dataFile << driverRating << ",";
+    dataFile << password << ",";
+    for (const Ride &ride: rides) {
+        dataFile << ride.getId() << ",";
+    }
+    dataFile << "\n";
 
+}
 

@@ -31,7 +31,8 @@ void EconomyDriver::addEconomyParameters() {
     char option;
     string str;
     cout << "Will you be bringing luggage? (Y/N)" << endl;
-    if (option == 'Y' || option == 'y'){
+    cin >> option;
+    if (option == 'Y' || option == 'y') {
         cout << "Enter description of luggage: " << endl;
         cin >> str;
         cargoCapacity = str;
@@ -195,7 +196,6 @@ void EconomyDriver::editInfo() {
 }
 
 
-
 void EconomyDriver::readEconomyProperties(const string &basicString) {
 
 
@@ -282,4 +282,35 @@ void EconomyDriver::readEconomyProperties(const string &basicString) {
     }
 
 
+}
+
+void EconomyDriver::writeDriverProperties(ostream &dataFile) {
+    dataFile << "Driver,";
+
+    dataFile << static_cast<int>(vehicleType) << ",";
+
+    dataFile << firstName << ",";
+
+    dataFile << lastName << ",";
+
+    dataFile << id << ",";
+
+    dataFile << vehicleCapacity << ",";
+
+    dataFile << cargoCapacity << ",";
+
+    cargoCapacity == "1" && dataFile << cargoCapacity << ",";
+
+    dataFile << handicappedCapable << ",";
+
+    dataFile << petsAllowed << ",";
+
+    dataFile << driverRating << ",";
+
+    cout << "Now reading" << password << endl;
+
+    for (const Ride &ride: rides) {
+        dataFile << ride.getId() << ",";
+    }
+    dataFile << "\n";
 }

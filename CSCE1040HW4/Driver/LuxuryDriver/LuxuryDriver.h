@@ -40,6 +40,8 @@ public:
     void editInfo() override;
 
     void readLuxuryProperties(const string &basicString);
+
+    void writeDriverProperties(ostream &dataFile) override;
 };
 
 
