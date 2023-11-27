@@ -108,12 +108,15 @@ void Passenger::getInfo() const {
     int currentRides = 0;
     for (auto &ride: rides) {
         count++;
-        if(ride.rideStatus == Ride::RideStatus::Active){
+        if (ride.rideStatus == Ride::RideStatus::Active) {
             currentRides++;
         }
     }
     cout << "Total Rides: " << count << endl;
-    (currentRides < 2) ?  cout << "Current Active Rides: " << currentRides << endl :  cout << "Current Active Rides: " << currentRides << ", consider cancelling " << currentRides - 1 << endl;
+    (currentRides < 2) ? cout << "Current Active Rides: " << currentRides << endl : cout << "Current Active Rides: "
+                                                                                         << currentRides
+                                                                                         << ", consider cancelling "
+                                                                                         << currentRides - 1 << endl;
 
     cout << endl;
 
@@ -139,8 +142,8 @@ bool Passenger::getHasPets() const {
     return hasPets;
 }
 
-void Passenger::setHasPets() {
-
+void Passenger::setHasPets(bool value) {
+        hasPets = value;
 }
 
 Passenger::PaymentPreference Passenger::getPaymentPreference() const {
@@ -250,7 +253,6 @@ void Passenger::getRides(char option) const {
 }
 
 
-
 void Passenger::cancelRide() {
     if (!rides.empty()) {
         for (const Ride &ride: rides) {
@@ -313,14 +315,14 @@ void Passenger::editRide() {
     cout << "            Current Rides            " << endl;
     cout << "*************************************" << endl;
 
-    if(!rides.empty()) {
+    if (!rides.empty()) {
         cout << "---------------------------------" << endl;
         for (const Ride &ride: rides) {
 
-            cout << "Destination: "  ;
-            cout <<ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << "Time: "  ;
-            cout <<ride.getPickupTime() << endl;
+            cout << "Destination: ";
+            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << "Time: ";
+            cout << ride.getPickupTime() << endl;
             cout << "ID: ";
             cout << ride.id << endl;
             cout << "---------------------------------" << endl;
@@ -422,9 +424,22 @@ void Passenger::editInfo() {
     cout << "C: Pets Allowed : " << this->getHasPets() << endl;
     cout << "D: First Name : " << this->getFirstName() << endl;
     cout << "E: Last Name : " << this->getLastName() << endl;
-    cout << "F: Payment Type : " << static_cast<int>(this->getPaymentPreference()) << endl;
+    switch (static_cast<int>(this->getPaymentPreference())) {
+        case 1:
+            str = "Cash";
+            break;
+        case 2:
+            str = "Credit";
+            break;
+        case 3:
+            str = "Debit";
+            break;
+    }
 
+    cout << "F: Payment Type : " << str << endl;
+    cout << "*";
     cin >> option;
+    cout << "*************************************" << endl;
 
 
     switch (option) {
@@ -435,9 +450,25 @@ void Passenger::editInfo() {
             break;
 
         case 'C':
-            cout << "New pet policy: " << endl;
-            this->setHasPets();
-            break;
+            while (true) {
+                cout << "Will you be bringing luggage? (Y/N) ";
+                cin >> option;
+
+                if (option == 'Y' || option == 'y') {
+                    this->setHasPets(true);
+                    break;
+                } else if (option == 'N' || option == 'n') {
+                    this->setHasPets(false);
+                    break;
+                } else {
+                    cout << "Not a valid input, please try again: " << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+            }
+
+            cout << "*************************************" << endl;
+
 
         case 'D':
 
@@ -454,7 +485,11 @@ void Passenger::editInfo() {
             break;
 
         case 'F':
-            cout << "New Payment Method (1-3): " << endl;
+            cout << "New Payment Method: " << endl;
+            cout << "1. Cash " << endl;
+            cout << "2. Credit " << endl;
+            cout << "3. Debit: " << endl;
+            cout << "*";
             cin >> i;
             this->setPaymentPreference(
                     static_cast<Passenger::PaymentPreference>(i));

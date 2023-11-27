@@ -52,7 +52,7 @@ public:
     void setRequiredRating(float rating);
 
     bool getHasPets() const;
-    void setHasPets();
+    void setHasPets(bool value);
 
     PaymentPreference getPaymentPreference() const;
     void setPaymentPreference(PaymentPreference pref);

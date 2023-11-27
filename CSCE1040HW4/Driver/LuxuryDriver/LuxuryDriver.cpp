@@ -7,6 +7,7 @@
 #include "../EconomyDriver/EconomyDriver.h"
 #include "../GroupDriver/GroupDriver.h"
 
+
 void LuxuryDriver::setVehicleCapacity(int capacity) {
     vehicleCapacity = capacity;
 }

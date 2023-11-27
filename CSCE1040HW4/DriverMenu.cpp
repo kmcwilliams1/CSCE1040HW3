@@ -74,7 +74,7 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
 
             case 'b':
             case 'B':// Finish Ride
-
+                cout << "Which action would you like to take?" << endl;
                 cout << "Complete Ride: A" << endl;
                 cout << "Cancel Ride: B" << endl;
                 cin >> option;
