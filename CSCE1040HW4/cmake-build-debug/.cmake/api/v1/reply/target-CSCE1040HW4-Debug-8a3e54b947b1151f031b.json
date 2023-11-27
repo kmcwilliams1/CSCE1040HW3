@@ -2,7 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "CSCE1040HW4"
+			"path" : "CSCE1040HW4.exe"
+		},
+		{
+			"path" : "CSCE1040HW4.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -35,10 +38,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -fcolor-diagnostics"
-				},
-				{
-					"fragment" : "-std=gnu++11"
+					"fragment" : "-g -std=gnu++11 -fdiagnostics-color=always"
 				}
 			],
 			"language" : "CXX",
@@ -78,12 +78,16 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "CSCE1040HW4",
-	"nameOnDisk" : "CSCE1040HW4",
+	"nameOnDisk" : "CSCE1040HW4.exe",
 	"paths" : 
 	{
 		"build" : ".",

@@ -5,13 +5,15 @@
 
 #include "../Driver.h"
 
-
+class BasicDriver;
+class EconomyDriver;
+class LuxuryDriver;
 class GroupDriver : public Driver {
 public:
     GroupDriver();
     ~GroupDriver();
 
-    int vehicleCapacity;
+    int vehicleCapacity{};
     string cargoCapacity;
 
     void addGroupParameters();
@@ -24,6 +26,9 @@ public:
     void setCargoCapacity(const string &cargo);
 
 
+    void getInfo() const;
+
+    void editInfo();
 };
 
 

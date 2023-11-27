@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.25"
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "CSCE1040HW4::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CSCE1040HW4-Debug-8b890dbc8c32ec361ae1.json",
+					"jsonFile" : "target-CSCE1040HW4-Debug-8a3e54b947b1151f031b.json",
 					"name" : "CSCE1040HW4",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/kylemcwilliams/CLionProjects/1040Homework/HW3/CSCE1040HW4/cmake-build-debug",
-		"source" : "/Users/kylemcwilliams/CLionProjects/1040Homework/HW3/CSCE1040HW4"
+		"build" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4/cmake-build-debug",
+		"source" : "C:/CLion 2023.2.2/CLionProjects/CSCE1040HW4"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 5
 	}
 }

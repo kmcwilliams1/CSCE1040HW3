@@ -5,6 +5,10 @@
 
 #include "../Driver.h"
 
+
+class EconomyDriver;
+class GroupDriver;
+class LuxuryDriver;
 class BasicDriver : public Driver {
 
 public:

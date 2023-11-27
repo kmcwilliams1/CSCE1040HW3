@@ -4,7 +4,9 @@
 #include <sstream>
 #include "LuxuryDriver.h"
 #include "../BasicDriver/BasicDriver.h"
-#include "../DriverCollection.h"
+#include "../EconomyDriver/EconomyDriver.h"
+#include "../GroupDriver/GroupDriver.h"
+
 
 void LuxuryDriver::setVehicleCapacity(int capacity) {
     vehicleCapacity = capacity;
@@ -16,7 +18,7 @@ void LuxuryDriver::setCargoCapacity(const string &cargo) {
 }
 
 
-void LuxuryDriver::setAmenities(const string &amenity) {
+void LuxuryDriver::setAmenities() {
     char option;
 
     cout << "Please choose amenities needed: " << endl;
@@ -225,7 +227,163 @@ void LuxuryDriver::getInfo() const {
     cout << endl;
 }
 
-void LuxuryDriver::editInfo() {}
+void LuxuryDriver::editInfo() {
+    char option;
+    string str;
+    int i;
+    cout << "*************************************" << endl;
+    cout << "           Driver Edit Menu          " << endl;
+    cout << "*************************************" << endl;
+    cout << "* What would you like to edit?      *" << endl;
+    cout << "* B: Handicapped Capable:      " << isHandicappedCapable() << endl;
+    cout << "* C: Pets Allowed :            " << isPetsAllowed() << endl;
+    cout << "* D: First Name :              " << getFirstName() << endl;
+    cout << "* E: Last Name :               " << getLastName() << endl;
+    cout << "* F: Vehicle Type :            " << static_cast<int>(getVehicleType()) << endl;
+    cout << "* G: Vehicle Capacity:         " << getVehicleCapacity() << endl;
+    cout << "* H: Cargo Capacity:           " << getCargoCapacity() << endl;
+    cout << "* I: Amenities:                ";
+    for (const string &amenity: getAmenities()) {
+        cout << amenity << ", ";
+    }
+    cout << endl;
+    cout << "*************************************" << endl;
+
+    cin >> option;
+
+
+    switch (option) {
+
+
+        case 'B':
+            cout << "Driving a handicapable vehicle? (Y/N): " <<
+                 endl;
+            cin >>
+                option;
+            if (option == 'Y' || option == 'y') {
+                setHandicappedCapable(true);
+            } else if (option == 'N' || option == 'n') {
+                setHandicappedCapable(false);
+
+            } else {
+                cout << "Not a proper answer, try again" << endl;
+                cin >> option;
+            }
+            break;
+
+        case 'C':
+            cout << "New pet policy (Y/N): " << endl;
+            cin >> option;
+            if (option == 'Y' || option == 'y') {
+                setPetsAllowed(true);
+            } else if (option == 'N' || option == 'n') {
+                setPetsAllowed(false);
+
+            } else {
+                cout << "Not a proper answer, try again" << endl;
+                cin >> option;
+            }
+            break;
+
+        case 'D':
+
+            cout << "New first name: " << endl;
+            cin >> str;
+            setFirstName(str);
+            break;
+
+        case 'E':
+
+            cout << "New Last Name: " << endl;
+            cin >> str;
+            setLastName(str);
+            break;
+
+        case 'F': {
+            cout << "New Vehicle Type (1-4): " << endl;
+            cin >> i;
+            if (static_cast<Driver::VehicleType>(i) != getVehicleType()) {
+                Driver *newDriver = nullptr;
+                switch (i) {
+                    case 1: {
+                        newDriver = new BasicDriver;
+                        dynamic_cast<BasicDriver *>(newDriver)->
+
+                                addBasicParameters();
+
+                        break;
+                    }
+                    case 2: {
+                        newDriver = new EconomyDriver;
+                        dynamic_cast<EconomyDriver *>(newDriver)->
+
+                                addEconomyParameters();
+
+                        break;
+                    }
+                    case 3: {
+                        newDriver = new GroupDriver;
+                        dynamic_cast<GroupDriver *>(newDriver)->
+
+                                addGroupParameters();
+
+                        break;
+                    }
+                    case 4:
+                        cout << "You are already this vehicle." << endl;
+                        break;
+                    default:
+                        break;
+                }
+                if (newDriver) {
+                    newDriver->copyPropertiesFrom(this);
+                    newDriver->setVehicleType(static_cast<Driver::VehicleType>(i)
+                    );
+
+                } else {
+                    cout << "Memory allocation failed." << endl;
+                }
+            } else {
+                cout << "You are already this type of vehicle!" << endl;
+            }
+            break;
+        }
+
+
+        case 'G': {
+
+            cout << "New Vehicle Capacity: " << endl;
+            cin >> i;
+            setVehicleCapacity(i);
+
+            break;
+        }
+
+        case 'H':
+
+            cout << "New Cargo Capacity: " << endl;
+            cin >> str;
+            setCargoCapacity(str);
+
+
+            break;
+
+        case 'I':
+
+            cout << "New Amenities: " << endl;
+
+            setAmenities();
+
+
+            break;
+
+
+        default:
+            cout << "Invalid option, try again." << endl;
+            cin >> option;
+
+    }
+}
 
 void LuxuryDriver::readLuxuryProperties(const string &basicString) {
 
@@ -289,7 +447,6 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
     {
         if (temp == "1")amenities.emplace_back("bodyguard");
     }
-
 
 
     getline(dataStream, temp, ',');

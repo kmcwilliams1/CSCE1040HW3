@@ -6,6 +6,9 @@
 
 #include "../Driver.h"
 
+class BasicDriver;
+class GroupDriver;
+class LuxuryDriver;
 class EconomyDriver : public Driver{
 
 public:
@@ -13,7 +16,7 @@ public:
     ~EconomyDriver();
 
 
-    int vehicleCapacity;
+    int vehicleCapacity{};
     string cargoCapacity;
 
     void addEconomyParameters();
@@ -26,6 +29,9 @@ public:
     void setCargoCapacity(const string &cargo);
 
 
+    void getInfo() const;
+
+    void editInfo();
 };
 
 

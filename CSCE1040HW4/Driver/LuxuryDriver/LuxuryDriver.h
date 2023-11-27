@@ -5,6 +5,10 @@
 
 #include "../Driver.h"
 
+
+class BasicDriver;
+class EconomyDriver;
+class GroupDriver;
 class LuxuryDriver : public Driver {
 public:
 
@@ -30,7 +34,7 @@ public:
     void setCargoCapacity(const string& cargo);
 
     vector<string>& getAmenities() { return amenities; };
-    void setAmenities(const string& amenity);
+    void setAmenities();
 
     void getInfo() const override;
     void editInfo() override;

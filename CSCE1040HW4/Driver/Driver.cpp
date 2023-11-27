@@ -79,13 +79,17 @@ void Driver::setLastName(const string &last) {
 
 void Driver::setCompletedRides() {
     int i;
+
     for (Ride &ride: rides) {
+        cout << "-------------------------------------------" << endl;
         if (ride.getStatus() == Ride::RideStatus::Active) {
-            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << ride.id << endl;
+            cout << "Destination: " << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << "ID: "<< ride.id << endl;
+            cout << "Time: " << ride.getPickupTime() << endl;
         }
     }
-    cout << "Which ride ID do you want to complete?" << endl;
+
+    cout<< endl << "Which ride ID do you want to complete?" << endl;
     cin >> i;
 
     for (Ride &ride: rides) {
@@ -99,10 +103,13 @@ void Driver::setCompletedRides() {
 
 void Driver::setCancelledRides() {
     int i;
+
     for (Ride &ride: rides) {
+        cout << "-------------------------------------------" << endl;
         if (ride.getStatus() == Ride::RideStatus::Active) {
-            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << ride.id << endl;
+            cout << "Destination: " << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << "ID: "<< ride.id << endl;
+            cout << "Time: " << ride.getPickupTime() << endl;
         }
     }
     cout << "Which ride ID do you want to cancel?" << endl;
@@ -211,9 +218,7 @@ void Driver::getInfo() const {
 
 }
 
-void Driver::editInfo() {
-
-}
+void Driver::editInfo() {}
 
 void Driver::copyPropertiesFrom(const Driver *otherDriver) {
 

@@ -43,17 +43,34 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
                 if (option == 'Y' || option == 'y') {
                     rideCollection.assignSchedule(*driver);
                     driver->getSchedule();
-                };
-
+                } else if (option == 'N' || option == 'n') {
+                    break;
+                } else {
+                    cout << "Invalid input, please try again.";
+                }
                 break;
 
             case 'd':
             case 'D':// Toggle Availability
-                cout << "Current Availability: " << driver->isAvailable() << endl;
-                driver->setAvailable(!driver->isAvailable());
-                cout << "Now: " << driver->isAvailable() << endl;
-                cout << endl;
+            {
+
+                cout << "Are you available? (Y/N)" << endl;
+                cin >> option;
+
+                if (option == 'Y' || option == 'y') {
+                    driver->setAvailable(true);
+                    cout << "Now Available" << endl;
+                } else if (option == 'N' || option == 'n') {
+                    driver->setAvailable(false);
+                    cout << "Now Unavailable" << endl;
+                } else {
+                    cout << "Invalid input, please try again.";
+                }
+
+
+
                 break;
+            }
 
             case 'b':
             case 'B':// Finish Ride
@@ -87,7 +104,7 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
             case 'f':
             case 'F':// Edit Car information
             {
-                driver = driverCollection.updateVehicleType(driver);
+                driver->editInfo();
                 cout << endl;
                 break;
             }
