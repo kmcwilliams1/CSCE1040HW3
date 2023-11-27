@@ -122,7 +122,7 @@ void LuxuryDriver::addLuxuryParameters() {
     string str;
 
     while (true) {
-        cout << "Will you be bringing luggage? (Y/N): ";
+        cout << "Do you have luggage storage? (Y/N): ";
         cin >> option;
         cout << "*****************************" << endl;
         cin.ignore();
@@ -395,8 +395,7 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
     dataStream.seekg(0);
 
     getline(dataStream, temp, ',');
-    {
-    };
+    {/*this line reads the word Driver*/};
 
     getline(dataStream, temp, ',');
     {
@@ -413,7 +412,27 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
     };
     getline(dataStream, temp, ',');
     {
+        id = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
         password = temp;
+    };
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; };
+    };
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; };
+    };
+    getline(dataStream, temp, ',');
+    {
+        available = true;
+    };
+    getline(dataStream, temp, ',');
+    {
+        driverRating = stof(temp);
     };
 
 
@@ -449,31 +468,6 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
     }
 
 
-    getline(dataStream, temp, ',');
-    {
-        id = stoi(temp);
-    };
-
-    getline(dataStream, temp, ',');
-    {
-        if (stoi(temp) == '1') { petsAllowed = true; } else { petsAllowed = false; };
-    };
-    getline(dataStream, temp, ',');
-    {
-        if (stoi(temp) == '1') { handicappedCapable = true; } else { handicappedCapable = false; };
-    };
-
-    getline(dataStream, temp, ',');
-    {
-        available = true;
-    };
-
-
-    getline(dataStream, temp, ',');
-    {
-        driverRating = stof(temp);
-    };
-
     getline(dataStream, temp, '\n');
     {
         int tripID = 0;
@@ -481,7 +475,6 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
             if (i != ',') {
                 tripID = tripID * 10 + (i - '0');
             } else {
-                cout << "Adding tripID: " << tripID << '\n';
                 rideIds.push_back(tripID);
                 tripID = 0;
 
@@ -492,27 +485,37 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
 
 }
 
+
 void LuxuryDriver::writeDriverProperties(ostream &dataFile) {
     dataFile << "Driver,";
+
     dataFile << static_cast<int>(vehicleType) << ",";
     dataFile << firstName << ",";
     dataFile << lastName << ",";
     dataFile << id << ",";
-    dataFile << vehicleCapacity << ",";
-    dataFile << cargoCapacity << ",";
-    cargoCapacity == "1" && dataFile << cargoCapacity << ",";
-    dataFile << amenities[0] << ",";
-    dataFile << amenities[1] << ",";
-    dataFile << amenities[2] << ",";
-    dataFile << amenities[3] << ",";
-    dataFile << handicappedCapable << ",";
-    dataFile << petsAllowed << ",";
-    dataFile << driverRating << ",";
     dataFile << password << ",";
+    dataFile << petsAllowed << ",";
+    dataFile << handicappedCapable << ",";
+    dataFile << available << ",";
+    dataFile << driverRating << ",";
+
+    dataFile << vehicleCapacity << ",";
+    cargoCapacity != "no luggage" ? dataFile << "1," << cargoCapacity << "," : dataFile << "0,";
+
+
+    int bottle = 0, club = 0, female = 0, bodyguard = 0;
+    for (const string &amenity : amenities) {
+        bottle += (amenity == "bottle") ? 1 : 0;
+        club += (amenity == "club") ? 1 : 0;
+        female += (amenity == "female") ? 1 : 0;
+        bodyguard += (amenity == "bodyguard") ? 1 : 0;
+    }
+    dataFile << bottle << "," << club << "," << female << "," << bodyguard << "," << endl;
+
+
     for (const Ride &ride: rides) {
         dataFile << ride.getId() << ",";
     }
     dataFile << "\n";
-
 }
 
