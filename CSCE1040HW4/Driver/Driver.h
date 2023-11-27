@@ -41,14 +41,13 @@ public:
 
 
     //methods
-    void writeDriverProperties(ostream &dataFile);
+    virtual void writeDriverProperties(ostream &dataFile) ;
 
     void getSchedule();
     virtual void getInfo() const ;
     virtual void editInfo();
     void deleteCancelledAndCompletedRides();
     void copyPropertiesFrom(const Driver* otherDriver);
-    Driver *createDriverOfType(int type);
 
 
     //getters and setters

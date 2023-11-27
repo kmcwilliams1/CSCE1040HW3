@@ -32,6 +32,8 @@ public:
     void getInfo() const;
 
     void editInfo();
+
+    void writeDriverProperties(ostream &ostream);
 };
 
 

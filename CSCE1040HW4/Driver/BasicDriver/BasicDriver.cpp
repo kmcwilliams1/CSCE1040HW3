@@ -23,11 +23,11 @@ BasicDriver::~BasicDriver() = default;
 BasicDriver::BasicDriver() = default;
 
 void BasicDriver::addBasicParameters() {
-
     int i;
 
     while (true) {
         cout << "Enter vehicle capacity (2-4): ";
+        cin >> i;
 
         // Check if input is an integer and within the specified range
         if (!(cin >> i) || (i < 2 || i > 4)) {
@@ -309,6 +309,25 @@ void BasicDriver::readBasicProperties(const string &basicString) {
     }
 
 
+}
+
+void BasicDriver::writeDriverProperties(ostream &dataFile) {
+    dataFile << "Driver,";
+    dataFile << static_cast<int>(vehicleType) << ",";
+    dataFile << firstName << ",";
+    dataFile << lastName << ",";
+    dataFile << id << ",";
+    dataFile << vehicleCapacity << ",";
+    dataFile << cargoCapacity << ",";
+    cargoCapacity == "1" && dataFile << cargoCapacity << ",";
+    dataFile << handicappedCapable << ",";
+    dataFile << petsAllowed << ",";
+    dataFile << driverRating << ",";
+    dataFile << password << ",";
+    for (const Ride &ride: rides) {
+        dataFile << ride.getId() << ",";
+    }
+    dataFile << "\n";
 }
 
 

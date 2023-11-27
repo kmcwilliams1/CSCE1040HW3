@@ -32,6 +32,8 @@ void GroupDriver::addGroupParameters() {
     char option;
     string str;
     cout << "Will you be bringing luggage? (Y/N) " << endl;
+    cin >> option;
+
     if (option == 'Y' || option == 'y'){
         cout << "Enter description of luggage: " << endl;
         cin >> str;
@@ -285,4 +287,23 @@ void GroupDriver::readGroupProperties(const string &basicString) {
     }
 
 
+}
+
+void GroupDriver::writeDriverProperties(ostream &dataFile) {
+    dataFile << "Driver,";
+    dataFile << static_cast<int>(vehicleType) << ",";
+    dataFile << firstName << ",";
+    dataFile << lastName << ",";
+    dataFile << id << ",";
+    dataFile << vehicleCapacity << ",";
+    dataFile << cargoCapacity << ",";
+    cargoCapacity == "1" && dataFile << cargoCapacity << ",";
+    dataFile << handicappedCapable << ",";
+    dataFile << petsAllowed << ",";
+    dataFile << driverRating << ",";
+    dataFile << password << ",";
+    for (const Ride &ride: rides) {
+        dataFile << ride.getId() << ",";
+    }
+    dataFile << "\n";
 }
