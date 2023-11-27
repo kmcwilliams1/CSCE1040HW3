@@ -169,23 +169,22 @@ int main() {
                     return 1;
                 }
 
+
                 for (Ride &currentRide: rideCollection.rides) {
                     currentRide.writeRideProperties(fout);
                 }
                 fout << endl;
 
-                for (Driver *currentDriverPtr: driverCollection.drivers) {
-
-                    currentDriverPtr->writeDriverProperties(fout);
-                }
-
-                for (Driver *driverPtr: driverCollection.drivers) {
-                    delete driverPtr;
-                }
-                fout << endl;
 
                 for (Passenger &currentPassenger: passengerCollection.passengers) {
                     currentPassenger.writePassengerProperties(fout);
+                }
+                fout << endl << endl;
+
+
+                for (Driver *currentDriverPtr: driverCollection.drivers) {
+                    currentDriverPtr->writeDriverProperties(fout);
+                    delete currentDriverPtr;
                 }
                 fout << endl;
 

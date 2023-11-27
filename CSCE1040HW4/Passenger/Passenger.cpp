@@ -451,7 +451,7 @@ void Passenger::editInfo() {
 
         case 'C':
             while (true) {
-                cout << "Will you be bringing luggage? (Y/N) ";
+                cout << "Do you have luggage storage? (Y/N) ";
                 cin >> option;
 
                 if (option == 'Y' || option == 'y') {

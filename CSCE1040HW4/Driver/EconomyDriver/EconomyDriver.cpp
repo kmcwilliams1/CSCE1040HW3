@@ -30,7 +30,7 @@ void EconomyDriver::addEconomyParameters() {
 
     char option;
     string str;
-    cout << "Will you be bringing luggage? (Y/N)" << endl;
+    cout << "Do you have luggage storage? (Y/N)" << endl;
     cin >> option;
     if (option == 'Y' || option == 'y') {
         cout << "Enter description of luggage: " << endl;
@@ -196,6 +196,7 @@ void EconomyDriver::editInfo() {
 }
 
 
+
 void EconomyDriver::readEconomyProperties(const string &basicString) {
 
 
@@ -223,8 +224,29 @@ void EconomyDriver::readEconomyProperties(const string &basicString) {
     };
     getline(dataStream, temp, ',');
     {
+        id = stoi(temp);
+    };
+    getline(dataStream, temp, ',');
+    {
         password = temp;
     };
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; };
+    };
+    getline(dataStream, temp, ',');
+    {
+        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; };
+    };
+    getline(dataStream, temp, ',');
+    {
+        available = true;
+    };
+    getline(dataStream, temp, ',');
+    {
+        driverRating = stof(temp);
+    };
+
 
 
     getline(dataStream, temp, ',');
@@ -242,30 +264,7 @@ void EconomyDriver::readEconomyProperties(const string &basicString) {
         };
     }
 
-    getline(dataStream, temp, ',');
-    {
-        id = stoi(temp);
-    };
 
-    getline(dataStream, temp, ',');
-    {
-        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; };
-    };
-    getline(dataStream, temp, ',');
-    {
-        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; };
-    };
-
-    getline(dataStream, temp, ',');
-    {
-        available = true;
-    };
-
-
-    getline(dataStream, temp, ',');
-    {
-        driverRating = stof(temp);
-    };
 
     getline(dataStream, temp, '\n');
     {
@@ -288,26 +287,17 @@ void EconomyDriver::writeDriverProperties(ostream &dataFile) {
     dataFile << "Driver,";
 
     dataFile << static_cast<int>(vehicleType) << ",";
-
     dataFile << firstName << ",";
-
     dataFile << lastName << ",";
-
     dataFile << id << ",";
-
-    dataFile << vehicleCapacity << ",";
-
-    dataFile << cargoCapacity << ",";
-
-    cargoCapacity == "1" && dataFile << cargoCapacity << ",";
-
-    dataFile << handicappedCapable << ",";
-
+    dataFile << password << ",";
     dataFile << petsAllowed << ",";
-
+    dataFile << handicappedCapable << ",";
+    dataFile << available << ",";
     dataFile << driverRating << ",";
 
-    cout << "Now reading" << password << endl;
+    dataFile << vehicleCapacity << ",";
+    cargoCapacity != "no luggage" ? dataFile << "1," << cargoCapacity << "," : dataFile << "0,";
 
     for (const Ride &ride: rides) {
         dataFile << ride.getId() << ",";
