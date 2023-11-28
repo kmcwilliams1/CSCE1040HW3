@@ -10,11 +10,13 @@ class PassengerCollection {
 
 public:
 
-    vector <Passenger> passengers;
+    vector <Passenger*> passengers;
 
-    void deletePassenger(const Passenger& passenger);
+    void deletePassenger(const Passenger* passenger);
 
-    Passenger addPassenger(Passenger passenger);
+    Passenger * addPassenger();
+
+    void readPassengerProperties(const string &basicString);
 };
 
 

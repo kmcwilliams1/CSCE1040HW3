@@ -9,10 +9,12 @@
 class RideCollection {
 
 public:
-    Ride addRide(Ride newRide);
-    vector<Ride> rides;
+    Ride *addRide(Ride* newRide);
+    vector<Ride* > rides;
 
     void assignSchedule(Driver& driver);
+
+    void readRideProperties(const string& basicString);
 };
 
 

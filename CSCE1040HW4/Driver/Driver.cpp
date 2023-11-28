@@ -170,6 +170,8 @@ void Driver::deleteCancelledAndCompletedRides() {
     for (auto it = rides.begin(); it != rides.end();) {
         if (it->rideStatus == Ride::RideStatus::Completed || it->rideStatus == Ride::RideStatus::Cancelled) {
             this->rides.erase(it);
+        }else {
+            ++it;
         }
     }
 }

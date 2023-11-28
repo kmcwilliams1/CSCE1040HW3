@@ -13,9 +13,9 @@ using namespace std;
 
 
 int main() {
-    Driver *driver = nullptr;
-    Passenger passenger;
-    Ride ride;
+    auto *driver = new Driver();
+    auto *passenger = new Passenger();
+    auto *ride = new Ride();
 
     DriverCollection driverCollection;
     PassengerCollection passengerCollection;
@@ -41,13 +41,11 @@ int main() {
 
         } else if (role == rideSearchWord) {
 
-            ride.readRideProperties(readingLine);
-            rideCollection.rides.push_back(ride);
+            rideCollection.readRideProperties(readingLine);
 
         } else if (role == passengerSearchWord) {
 
-            passenger.readPassengerProperties(readingLine);
-            passengerCollection.passengers.push_back(passenger);
+            passengerCollection.readPassengerProperties(readingLine);
 
         }
     }
@@ -56,24 +54,33 @@ int main() {
     fin.clear();
     fin.seekg(0, ios::beg);
 
+/*populates the passengers and drivers with ride objects*/
+    for (auto &currentRidePtr: rideCollection.rides) {
+        Ride &currentRide = *currentRidePtr;  // Dereference the pointer
 
-    /*populates the passengers and drivers with ride objects*/
-    for (auto &currentRide: rideCollection.rides) {
-        for (auto &currentPassenger: passengerCollection.passengers) {
+        for (auto &currentPassengerPtr: passengerCollection.passengers) {
+            Passenger &currentPassenger = *currentPassengerPtr;  // Dereference the pointer
+
             if (currentRide.assignedPassengerId == currentPassenger.id) {
-                currentPassenger.rides.push_back(currentRide);
+                currentPassenger.rides.push_back(&currentRide);
+            }
+
+        }
+    }
+
+
+    for (auto &currentRidePtr: rideCollection.rides) {
+        Ride &currentRide = *currentRidePtr;  // Dereference the pointer
+
+        for (auto &currentDriverPtr: driverCollection.drivers) {
+            Driver &currentDriver = *currentDriverPtr;  // Dereference the pointer
+
+            if (currentRide.assignedDriverId == currentDriver.id) {
+                currentDriver.rides.push_back(currentRide);
             }
         }
     }
 
-    for (auto &currentRide: rideCollection.rides) {
-        for (auto &currentDriver: driverCollection.drivers) {
-            cout << "This type is: " << currentDriver->getTypeName() << endl;
-            if (currentRide.assignedDriverId == currentDriver->id) {
-                currentDriver->rides.push_back(currentRide);
-            }
-        }
-    }
 
     fin.close();
 
@@ -113,7 +120,7 @@ int main() {
 
                 for (auto &currentDriver: driverCollection.drivers) {
                     if (currentDriver->password == enteredPassword) {
-                        DriverMenu(currentDriver, rideCollection, driverCollection);
+                        DriverMenu(currentDriver, &rideCollection, driverCollection);
                         driverLoggedIn = true;
                         break;
                     }
@@ -122,8 +129,8 @@ int main() {
                 if (!driverLoggedIn) {
                     bool passengerLoggedIn = false;
                     for (auto &currentPassenger: passengerCollection.passengers) {
-                        if (currentPassenger.password == enteredPassword) {
-                            PassengerMenu(currentPassenger, rideCollection, passengerCollection);
+                        if (currentPassenger->password == enteredPassword) {
+                            PassengerMenu(currentPassenger, &rideCollection, passengerCollection);
                             passengerLoggedIn = true;
                             break;
                         }
@@ -140,16 +147,15 @@ int main() {
             case 'b': // Add Driver
 
                 driver = driverCollection.addDriver();
-                DriverMenu(driver, rideCollection, driverCollection);
+                DriverMenu(driver, &rideCollection, driverCollection);
                 break;
 
 
             case 'c':
             case 'C'://Add Passenger
 
-                passenger = passengerCollection.addPassenger(passenger);
-                PassengerMenu(passenger, rideCollection, passengerCollection);
-
+                passenger = passengerCollection.addPassenger();
+                PassengerMenu(passenger, &rideCollection, passengerCollection);
                 break;
 
             default:
@@ -159,39 +165,44 @@ int main() {
 
             case 'd':
             case 'D'://Exit
+            {
                 ofstream fout("RideShareData.dat");
 
-                /*all data from sheet was already copied, any new data has already been stored in a
-                 * collection, hence the datasheet can be rewritten with all existing collection data*/
-
+                // Check if the file is successfully opened
                 if (!fout) {
                     cerr << "Failed to open output file" << endl;
                     return 1;
                 }
 
-
-                for (Ride &currentRide: rideCollection.rides) {
-                    currentRide.writeRideProperties(fout);
+                for (Ride *currentRide: rideCollection.rides) {
+                    currentRide->writeRideProperties(fout);
+                    delete currentRide;
                 }
+                rideCollection.rides.clear();
+
                 fout << endl;
 
-
-                for (Passenger &currentPassenger: passengerCollection.passengers) {
-                    currentPassenger.writePassengerProperties(fout);
+                cout << "Writing " << passengerCollection.passengers.size() << " passengers" << endl;
+                for (Passenger *currentPassenger: passengerCollection.passengers) {
+                    cout << "Current passenger has " << currentPassenger->rides.size() << " rides" << endl;
+                    currentPassenger->writePassengerProperties(fout);
+                    delete currentPassenger;
                 }
-                fout << endl << endl;
+                passengerCollection.passengers.clear();
 
+                fout << endl << endl;
 
                 for (Driver *currentDriverPtr: driverCollection.drivers) {
                     currentDriverPtr->writeDriverProperties(fout);
                     delete currentDriverPtr;
                 }
+                driverCollection.drivers.clear();
                 fout << endl;
-
 
                 fout.close();
                 cout << "Goodbye" << endl;
                 return 0;
+            }
 
 
         }
