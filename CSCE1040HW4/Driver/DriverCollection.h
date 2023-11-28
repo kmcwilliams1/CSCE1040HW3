@@ -15,8 +15,6 @@ public:
 
     void removeDriver(Driver& driver);
 
-    Driver *updateVehicleType(Driver *driver);
-
     void readDriverProperties(const string& basicString);
 };
 

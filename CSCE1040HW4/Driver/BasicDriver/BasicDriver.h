@@ -33,11 +33,9 @@ public:
 
 
     void getInfo() const override;
-
     void editInfo() override;
 
     void readBasicProperties(const string &basicString);
-
     void writeDriverProperties(ostream &ostream) override;
 };
 

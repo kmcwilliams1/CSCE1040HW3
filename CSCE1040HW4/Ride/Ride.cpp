@@ -15,7 +15,7 @@ int Ride::getSizeOfParty() const {
 }
 
 void Ride::setSizeOfParty(int partySize) {
-
+    sizeOfParty = partySize;
 }
 
 bool Ride::getIncludesPets() const {
@@ -30,8 +30,8 @@ Ride::RideStatus Ride::getStatus() const {
     return rideStatus;
 }
 
-void Ride::setStatus(Ride::RideStatus status) {
-
+void Ride::setStatus(Ride::RideStatus newStatus) {
+    rideStatus = newStatus;
 }
 
 float Ride::getRating() const {
@@ -39,7 +39,7 @@ float Ride::getRating() const {
 }
 
 void Ride::setRating(float rideRating) {
-
+    rating = rideRating;
 }
 
 int Ride::getId() const {
@@ -47,7 +47,7 @@ int Ride::getId() const {
 }
 
 void Ride::setId(int rideId) {
-
+    id = rideId;
 }
 
 string Ride::getPickupLocation() const {
@@ -55,7 +55,7 @@ string Ride::getPickupLocation() const {
 }
 
 void Ride::setPickupLocation(const string &location) {
-
+    pickupLocation = location;
 }
 
 string Ride::getDropOffLocation() const {
@@ -63,7 +63,7 @@ string Ride::getDropOffLocation() const {
 }
 
 void Ride::setDropOffLocation(const string &location) {
-
+    dropOffLocation = location;
 }
 
 string Ride::getPickupTime() const {
@@ -154,7 +154,7 @@ void Ride::setPickupTime() {
     timeInfo.tm_isdst = -1;
 
     userTime = mktime(&timeInfo);
-    this->pickupTime = userTime;
+    pickupTime = userTime;
 }
 
 time_t Ride::getDropOffTime() const {
@@ -169,8 +169,8 @@ const string &Ride::getNote() const {
     return note;
 }
 
-void Ride::setNote(const string &note) {
-
+void Ride::setNote(const string &newNote) {
+    note = newNote;
 }
 
 bool Ride::getHandicapped() const {
@@ -181,93 +181,50 @@ void Ride::setHandicapped() {
     handicapable = !handicapable;
 }
 
-void Ride::readRideProperties(string basicString) {
-    istringstream dataStream(basicString);
-    string temp;
 
-    getline(dataStream, temp, ',');
-    {
-    };
-    getline(dataStream, temp, ',');
-        if (temp == "12") {
-            this->rideStatus = RideStatus::Active;
-        } else if (temp == "13") {
-            this->rideStatus = RideStatus::Completed;
-        } else {
-            this->rideStatus = RideStatus::Cancelled;
-        }
-    getline(dataStream, temp, ',');
-    {
-        this->sizeOfParty = stoi(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->pickupLocation = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->dropOffLocation = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->pickupTime = stoi(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->note = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        temp == "1" ? this->handicapable = true : this->handicapable = false;
-    };
-    getline(dataStream, temp, ',');
-    {
-        temp == "1" ? this->includesPets = true : this->includesPets = false;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->id = stoi(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->assignedPassengerId = stoi(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->assignedDriverId = stoi(temp);
-    };
-}
 
 
 void Ride::writeRideProperties(ostream &dataFile) const {
     dataFile << "Ride,";
     dataFile << static_cast<int>(rideStatus) << ",";
+
     dataFile << sizeOfParty << ",";
+
     dataFile << pickupLocation << ",";
+
     dataFile << dropOffLocation << ",";
+
     dataFile << pickupTime << ",";
+
     dataFile << note << ",";
-    dataFile << (handicapable ? "1" : "0") << ","; // Convert to "1" or "0"
-    dataFile << (includesPets ? "1" : "0") << ","; // Convert to "1" or "0"
+
+    dataFile << (handicapable ? "1" : "0") << ",";
+
+    dataFile << (includesPets ? "1" : "0") << ",";
+
     dataFile << id << ",";
+
     dataFile << assignedPassengerId << ",";
-    dataFile << assignedDriverId<< "," << endl;
+
+    dataFile << assignedDriverId<< ",";
+
+    dataFile << rating<< "," << endl;
 }
 
 int Ride::getAssignedDriverId() const {
     return assignedDriverId;
 }
 
-void Ride::setAssignedDriverId() {
-
+void Ride::setAssignedDriverId(int driverId) {
+    assignedDriverId = driverId;
 }
 
 int Ride::getAssignedPassengerId() const {
     return assignedPassengerId;
 }
 
-void Ride::setAssignedPassengerId() {
-
+void Ride::setAssignedPassengerId(int passengerId) {
+    assignedPassengerId = passengerId;
 }
 
 

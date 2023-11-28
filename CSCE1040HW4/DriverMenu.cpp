@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection &driverCollection) {
+void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection &driverCollection) {
 
     char option;
     string str;
@@ -41,7 +41,7 @@ void DriverMenu(Driver *driver, RideCollection &rideCollection, DriverCollection
                 cout << "Add more rides to your schedule? (Y/N)" << endl;
                 cin >> option;
                 if (option == 'Y' || option == 'y') {
-                    rideCollection.assignSchedule(*driver);
+                    rideCollection->assignSchedule(*driver);
                     driver->getSchedule();
                 } else if (option == 'N' || option == 'n') {
                     break;

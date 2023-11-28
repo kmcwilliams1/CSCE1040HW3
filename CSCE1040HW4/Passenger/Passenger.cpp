@@ -11,61 +11,6 @@ Passenger::~Passenger() = default;
 Passenger::Passenger() = default;
 
 
-void Passenger::readPassengerProperties(string &readingLine) {
-    istringstream dataStream(readingLine);
-    string temp;
-
-    getline(dataStream, temp, ',');
-    {
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->firstName = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->lastName = temp;
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->id = stoi(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->requiredRating = stof(temp);
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->hasPets = (temp == "true");
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->paymentPreference = static_cast<PaymentPreference>(stoi(temp));
-    };
-    getline(dataStream, temp, ',');
-    {
-        this->password = temp;
-    }
-
-    getline(dataStream, temp, '\n');
-
-
-    string rideId;
-    this->rideIds.clear();
-    char currentChar;
-
-    for (char i: temp) {
-        currentChar = i;
-        if (currentChar != ',') {
-            rideId.push_back(currentChar);
-        } else {
-            this->rideIds.push_back(stoi(rideId));
-            rideId = "";
-        }
-    };
-
-}
-
 void Passenger::writePassengerProperties(ostream &dataFile) {
     dataFile << "Passenger,";
     dataFile << firstName << ",";
@@ -75,14 +20,15 @@ void Passenger::writePassengerProperties(ostream &dataFile) {
     dataFile << (hasPets ? "true" : "false") << ",";
     dataFile << static_cast<int>(paymentPreference) << ",";
     dataFile << password << ",";
-    for (auto &ride: rides) {
-        dataFile << ride.id << ",";
-    };
+    for (const auto &ride : rides) {
+        dataFile << ride->id << ",";
+    }
 }
 
-void Passenger::addRide(const Ride &ride) {
+void Passenger::addRide(Ride* ride) {
     rides.push_back(ride);
 }
+
 
 void Passenger::getInfo() const {
     cout << "First Name: " << firstName << endl;
@@ -108,7 +54,7 @@ void Passenger::getInfo() const {
     int currentRides = 0;
     for (auto &ride: rides) {
         count++;
-        if (ride.rideStatus == Ride::RideStatus::Active) {
+        if (ride->rideStatus == Ride::RideStatus::Active) {
             currentRides++;
         }
     }
@@ -124,11 +70,14 @@ void Passenger::getInfo() const {
 
 void Passenger::deleteCancelledAndCompletedRides() {
     for (auto it = rides.begin(); it != rides.end();) {
-        if (it->rideStatus == Ride::RideStatus::Completed || it->rideStatus == Ride::RideStatus::Cancelled) {
-            this->rides.erase(it);
+        if ((*it)->rideStatus == Ride::RideStatus::Completed || (*it)->rideStatus == Ride::RideStatus::Cancelled) {
+            it = rides.erase(it);
+        } else {
+            ++it;
         }
     }
 }
+
 
 float Passenger::getRequiredRating() const {
     return requiredRating;
@@ -143,7 +92,7 @@ bool Passenger::getHasPets() const {
 }
 
 void Passenger::setHasPets(bool value) {
-        hasPets = value;
+    hasPets = value;
 }
 
 Passenger::PaymentPreference Passenger::getPaymentPreference() const {
@@ -183,14 +132,14 @@ void Passenger::setLastName(const string &last) {
 }
 
 void Passenger::getRides(char option) const {
-
     if (!rides.empty()) {
         bool foundRides = false;
 
         cout << "Rides:" << endl;
         cout << "---------------------------------------" << endl;
 
-        for (const Ride &ride: rides) {
+        for (const Ride* ridePtr : rides) {
+            const Ride& ride = *ridePtr;
             bool printRide;
 
             switch (option) {
@@ -220,6 +169,7 @@ void Passenger::getRides(char option) const {
                 cout << "Pickup Location: " << ride.getPickupLocation() << endl;
                 cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
                 cout << "Pickup Time: " << ride.getPickupTime() << endl;
+                cout << "Rating: " << ride.getRating() << endl;
                 cout << "---------------------------------------" << endl;
             }
         }
@@ -229,17 +179,17 @@ void Passenger::getRides(char option) const {
             switch (option) {
                 case 'C':
                 case 'c':
-                    cout << "No active rides for this passenger." << endl;
+                    cout << "No active rides available for this passenger." << endl;
                     break;
 
                 case 'A':
                 case 'a':
-                    cout << "No cancelled rides for this passenger." << endl;
+                    cout << "No cancelled rides available for this passenger." << endl;
                     break;
 
                 case 'B':
                 case 'b':
-                    cout << "No completed rides for this passenger." << endl;
+                    cout << "No completed rides available for this passenger." << endl;
                     break;
 
                 default:
@@ -253,60 +203,89 @@ void Passenger::getRides(char option) const {
 }
 
 
+
 void Passenger::cancelRide() {
     if (!rides.empty()) {
-        for (const Ride &ride: rides) {
-            cout << "Current Active Rides:" << endl;
-            cout << "---------------------------------------" << endl;
-            if (ride.rideStatus == Ride::RideStatus::Active) {
+        cout << "Current Active Rides:" << endl;
+        cout << "---------------------------------------" << endl;
+        for (const Ride* ridePtr : rides) {
+            const Ride& ride = *ridePtr;  // Dereference the pointer
 
+            if (ride.rideStatus == Ride::RideStatus::Active) {
                 cout << "Pickup Location: " << ride.getPickupLocation() << endl;
                 cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
                 cout << "Pickup Time: " << ride.getPickupTime() << endl;
                 cout << "ID: " << ride.id << endl;
                 cout << "---------------------------------------" << endl;
-
             }
         }
 
-        cout << "Which ride id would you like to cancel?" << endl;
+        cout << "Enter the ride id you would like to cancel" << endl;
         int rideId;
         cin >> rideId;
+        cout << endl;
 
-        for (Ride &ride: rides) {
-            if (ride.id == rideId) {
-                ride.rideStatus = Ride::RideStatus::Cancelled;
+        bool rideFound = false;
+
+        for (Ride* ridePtr : rides) {
+            if (ridePtr->id == rideId) {
+                ridePtr->rideStatus = Ride::RideStatus::Cancelled;
+                cout << "Ride cancelled" << endl;
+                rideFound = true;
+                break;
             }
         }
 
-
-    } else {
-        cout << "No rides available for this passenger." << endl;
+        if (!rideFound) {
+            cout << "Ride not found" << endl;
+        }
     }
-
 }
 
 
 void Passenger::rateRide() {
-    float flo;
-    int i;
-    for (const Ride &ride: rides) {
-        cout << ride.pickupLocation << "-> " << ride.dropOffLocation << endl;
-        cout << ride.id << endl;
-    }
+    cout << "Current Completed Rides:" << endl;
+    cout << "---------------------------------------" << endl;
 
-    cout << "Enter Ride ID: " << endl;
-    cin >> i;
+    bool rideFound = false;
 
-    for (Ride ride: rides) {
-        if (i == ride.id) {
-            cout << "Enter Rating: " << endl;
-            cin >> flo;
-            ride.setRating(flo);
+
+    for (const Ride* originalRidePtr : rides) {
+        const Ride& originalRide = *originalRidePtr;
+        if (originalRide.rideStatus == Ride::RideStatus::Completed) {
+            cout << originalRide.pickupLocation << " -> " << originalRide.dropOffLocation << endl;
+            cout << originalRide.getPickupTime();
+            cout << "Ride ID: " << originalRide.id << endl;
+            rideFound = true;
         }
     }
 
+    if (!rideFound) {
+        cout << "No completed rides found." << endl;
+        return;
+    }
+    cout << "---------------------------------------" << endl;
 
+    cout << "Enter Ride ID: ";
+    int selectedRideId;
+    cin >> selectedRideId;
+
+    for (Ride* ridePtr : rides) {
+        Ride& ride = *ridePtr;
+        if (selectedRideId == ride.id && ride.rideStatus == Ride::RideStatus::Completed) {
+            cout << "---------------------------------------" << endl;
+            cout << "Enter Rating: ";
+            float rating;
+            cin >> rating;
+            ride.setRating(rating);
+            cout << "Ride id: " <<ride.id << endl;
+            cout << "Just changed the rating of ride " << ride.getId() << " to " << ride.getRating() << endl;
+            return;
+
+        }
+    }
+
+    cout << "Invalid Ride ID or the ride is not eligible for rating." << endl;
 }
 
 
@@ -317,14 +296,15 @@ void Passenger::editRide() {
 
     if (!rides.empty()) {
         cout << "---------------------------------" << endl;
-        for (const Ride &ride: rides) {
+        for (const Ride* originalRidePtr : rides) {
+            const Ride& originalRide = *originalRidePtr;
 
             cout << "Destination: ";
-            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
+            cout << originalRidePtr->pickupLocation << " -> " << originalRidePtr->dropOffLocation << endl;
             cout << "Time: ";
-            cout << ride.getPickupTime() << endl;
+            cout << originalRidePtr->getPickupTime() << endl;
             cout << "ID: ";
-            cout << ride.id << endl;
+            cout << originalRidePtr->id << endl;
             cout << "---------------------------------" << endl;
 
         }
@@ -337,22 +317,25 @@ void Passenger::editRide() {
     string str;
     char option;
     cin >> i;
+    bool found = false;
 
-
-    for (Ride &ride: rides) {
+    for (Ride* ridePtr : rides) {
+        Ride& ride = *ridePtr;
         if (ride.id == i) {
+            found = true;
             cout << "\n\n\n\n";
             while (true) {
 
                 cout << "*************************************" << endl;
                 cout << "               Ride Edit             " << endl;
                 cout << "*************************************" << endl;
-                cout << "** A: Size of Party: " << ride.sizeOfParty << "**" << endl;
-                cout << "** B: Including Pets: " << ride.includesPets << "**" << endl;
-                cout << "** C: Pickup Location: " << ride.pickupLocation << "**" << endl;
-                cout << "** D: Drop Off Location: " << ride.dropOffLocation << "**" << endl;
-                cout << "** F: Pickup Time: " << ride.getPickupTime() << "**" << endl;
-                cout << "** G: Handicaped: " << ride.handicapable << "**" << endl;
+                cout << "** A: Size of Party:               " << ride.sizeOfParty << endl;
+                cout << "** B: Including Pets:              " << ride.includesPets << endl;
+                cout << "** C: Pickup Location:         " << ride.pickupLocation << endl;
+                cout << "** D: Drop Off Location:       " << ride.dropOffLocation << endl;
+                cout << "** F: Pickup Time:          " << ride.getPickupTime() << endl;
+                cout << "** G: Handicapped:                 " << ride.handicapable << endl;
+                cout << "** Q: Quit:                 " << endl;
                 cout << "*************************************" << endl;
                 cout << "*";
                 cin >> option;
@@ -396,18 +379,28 @@ void Passenger::editRide() {
                     case 'g':
                         cout << "Toggling Handicapable: " << endl;
                         ride.setHandicapped();
+                        break;
 
+
+                    case 'Q': // Quit
+                        case 'q':
+                            return;
                     default:
                         cout << "Invalid Option, please try again." << endl;
                         cin >> option;
                 }
                 break;
             }
-        } else {
-            cout << "Invalid Option, please try again." << endl;
         }
+
+    }
+
+
+    if(!found) {
+        cout << "Ride not found." << endl;
     }
 }
+
 
 void Passenger::editInfo() {
     char option;

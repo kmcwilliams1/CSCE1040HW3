@@ -74,10 +74,10 @@ public:
     void setHandicapped();
 
     int getAssignedDriverId() const;
-    void setAssignedDriverId();
+    void setAssignedDriverId(int driverId);
 
-    int getAssignedPassengerId() const;
-    void setAssignedPassengerId();
+    int getAssignedPassengerId()const;
+    void setAssignedPassengerId(int passengerId);
 
 
 };

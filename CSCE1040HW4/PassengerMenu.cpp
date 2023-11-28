@@ -1,20 +1,20 @@
 
-
-#include "Passenger/PassengerMenu.h"
+#include <algorithm>
 #include "Ride/RideCollection.h"
 #include "Passenger/Passenger.h"
+
 
 using namespace std;
 
 
-void PassengerMenu(Passenger passenger, RideCollection &rideCollection, PassengerCollection &passengerCollection) {
+void PassengerMenu(Passenger *passenger, RideCollection *rideCollection, PassengerCollection &passengerCollection) {
 
     while (true) {
 
         cout << "*************************************" << endl;
         cout << "*         *  Passenger Menu  *      *" << endl;
         cout << "*         *******************       *" << endl;
-        cout << "*           " << passenger.getFirstName() << " " << passenger.getLastName() << endl;
+        cout << "*           " << passenger->getFirstName() << " " << passenger->getLastName() << endl;
         cout << "*************************************" << endl;
         cout << "*           Enter Selection:        *" << endl;
         cout << "*************************************" << endl;
@@ -44,10 +44,10 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
             case 'a':
             case 'A':// Add New Ride
             {
-                Ride newRide;
-                newRide.assignedPassengerId = passenger.id;
-                newRide = rideCollection.addRide(newRide);
-                passenger.rides.push_back(newRide);
+                Ride *newRide = new Ride();
+                newRide->setAssignedPassengerId(passenger->id);
+                rideCollection->addRide(newRide);
+                passenger->rides.push_back(newRide);
                 break;
             }
             case 'b':
@@ -56,28 +56,33 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
                 cout << "B. Completed " << endl;
                 cout << "C. Active " << endl;
                 cin >> option;
-                passenger.getRides(option);
+                passenger->getRides(option);
                 break;
 
             case 'c':
             case 'C':// Print Information
-                passenger.getInfo();
+                passenger->getInfo();
                 break;
 
             case 'd':
             case 'D': // Cancel Ride
-                passenger.cancelRide();
+                passenger->cancelRide();
                 break;
 
             case 'e':
             case 'E': // Edit
-                passenger.editInfo();
+
+                passenger->editInfo();
                 break;
+
 
             case 'f':
             case 'F': //Rate
-                passenger.rateRide();
+
+            {
+                passenger->rateRide();
                 break;
+            }
 
             case 'g':
             case 'G': // Delete
@@ -89,14 +94,20 @@ void PassengerMenu(Passenger passenger, RideCollection &rideCollection, Passenge
                 break;
 
             case 'h':
-            case 'H': // Edit
-                passenger.editRide();
+            case 'H': // Edit Ride
+                passenger->editRide();
                 break;
 
-            case 'q':
-            case 'Q': //Quit
+            case 'Q':
+            case 'q': // Quit
+            {
+
                 cout << "Goodbye!" << endl;
                 return;
+            }
+
+
+
 
             default:
                 cout << "Not an input, try again" << endl;

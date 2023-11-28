@@ -33,12 +33,11 @@ public:
     int id{};
     string password;
     vector<int> rideIds;
-    vector<Ride> rides;
+    vector<Ride *> rides;
 
 
     //methods
-    void addRide(const Ride& ride);
-    void readPassengerProperties(string &readingLine);
+    void addRide(Ride* ride);
     void writePassengerProperties(ostream& dataFile);
     void getInfo() const;
     void deleteCancelledAndCompletedRides();
@@ -68,7 +67,6 @@ public:
 
 
     void editRide();
-
     void editInfo();
 };
 
