@@ -80,23 +80,30 @@ void Driver::setLastName(const string &last) {
 void Driver::setCompletedRides() {
     int i;
 
-    for (Ride &ride: rides) {
+    for (Ride *ride: rides) {
         cout << "-------------------------------------------" << endl;
-        if (ride.getStatus() == Ride::RideStatus::Active) {
-            cout << "Destination: " << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << "ID: " << ride.id << endl;
-            cout << "Time: " << ride.getPickupTime() << endl;
+        if (ride->getStatus() == Ride::RideStatus::Active) {
+            cout << "Destination: " << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
+            cout << "ID: " << ride->id << endl;
+            cout << "Time: " << ride->getPickupTime() << endl;
+            cout << "-------------------------------------------" << endl;
+
         }
     }
 
     cout << endl << "Which ride ID do you want to complete?" << endl;
     cin >> i;
 
-    for (Ride &ride: rides) {
-        if (ride.id == i) {
-            ride.setStatus(Ride::RideStatus::Completed);
+    for (Ride *ride: rides) {
+        if (ride->id == i) {
+            ride->rideStatus = (Ride::RideStatus::Completed);
+
+
+            cout<< "After update: " << static_cast<int>(ride->rideStatus) << endl;
         }
     }
+
+
 
 }
 
@@ -104,20 +111,21 @@ void Driver::setCompletedRides() {
 void Driver::setCancelledRides() {
     int i;
 
-    for (Ride &ride: rides) {
+    for (Ride *ride: rides) {
         cout << "-------------------------------------------" << endl;
-        if (ride.getStatus() == Ride::RideStatus::Active) {
-            cout << "Destination: " << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << "ID: " << ride.id << endl;
-            cout << "Time: " << ride.getPickupTime() << endl;
+        if (ride->getStatus() == Ride::RideStatus::Active) {
+            cout << "Destination: " << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
+            cout << "ID: " << ride->id << endl;
+            cout << "Time: " << ride->getPickupTime() << endl;
+            cout << "-------------------------------------------" << endl;
         }
     }
     cout << "Which ride ID do you want to cancel?" << endl;
     cin >> i;
 
-    for (Ride &ride: rides) {
-        if (ride.id == i) {
-            ride.setStatus(Ride::RideStatus::Cancelled);
+    for (Ride *ride: rides) {
+        if (ride->id == i) {
+            ride->rideStatus = (Ride::RideStatus::Cancelled);
         }
     }
 }
@@ -126,11 +134,11 @@ void Driver::getRides() const {
     if (!rides.empty()) {
         cout << "Previous Rides:" << endl;
         cout << "---------------------------------------" << endl;
-        for (const Ride &ride: rides) {
-            if (ride.getStatus() != Ride::RideStatus::Active) {
-                cout << "Pickup Location: " << ride.getPickupLocation() << endl;
-                cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
-                cout << "Pickup Time: " << ride.getPickupTime() << endl;
+        for (const Ride *ride: rides) {
+            if (ride->getStatus() != Ride::RideStatus::Active) {
+                cout << "Pickup Location: " << ride->getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride->getPickupTime() << endl;
                 cout << "---------------------------------------" << endl;
             }
         }
@@ -151,11 +159,11 @@ void Driver::getSchedule() {
     if (!rides.empty()) {
         cout << "Rides:" << endl;
         cout << "---------------------------------------" << endl;
-        for (const Ride &ride: rides) {
-            if (ride.getStatus() == Ride::RideStatus::Active) {
-                cout << "Pickup Location: " << ride.getPickupLocation() << endl;
-                cout << "Drop-Off Location: " << ride.getDropOffLocation() << endl;
-                cout << "Pickup Time: " << ride.getPickupTime() << endl;
+        for (const Ride *ride: rides) {
+            if (ride->getStatus() == Ride::RideStatus::Active) {
+                cout << "Pickup Location: " << ride->getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride->getPickupTime() << endl;
                 cout << "---------------------------------------" << endl;
             }
         }
@@ -168,8 +176,8 @@ void Driver::getSchedule() {
 
 void Driver::deleteCancelledAndCompletedRides() {
     for (auto it = rides.begin(); it != rides.end();) {
-        if (it->rideStatus == Ride::RideStatus::Completed || it->rideStatus == Ride::RideStatus::Cancelled) {
-            this->rides.erase(it);
+        if ((*it)->rideStatus == Ride::RideStatus::Completed || (*it)->rideStatus == Ride::RideStatus::Cancelled) {
+            rides.erase(it);
         }else {
             ++it;
         }
@@ -182,26 +190,32 @@ void Driver::writeDriverProperties(ostream &dataFile)  {
 }
 
 void Driver::getCompletedRides() const {
-    for (const Ride &ride: rides) {
-        if (ride.rideStatus == Ride::RideStatus::Completed) {
-            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << ride.pickupTime << endl;
+    for (const Ride *ride: rides) {
+        if (ride->rideStatus == Ride::RideStatus::Completed) {
+            cout << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
+            cout << ride->pickupTime << endl;
         }
     }
 }
 
 void Driver::getCancelledRides() const {
-    for (const Ride &ride: rides) {
-        if (ride.rideStatus == Ride::RideStatus::Cancelled) {
-            cout << ride.pickupLocation << " -> " << ride.dropOffLocation << endl;
-            cout << ride.pickupTime << endl;
+    for (const Ride *ride: rides) {
+        if (ride->rideStatus == Ride::RideStatus::Cancelled) {
+            cout << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
+            cout << ride->pickupTime << endl;
         }
     }
 }
 
 void Driver::getInfo() const {
     cout << "*************************************" << endl;
-    cout << this->firstName << " " << this->lastName << endl;
+    cout << "*        Personal Information       *" << endl;
+    cout << "*************************************" << endl;
+    cout << firstName << " " << lastName << endl;
+    cout << "*   Password: " << password << endl;
+    cout << "*   Rating: " << driverRating << endl;
+    cout << "*   Total rides: " << rideIds.size() << endl;
+
 
 }
 
@@ -210,18 +224,18 @@ void Driver::editInfo() {}
 void Driver::copyPropertiesFrom(const Driver *otherDriver) {
 
     if (otherDriver) {
-        this->setHandicappedCapable(otherDriver->isHandicappedCapable());
-        this->setPetsAllowed(otherDriver->isPetsAllowed());
-        this->setDriverRating(otherDriver->getDriverRating());
-        this->setId(otherDriver->getId());
-        this->setFirstName(otherDriver->getFirstName());
-        this->setLastName(otherDriver->getLastName());
-        this->setPassword(otherDriver->getPassword());
+        setHandicappedCapable(otherDriver->isHandicappedCapable());
+        setPetsAllowed(otherDriver->isPetsAllowed());
+        setDriverRating(otherDriver->getDriverRating());
+        setId(otherDriver->getId());
+        setFirstName(otherDriver->getFirstName());
+        setLastName(otherDriver->getLastName());
+        setPassword(otherDriver->getPassword());
 
     };
-    this->rides.clear();
+    rides.clear();
     for (auto &&ride: otherDriver->rides) {
-        this->rides.push_back(ride);
+        rides.push_back(ride);
     }
 
 

@@ -254,8 +254,10 @@ void Passenger::rateRide() {
         const Ride& originalRide = *originalRidePtr;
         if (originalRide.rideStatus == Ride::RideStatus::Completed) {
             cout << originalRide.pickupLocation << " -> " << originalRide.dropOffLocation << endl;
-            cout << originalRide.getPickupTime();
+            cout << originalRide.getPickupTime() << endl;
+            cout << "Rating: " << originalRide.rating << endl;
             cout << "Ride ID: " << originalRide.id << endl;
+            cout << "---------------------------------------" << endl;
             rideFound = true;
         }
     }
@@ -264,7 +266,6 @@ void Passenger::rateRide() {
         cout << "No completed rides found." << endl;
         return;
     }
-    cout << "---------------------------------------" << endl;
 
     cout << "Enter Ride ID: ";
     int selectedRideId;

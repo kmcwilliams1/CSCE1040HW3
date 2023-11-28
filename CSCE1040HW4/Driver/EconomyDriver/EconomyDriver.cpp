@@ -46,9 +46,16 @@ void EconomyDriver::addEconomyParameters() {
 void EconomyDriver::getInfo() const {
     Driver::getInfo();
 
-    cout << "Vehicle Capacity: " << vehicleCapacity << endl;
-    cout << "Cargo Capacity: " << cargoCapacity << endl;
-    cout << endl;
+    cout << "*************************************" << endl;
+    cout << "             Economy Car             " << endl;
+    cout << "*************************************" << endl;
+    cout << "          Vehicle Information        " << endl;
+    cout << "*************************************" << endl;
+    cout << "*  Handicapped Capable:      " << isHandicappedCapable() << endl;
+    cout << "*  Pets Allowed :            " << isPetsAllowed() << endl;
+    cout << "*  Vehicle Capacity: " << vehicleCapacity << endl;
+    cout << "*  Cargo Capacity: " << cargoCapacity << endl;
+
 }
 
 void EconomyDriver::editInfo() {
@@ -299,8 +306,8 @@ void EconomyDriver::writeDriverProperties(ostream &dataFile) {
     dataFile << vehicleCapacity << ",";
     cargoCapacity != "no luggage" ? dataFile << "1," << cargoCapacity << "," : dataFile << "0,";
 
-    for (const Ride &ride: rides) {
-        dataFile << ride.getId() << ",";
+    for (const Ride *ride: rides) {
+        dataFile << ride->getId() << ",";
     }
     dataFile << "\n";
 }

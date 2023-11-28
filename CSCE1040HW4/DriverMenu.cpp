@@ -68,7 +68,6 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
                 }
 
 
-
                 break;
             }
 
@@ -123,6 +122,15 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
             case 'q':
             case 'Q':
                 cout << "Quitting Driver Menu" << endl;
+
+                for (auto &rideStatuses: driver->rides) {
+                    cout << "Leaving Menu: " << static_cast<int>(rideStatuses->rideStatus) << endl;
+                }
+                for (Ride *currentRide: rideCollection->rides) {
+                    cout << "Ride Collection Leaving DriverMenu: " << static_cast<int>(currentRide->rideStatus) << endl;
+
+                }
+
                 return;
 
             default:
@@ -131,5 +139,6 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
 
         }
     }
+
 }
 

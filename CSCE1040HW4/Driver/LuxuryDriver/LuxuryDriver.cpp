@@ -216,11 +216,16 @@ void LuxuryDriver::addLuxuryParameters() {
 
 void LuxuryDriver::getInfo() const {
     Driver::getInfo();
-    cout << "LuxDriver version " << endl;
-
-    cout << "Vehicle Capacity: " << vehicleCapacity << endl;
-    cout << "Cargo Capacity: " << cargoCapacity << endl;
-    cout << "Amenities: ";
+    cout << "*************************************" << endl;
+    cout << "*            Luxury Car             *" << endl;
+    cout << "*************************************" << endl;
+    cout << "          Vehicle Information        " << endl;
+    cout << "*************************************" << endl;
+    cout << "*  Handicapped Capable:      " << isHandicappedCapable() << endl;
+    cout << "*  Pets Allowed :            " << isPetsAllowed() << endl;
+    cout << "*  Vehicle Capacity: " << vehicleCapacity << endl;
+    cout << "*  Cargo Capacity: " << cargoCapacity << endl;
+    cout << "*  Amenities: ";
     for (const string &amenity: amenities) {
         cout << amenity << ", ";
     }
@@ -510,11 +515,11 @@ void LuxuryDriver::writeDriverProperties(ostream &dataFile) {
         female += (amenity == "female") ? 1 : 0;
         bodyguard += (amenity == "bodyguard") ? 1 : 0;
     }
-    dataFile << bottle << "," << club << "," << female << "," << bodyguard << "," << endl;
+    dataFile << bottle << "," << club << "," << female << "," << bodyguard << ",";
 
 
-    for (const Ride &ride: rides) {
-        dataFile << ride.getId() << ",";
+    for (const Ride *ride: rides) {
+        dataFile << ride->getId() << ",";
     }
     dataFile << "\n";
 }
