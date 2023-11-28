@@ -25,7 +25,6 @@ public:
         EconomyDriver,
         GroupDriver,
         LuxuryDriver,
-        Other
     };
     bool handicappedCapable{};
     VehicleType vehicleType{};
@@ -36,7 +35,7 @@ public:
     string firstName;
     string lastName;
     vector<int> rideIds;
-    vector<Ride> rides;
+    vector<Ride*> rides;
     string password;
 
 

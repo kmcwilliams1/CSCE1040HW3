@@ -50,9 +50,16 @@ void GroupDriver::addGroupParameters() {
 
 void GroupDriver::getInfo() const {
     Driver::getInfo();
+    cout << "*************************************" << endl;
+    cout << "              Group Car              " << endl;
+    cout << "*************************************" << endl;
+    cout << "          Vehicle Information        " << endl;
+    cout << "*************************************" << endl;
+    cout << "*  Handicapped Capable:      " << isHandicappedCapable() << endl;
+    cout << "*  Pets Allowed :            " << isPetsAllowed() << endl;
+    cout << "*  Vehicle Capacity: " << vehicleCapacity << endl;
+    cout << "*  Cargo Capacity: " << cargoCapacity << endl;
 
-    cout << "Vehicle Capacity: " << vehicleCapacity << endl;
-    cout << "Cargo Capacity: " << cargoCapacity << endl;
     cout << endl;
 }
 
@@ -303,8 +310,8 @@ void GroupDriver::writeDriverProperties(ostream &dataFile) {
     dataFile << vehicleCapacity << ",";
     cargoCapacity != "no luggage" ? dataFile << "1," << cargoCapacity << "," : dataFile << "0,";
 
-    for (const Ride &ride: rides) {
-        dataFile << ride.getId() << ",";
+    for (const Ride *ride: rides) {
+        dataFile << ride->getId() << ",";
     }
     dataFile << "\n";
 }

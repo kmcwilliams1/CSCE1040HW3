@@ -56,10 +56,10 @@ int main() {
 
 /*populates the passengers and drivers with ride objects*/
     for (auto &currentRidePtr: rideCollection.rides) {
-        Ride &currentRide = *currentRidePtr;  // Dereference the pointer
+        Ride &currentRide = *currentRidePtr;
 
         for (auto &currentPassengerPtr: passengerCollection.passengers) {
-            Passenger &currentPassenger = *currentPassengerPtr;  // Dereference the pointer
+            Passenger &currentPassenger = *currentPassengerPtr;
 
             if (currentRide.assignedPassengerId == currentPassenger.id) {
                 currentPassenger.rides.push_back(&currentRide);
@@ -70,13 +70,13 @@ int main() {
 
 
     for (auto &currentRidePtr: rideCollection.rides) {
-        Ride &currentRide = *currentRidePtr;  // Dereference the pointer
+        Ride &currentRide = *currentRidePtr;
 
         for (auto &currentDriverPtr: driverCollection.drivers) {
-            Driver &currentDriver = *currentDriverPtr;  // Dereference the pointer
+            Driver &currentDriver = *currentDriverPtr;
 
             if (currentRide.assignedDriverId == currentDriver.id) {
-                currentDriver.rides.push_back(currentRide);
+                currentDriver.rides.push_back(&currentRide);
             }
         }
     }
@@ -182,9 +182,7 @@ int main() {
 
                 fout << endl;
 
-                cout << "Writing " << passengerCollection.passengers.size() << " passengers" << endl;
                 for (Passenger *currentPassenger: passengerCollection.passengers) {
-                    cout << "Current passenger has " << currentPassenger->rides.size() << " rides" << endl;
                     currentPassenger->writePassengerProperties(fout);
                     delete currentPassenger;
                 }
@@ -194,6 +192,10 @@ int main() {
 
                 for (Driver *currentDriverPtr: driverCollection.drivers) {
                     currentDriverPtr->writeDriverProperties(fout);
+
+                    for(auto & thisRide : currentDriverPtr->rides){
+                    }
+
                     delete currentDriverPtr;
                 }
                 driverCollection.drivers.clear();

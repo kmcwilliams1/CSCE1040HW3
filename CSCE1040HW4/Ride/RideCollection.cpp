@@ -113,21 +113,28 @@ Ride *RideCollection::addRide(Ride* newRide) {
 }
 
 void RideCollection::assignSchedule(Driver &driver) {
+    bool found = false;
+
     for (Ride *currentRide : this->rides) {
         if (currentRide->rideStatus == Ride::RideStatus::Active &&
-           currentRide->assignedDriverId == 0 &&
-           currentRide->includesPets && driver.petsAllowed &&
-           currentRide->handicapable && driver.handicappedCapable &&
-           currentRide->rating >= driver.driverRating) {
+            currentRide->assignedDriverId == 0 &&
+            currentRide->includesPets && driver.petsAllowed &&
+            currentRide->handicapable && driver.handicappedCapable &&
+            currentRide->rating >= driver.driverRating) {
 
-            driver.rides.push_back(*currentRide);
-           currentRide->setAssignedDriverId(driver.id);
+            driver.rides.push_back(currentRide);
+            currentRide->setAssignedDriverId(driver.id);
+            found = true;
         }
-
     }
 
-    cout << "Rides Assigned! " << endl;
+    if (!found) {
+        cout << "No active rides meet your vehicle's options." << endl;
+    } else {
+        cout << "Rides Assigned!" << endl;
+    }
 }
+
 
 void RideCollection::readRideProperties(const string& basicString) {
 
@@ -189,7 +196,6 @@ void RideCollection::readRideProperties(const string& basicString) {
     getline(dataStream, temp, ',');
     {
         ride->rating = stof(temp);
-        cout << ride->id << " reading rating " << ride->rating << endl;
 
     };
 
