@@ -159,7 +159,7 @@ void Passenger::getRides(char option) const {
                     break;
 
                 default:
-                    cout << "Invalid option for getRides." << endl;
+                    cout << "Invalid option, please try again ." << endl;
                     return;
             }
 
@@ -193,7 +193,7 @@ void Passenger::getRides(char option) const {
                     break;
 
                 default:
-                    cout << "Invalid option for getRides." << endl;
+                    cout << "Invalid option, please try again." << endl;
                     break;
             }
         }

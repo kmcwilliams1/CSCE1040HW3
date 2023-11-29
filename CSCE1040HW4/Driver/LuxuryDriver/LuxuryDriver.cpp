@@ -221,14 +221,18 @@ void LuxuryDriver::getInfo() const {
     cout << "*************************************" << endl;
     cout << "          Vehicle Information        " << endl;
     cout << "*************************************" << endl;
-    cout << "*  Handicapped Capable:      " << isHandicappedCapable() << endl;
-    cout << "*  Pets Allowed :            " << isPetsAllowed() << endl;
-    cout << "*  Vehicle Capacity: " << vehicleCapacity << endl;
-    cout << "*  Cargo Capacity: " << cargoCapacity << endl;
-    cout << "*  Amenities: ";
+    cout << "*  Handicapped Capable:             " << isHandicappedCapable() << endl;
+    cout << "*  Pets Allowed :                   " << isPetsAllowed() << endl;
+    cout << "*  Vehicle Capacity:                " << vehicleCapacity << endl;
+    cout << "*  Cargo Capacity:                  " << cargoCapacity << endl;
+    cout << "*  Amenities:                 ";
     for (const string &amenity: amenities) {
         cout << amenity << ", ";
     }
+    cout << endl;
+
+    cout << "*************************************" << endl;
+
     cout << endl;
 }
 
@@ -251,6 +255,8 @@ void LuxuryDriver::editInfo() {
     for (const string &amenity: getAmenities()) {
         cout << amenity << ", ";
     }
+    cout << "* Q: Quit:                     "  << endl;
+
     cout << endl;
     cout << "*************************************" << endl;
 
@@ -259,7 +265,7 @@ void LuxuryDriver::editInfo() {
 
     switch (option) {
 
-
+        case 'b':
         case 'B':
             cout << "Driving a handicapable vehicle? (Y/N): " <<
                  endl;
@@ -275,7 +281,7 @@ void LuxuryDriver::editInfo() {
                 cin >> option;
             }
             break;
-
+        case 'c':
         case 'C':
             cout << "New pet policy (Y/N): " << endl;
             cin >> option;
@@ -289,21 +295,21 @@ void LuxuryDriver::editInfo() {
                 cin >> option;
             }
             break;
-
+        case 'd':
         case 'D':
 
             cout << "New first name: " << endl;
             cin >> str;
             setFirstName(str);
             break;
-
+        case 'e':
         case 'E':
 
             cout << "New Last Name: " << endl;
             cin >> str;
             setLastName(str);
             break;
-
+        case 'f':
         case 'F': {
             cout << "New Vehicle Type (1-4): " << endl;
             cin >> i;
@@ -353,8 +359,7 @@ void LuxuryDriver::editInfo() {
             }
             break;
         }
-
-
+        case 'g':
         case 'G': {
 
             cout << "New Vehicle Capacity: " << endl;
@@ -363,25 +368,26 @@ void LuxuryDriver::editInfo() {
 
             break;
         }
-
+        case 'h':
         case 'H':
 
             cout << "New Cargo Capacity: " << endl;
             cin >> str;
             setCargoCapacity(str);
 
-
             break;
 
+        case 'i':
         case 'I':
 
             cout << "New Amenities: " << endl;
-
             setAmenities();
-
 
             break;
 
+        case 'q':
+        case 'Q':
+            return;
 
         default:
             cout << "Invalid option, try again." << endl;
@@ -509,7 +515,7 @@ void LuxuryDriver::writeDriverProperties(ostream &dataFile) {
 
 
     int bottle = 0, club = 0, female = 0, bodyguard = 0;
-    for (const string &amenity : amenities) {
+    for (const string &amenity: amenities) {
         bottle += (amenity == "bottle") ? 1 : 0;
         club += (amenity == "club") ? 1 : 0;
         female += (amenity == "female") ? 1 : 0;

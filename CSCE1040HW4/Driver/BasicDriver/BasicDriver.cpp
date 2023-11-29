@@ -79,10 +79,10 @@ void BasicDriver::getInfo() const {
     cout << "*************************************" << endl;
     cout << "          Vehicle Information        " << endl;
     cout << "*************************************" << endl;
-    cout << "*  Handicapped Capable:      " << isHandicappedCapable() << endl;
-    cout << "*  Pets Allowed :            " << isPetsAllowed() << endl;
-    cout << "*  Vehicle Capacity: " << vehicleCapacity << endl;
-    cout << "*  Cargo Capacity: " << cargoCapacity << endl;
+    cout << "*  Handicapped Capable:             " << isHandicappedCapable() << endl;
+    cout << "*  Pets Allowed :                   " << isPetsAllowed() << endl;
+    cout << "*  Vehicle Capacity:                " << vehicleCapacity << endl;
+    cout << "*  Cargo Capacity:                  " << cargoCapacity << endl;
 
     cout << endl;
 }
@@ -102,6 +102,7 @@ void BasicDriver::editInfo() {
     cout << "* F: Vehicle Type :            " << static_cast<int>(getVehicleType()) << endl;
     cout << "* G: Vehicle Capacity:         " << getVehicleCapacity() << endl;
     cout << "* H: Cargo Capacity:           " << getCargoCapacity() << endl;
+    cout << "* Q: Quit:           " << endl;
     cout << endl;
     cout << "*************************************" << endl;
 
@@ -110,7 +111,7 @@ void BasicDriver::editInfo() {
 
     switch (option) {
 
-
+        case 'b':
         case 'B':
             cout << "Driving a handicapable vehicle? (Y/N): " <<
                  endl;
@@ -126,7 +127,7 @@ void BasicDriver::editInfo() {
                 cin >> option;
             }
             break;
-
+        case 'c':
         case 'C':
             cout << "New pet policy (Y/N): " << endl;
             cin >> option;
@@ -140,21 +141,21 @@ void BasicDriver::editInfo() {
                 cin >> option;
             }
             break;
-
+        case 'd':
         case 'D':
 
             cout << "New first name: " << endl;
             cin >> str;
             setFirstName(str);
             break;
-
+        case 'e':
         case 'E':
 
             cout << "New Last Name: " << endl;
             cin >> str;
             setLastName(str);
             break;
-
+        case 'f':
         case 'F': {
             cout << "New Vehicle Type (1-4): " << endl;
             cin >> i;
@@ -205,7 +206,7 @@ void BasicDriver::editInfo() {
             break;
         }
 
-
+        case 'g':
         case 'G': {
 
             cout << "New Vehicle Capacity: " << endl;
@@ -215,6 +216,7 @@ void BasicDriver::editInfo() {
             break;
         }
 
+        case 'h':
         case 'H':
 
             cout << "New Cargo Capacity: " << endl;
@@ -222,7 +224,6 @@ void BasicDriver::editInfo() {
             setCargoCapacity(str);
 
             break;
-
 
         default:
             cout << "Invalid option, try again." << endl;

@@ -1,5 +1,6 @@
 
 #include <sstream>
+#include <limits>
 #include "Driver.h"
 #include "BasicDriver/BasicDriver.h"
 #include "EconomyDriver/EconomyDriver.h"
@@ -110,9 +111,9 @@ void Driver::setCompletedRides() {
 
 void Driver::setCancelledRides() {
     int i;
+    cout << "-------------------------------------------" << endl;
 
     for (Ride *ride: rides) {
-        cout << "-------------------------------------------" << endl;
         if (ride->getStatus() == Ride::RideStatus::Active) {
             cout << "Destination: " << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
             cout << "ID: " << ride->id << endl;
@@ -122,6 +123,14 @@ void Driver::setCancelledRides() {
     }
     cout << "Which ride ID do you want to cancel?" << endl;
     cin >> i;
+
+    while (cin.fail() || i < 0) {
+        cout << "Invalid input. Please enter a valid ride ID : " << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> i;
+    }
+
 
     for (Ride *ride: rides) {
         if (ride->id == i) {
@@ -211,10 +220,10 @@ void Driver::getInfo() const {
     cout << "*************************************" << endl;
     cout << "*        Personal Information       *" << endl;
     cout << "*************************************" << endl;
-    cout << firstName << " " << lastName << endl;
-    cout << "*   Password: " << password << endl;
-    cout << "*   Rating: " << driverRating << endl;
-    cout << "*   Total rides: " << rideIds.size() << endl;
+    cout <<             firstName << " " << lastName << endl;
+    cout << "*   Password:                  " << password << endl;
+    cout << "*   Rating:                         " << driverRating << endl;
+    cout << "*   Total rides:                    " << rideIds.size() << endl;
 
 
 }
