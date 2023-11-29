@@ -2,10 +2,7 @@
 #include <sstream>
 #include <limits>
 #include "Driver.h"
-#include "BasicDriver/BasicDriver.h"
-#include "EconomyDriver/EconomyDriver.h"
-#include "GroupDriver/GroupDriver.h"
-#include "LuxuryDriver/LuxuryDriver.h"
+
 
 
 Driver::~Driver() = default;
@@ -139,23 +136,6 @@ void Driver::setCancelledRides() {
     }
 }
 
-void Driver::getRides() const {
-    if (!rides.empty()) {
-        cout << "Previous Rides:" << endl;
-        cout << "---------------------------------------" << endl;
-        for (const Ride *ride: rides) {
-            if (ride->getStatus() != Ride::RideStatus::Active) {
-                cout << "Pickup Location: " << ride->getPickupLocation() << endl;
-                cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
-                cout << "Pickup Time: " << ride->getPickupTime() << endl;
-                cout << "---------------------------------------" << endl;
-            }
-        }
-    } else {
-        cout << "No rides available for this passenger." << endl;
-    }
-}
-
 const string &Driver::getPassword() const {
     return password;
 }
@@ -173,6 +153,7 @@ void Driver::getSchedule() {
                 cout << "Pickup Location: " << ride->getPickupLocation() << endl;
                 cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
                 cout << "Pickup Time: " << ride->getPickupTime() << endl;
+                cout << "Passenger ID: " << ride->getAssignedPassengerId() << endl;
                 cout << "---------------------------------------" << endl;
             }
         }
@@ -199,20 +180,36 @@ void Driver::writeDriverProperties(ostream &dataFile)  {
 }
 
 void Driver::getCompletedRides() const {
-    for (const Ride *ride: rides) {
-        if (ride->rideStatus == Ride::RideStatus::Completed) {
-            cout << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
-            cout << ride->pickupTime << endl;
+    if (!rides.empty()) {
+        cout << "Previous Rides:" << endl;
+        cout << "---------------------------------------" << endl;
+        for (const Ride *ride: rides) {
+            if (ride->getStatus() != Ride::RideStatus::Completed) {
+                cout << "Pickup Location: " << ride->getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride->getPickupTime() << endl;
+                cout << "---------------------------------------" << endl;
+            }
         }
+    } else {
+        cout << "No rides available for this passenger." << endl;
     }
 }
 
 void Driver::getCancelledRides() const {
-    for (const Ride *ride: rides) {
-        if (ride->rideStatus == Ride::RideStatus::Cancelled) {
-            cout << ride->pickupLocation << " -> " << ride->dropOffLocation << endl;
-            cout << ride->pickupTime << endl;
+    if (!rides.empty()) {
+        cout << "Previous Rides:" << endl;
+        cout << "---------------------------------------" << endl;
+        for (const Ride *ride: rides) {
+            if (ride->getStatus() != Ride::RideStatus::Cancelled) {
+                cout << "Pickup Location: " << ride->getPickupLocation() << endl;
+                cout << "Drop-Off Location: " << ride->getDropOffLocation() << endl;
+                cout << "Pickup Time: " << ride->getPickupTime() << endl;
+                cout << "---------------------------------------" << endl;
+            }
         }
+    } else {
+        cout << "No rides available for this passenger." << endl;
     }
 }
 

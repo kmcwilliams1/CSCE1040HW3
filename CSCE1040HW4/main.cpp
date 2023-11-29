@@ -13,9 +13,8 @@ using namespace std;
 
 
 int main() {
-    auto *driver = new Driver();
-    auto *passenger = new Passenger();
-    auto *ride = new Ride();
+    Driver *driver;
+    Passenger *passenger;
 
     DriverCollection driverCollection;
     PassengerCollection passengerCollection;
@@ -164,7 +163,7 @@ int main() {
 
 
             case 'd':
-            case 'D'://Exit
+            case 'D': // Exit
             {
                 ofstream fout("RideShareData.dat");
 
@@ -174,37 +173,37 @@ int main() {
                     return 1;
                 }
 
-                for (Ride *currentRide: rideCollection.rides) {
+                for (Ride *currentRide : rideCollection.rides) {
                     currentRide->writeRideProperties(fout);
-                    delete currentRide;
                 }
                 rideCollection.rides.clear();
 
                 fout << endl;
 
-                for (Passenger *currentPassenger: passengerCollection.passengers) {
+                for (Passenger *currentPassenger : passengerCollection.passengers) {
                     currentPassenger->writePassengerProperties(fout);
-                    delete currentPassenger;
                 }
                 passengerCollection.passengers.clear();
 
                 fout << endl << endl;
 
-                for (Driver *currentDriverPtr: driverCollection.drivers) {
+                for (Driver *currentDriverPtr : driverCollection.drivers) {
                     currentDriverPtr->writeDriverProperties(fout);
-
-                    for(auto & thisRide : currentDriverPtr->rides){
-                    }
-
-                    delete currentDriverPtr;
                 }
+
                 driverCollection.drivers.clear();
+
+
+                delete driver;
+                delete passenger;
+
                 fout << endl;
 
                 fout.close();
                 cout << "Goodbye" << endl;
                 return 0;
             }
+
 
 
         }

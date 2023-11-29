@@ -26,9 +26,8 @@ public:
     void setCargoCapacity(const string &cargo);
 
 
-    void getInfo() const;
-
-    void editInfo();
+    void getInfo() const override;
+    void editInfo() override;
 
     void writeDriverProperties(ostream &ostream) override;
 };

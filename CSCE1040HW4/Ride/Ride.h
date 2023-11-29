@@ -37,7 +37,6 @@ public:
 
     //methods
     void writeRideProperties(ostream &dataFile) const;
-    void readRideProperties(string basicString);
 
     //setters and getters
     int getSizeOfParty() const;
@@ -53,7 +52,7 @@ public:
     void setRating(float rideRating);
 
     int getId() const;
-    void setId(int rideId);
+    void setId();
 
     string getPickupLocation() const;
     void setPickupLocation(const string& location);
@@ -64,8 +63,8 @@ public:
     string getPickupTime() const;
     void setPickupTime();
 
-    time_t getDropOffTime() const;
-    void setDropOffTime(time_t time);
+    string getDropOffTime() const;
+    void setDropOffTime();
 
     const string& getNote() const;
     void setNote(const string &note);

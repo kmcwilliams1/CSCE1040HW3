@@ -80,7 +80,6 @@ public:
     void getCancelledRides() const;
     void setCancelledRides();
 
-    void getRides() const;
 
     const string &getPassword() const;
     void setPassword(const string &pass);

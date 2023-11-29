@@ -27,13 +27,12 @@ void PassengerMenu(Passenger *passenger, RideCollection *rideCollection, Passeng
         cout << "*       C. Print My Information     *" << endl;
         cout << "*        E. Edit My Information     *" << endl;
         cout << "*       G. Delete My Information    *" << endl;
+        cout << "* I. Delete Cancelled and Completed Rides *" << endl;
         cout << "*              Q. Quit              *" << endl;
         cout << "*************************************" << endl;
         cout << "*";
 
         char option;
-        float flo;
-        int i;
         string string1;
 
 
@@ -47,7 +46,7 @@ void PassengerMenu(Passenger *passenger, RideCollection *rideCollection, Passeng
                 Ride *newRide = new Ride();
                 newRide->setAssignedPassengerId(passenger->id);
                 rideCollection->addRide(newRide);
-                passenger->rides.push_back(newRide);
+                passenger->addRide(newRide);
                 break;
             }
             case 'b':
@@ -97,6 +96,10 @@ void PassengerMenu(Passenger *passenger, RideCollection *rideCollection, Passeng
             case 'H': // Edit Ride
                 passenger->editRide();
                 break;
+
+            case 'i':
+            case 'I':// Delete past cancelled and completed rides
+                passenger->deleteCancelledAndCompletedRides();
 
             case 'Q':
             case 'q': // Quit

@@ -113,11 +113,8 @@ Passenger *PassengerCollection::addPassenger() {
         }
     }
 
-    random_device rd;
-    mt19937 generator(rd());
-    uniform_int_distribution<int> distribution(1, 20000);
-    int random_number = distribution(generator);
-    passenger->id = random_number;
+
+    passenger->setId();
 
     this->passengers.push_back(passenger);
     return passenger;
@@ -145,31 +142,31 @@ void PassengerCollection::readPassengerProperties(const string& basicString){
     
     getline(dataStream, temp, ',');
     {
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->firstName = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->lastName = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->id = stoi(temp);
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->requiredRating = stof(temp);
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->hasPets = (temp == "true");
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->paymentPreference = static_cast<Passenger::PaymentPreference>(stoi(temp));
-    };
+    }
     getline(dataStream, temp, ',');
     {
         passenger->password = temp;
@@ -190,7 +187,7 @@ void PassengerCollection::readPassengerProperties(const string& basicString){
             passenger->rideIds.push_back(stoi(rideId));
             rideId = "";
         }
-    };
+    }
 
     this->passengers.push_back(passenger);
 
