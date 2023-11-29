@@ -8,7 +8,7 @@
 #include "Ride.h"
 #include "../Passenger/Passenger.h"
 
-Ride *RideCollection::addRide(Ride* newRide) {
+Ride *RideCollection::addRide(Ride *newRide) {
     cout << "\n\n\n\n\n\n\n\n\n";
     cout << "********************************" << endl;
     cout << "********************************" << endl;
@@ -35,9 +35,6 @@ Ride *RideCollection::addRide(Ride* newRide) {
     cout << "*************************************" << endl;
     cout << "How many passengers? ";
     cin >> i;
-   newRide->sizeOfParty = i;
-    cin.ignore();
-
 
     while (cin.fail()) {
         cout << "Requires a number. Try again: ";
@@ -45,20 +42,24 @@ Ride *RideCollection::addRide(Ride* newRide) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin >> i;
     }
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    newRide->sizeOfParty = i;
+
     cout << "*************************************" << endl;
     cout << "Enter pickup location: ";
-    getline(cin,string1);
-   newRide->pickupLocation = string1;
+    getline(cin, string1);
+    newRide->pickupLocation = string1;
 
     cout << "*************************************" << endl;
     cout << "Enter drop off location: ";
-    getline(cin,string1);
-   newRide->dropOffLocation = string1;
+    getline(cin, string1);
+    newRide->dropOffLocation = string1;
 
     cout << "*************************************" << endl;
     cout << "Enter note: ";
-    getline(cin,string1);
-   newRide->note = string1;
+    getline(cin, string1);
+    newRide->note = string1;
 
     cout << "*************************************" << endl;
     cout << "Do you need a handicapable vehicle (Y/N): ";
@@ -71,7 +72,7 @@ Ride *RideCollection::addRide(Ride* newRide) {
         cin >> inputChar;
     }
 
-   newRide->handicapable = (inputChar == 'Y' || inputChar == 'y');
+    newRide->handicapable = (inputChar == 'Y' || inputChar == 'y');
 
     cout << "*************************************" << endl;
     cout << "Do you have pets (Y/N): ";
@@ -84,38 +85,55 @@ Ride *RideCollection::addRide(Ride* newRide) {
         cin >> inputChar;
     }
 
-   newRide->includesPets = (inputChar == 'Y' || inputChar == 'y');
+    newRide->includesPets = (inputChar == 'Y' || inputChar == 'y');
 
-   newRide->assignedDriverId = 0;
-   newRide->rideStatus = Ride::RideStatus::Active;
+    newRide->assignedDriverId = 0;
+    newRide->rideStatus = Ride::RideStatus::Active;
 
     //time
-   newRide->setPickupTime();
+    newRide->setPickupTime();
 
     //true random number generator
     random_device rd;
     mt19937 generator(rd());
     uniform_int_distribution<int> distribution(1, 20000);
     int random_number = distribution(generator);
-   newRide->id = random_number;
+    newRide->id = random_number;
 
-
-    this->rides.push_back(newRide);
 
     cout << "*************************************" << endl;
-    cout << "Ride Added" << endl;
-    cout <<newRide->pickupLocation << " -> " <<newRide->dropOffLocation << endl;
-    cout <<newRide->pickupTime << endl;
-    cout << "*************************************" << endl;
-    cout << "\n\n\n" ;
+    cout << "Current Ride" << endl;
+    cout << newRide->sizeOfParty << (newRide->sizeOfParty == 1 ? " person" : " people") << endl;
+    cout << newRide->pickupLocation << " -> " << newRide->dropOffLocation << endl;
+    if (newRide->handicapable) cout << "Handicapable ";
+    if (newRide->handicapable && newRide->includesPets) cout << "& ";
+    if (newRide->includesPets) {
+        cout << "Has Pets ";
+        cout << endl;
+        cout << newRide->getPickupTime() << endl;
 
-    return newRide;
+        cout << "*************************************" << endl;
+        cout << "Confirm ride information (Y/N): ";
+        cin >> inputChar;
+
+        if (inputChar == 'Y' || inputChar == 'y') {
+            this->rides.push_back(newRide);
+            cout << "*************************************" << endl;
+            cout << "Ride Added" << endl;
+            return newRide;
+        } else {
+            cout << "Ride information not confirmed. Please enter the details again." << endl;
+            return addRide(new Ride());
+        }
+
+    }
+    cout << "\n\n\n";
 }
 
 void RideCollection::assignSchedule(Driver &driver) {
     bool found = false;
 
-    for (Ride *currentRide : this->rides) {
+    for (Ride *currentRide: this->rides) {
         if (currentRide->rideStatus == Ride::RideStatus::Active &&
             currentRide->assignedDriverId == 0 &&
             currentRide->includesPets && driver.petsAllowed &&
@@ -136,7 +154,7 @@ void RideCollection::assignSchedule(Driver &driver) {
 }
 
 
-void RideCollection::readRideProperties(const string& basicString) {
+void RideCollection::readRideProperties(const string &basicString) {
 
     istringstream dataStream(basicString);
     string temp;
