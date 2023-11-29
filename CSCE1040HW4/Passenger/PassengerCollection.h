@@ -14,7 +14,7 @@ public:
 
     void deletePassenger(const Passenger* passenger);
 
-    Passenger * addPassenger();
+    Passenger* addPassenger();
 
     void readPassengerProperties(const string &basicString);
 };

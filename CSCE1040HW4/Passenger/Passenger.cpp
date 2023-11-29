@@ -20,12 +20,12 @@ void Passenger::writePassengerProperties(ostream &dataFile) {
     dataFile << (hasPets ? "true" : "false") << ",";
     dataFile << static_cast<int>(paymentPreference) << ",";
     dataFile << password << ",";
-    for (const auto &ride : rides) {
+    for (const auto &ride: rides) {
         dataFile << ride->id << ",";
     }
 }
 
-void Passenger::addRide(Ride* ride) {
+void Passenger::addRide(Ride *ride) {
     rides.push_back(ride);
 }
 
@@ -83,8 +83,8 @@ float Passenger::getRequiredRating() const {
     return requiredRating;
 }
 
-void Passenger::setRequiredRating(float rating) {
-
+void Passenger::setRequiredRating(float newRating) {
+    requiredRating = newRating;
 }
 
 bool Passenger::getHasPets() const {
@@ -100,7 +100,7 @@ Passenger::PaymentPreference Passenger::getPaymentPreference() const {
 }
 
 void Passenger::setPaymentPreference(Passenger::PaymentPreference pref) {
-
+    paymentPreference = pref;
 }
 
 int Passenger::getId() const {
@@ -120,7 +120,7 @@ string Passenger::getFirstName() const {
 }
 
 void Passenger::setFirstName(const string &first) {
-
+    firstName = first;
 }
 
 string Passenger::getLastName() const {
@@ -128,7 +128,7 @@ string Passenger::getLastName() const {
 }
 
 void Passenger::setLastName(const string &last) {
-
+    lastName = last;
 }
 
 void Passenger::getRides(char option) const {
@@ -138,8 +138,8 @@ void Passenger::getRides(char option) const {
         cout << "Rides:" << endl;
         cout << "---------------------------------------" << endl;
 
-        for (const Ride* ridePtr : rides) {
-            const Ride& ride = *ridePtr;
+        for (const Ride *ridePtr: rides) {
+            const Ride &ride = *ridePtr;
             bool printRide;
 
             switch (option) {
@@ -203,13 +203,12 @@ void Passenger::getRides(char option) const {
 }
 
 
-
 void Passenger::cancelRide() {
     if (!rides.empty()) {
         cout << "Current Active Rides:" << endl;
         cout << "---------------------------------------" << endl;
-        for (const Ride* ridePtr : rides) {
-            const Ride& ride = *ridePtr;  // Dereference the pointer
+        for (const Ride *ridePtr: rides) {
+            const Ride &ride = *ridePtr;  // Dereference the pointer
 
             if (ride.rideStatus == Ride::RideStatus::Active) {
                 cout << "Pickup Location: " << ride.getPickupLocation() << endl;
@@ -227,9 +226,9 @@ void Passenger::cancelRide() {
 
         bool rideFound = false;
 
-        for (Ride* ridePtr : rides) {
+        for (Ride *ridePtr: rides) {
             if (ridePtr->id == rideId) {
-                ridePtr->rideStatus = Ride::RideStatus::Cancelled;
+                ridePtr->setStatus(Ride::RideStatus::Cancelled);
                 cout << "Ride cancelled" << endl;
                 rideFound = true;
                 break;
@@ -250,8 +249,8 @@ void Passenger::rateRide() {
     bool rideFound = false;
 
 
-    for (const Ride* originalRidePtr : rides) {
-        const Ride& originalRide = *originalRidePtr;
+    for (const Ride *originalRidePtr: rides) {
+        const Ride &originalRide = *originalRidePtr;
         if (originalRide.rideStatus == Ride::RideStatus::Completed) {
             cout << originalRide.pickupLocation << " -> " << originalRide.dropOffLocation << endl;
             cout << originalRide.getPickupTime() << endl;
@@ -271,15 +270,15 @@ void Passenger::rateRide() {
     int selectedRideId;
     cin >> selectedRideId;
 
-    for (Ride* ridePtr : rides) {
-        Ride& ride = *ridePtr;
+    for (Ride *ridePtr: rides) {
+        Ride &ride = *ridePtr;
         if (selectedRideId == ride.id && ride.rideStatus == Ride::RideStatus::Completed) {
             cout << "---------------------------------------" << endl;
             cout << "Enter Rating: ";
             float rating;
             cin >> rating;
             ride.setRating(rating);
-            cout << "Ride id: " <<ride.id << endl;
+            cout << "Ride id: " << ride.id << endl;
             cout << "Just changed the rating of ride " << ride.getId() << " to " << ride.getRating() << endl;
             return;
 
@@ -297,8 +296,7 @@ void Passenger::editRide() {
 
     if (!rides.empty()) {
         cout << "---------------------------------" << endl;
-        for (const Ride* originalRidePtr : rides) {
-            const Ride& originalRide = *originalRidePtr;
+        for (const Ride *originalRidePtr: rides) {
 
             cout << "Destination: ";
             cout << originalRidePtr->pickupLocation << " -> " << originalRidePtr->dropOffLocation << endl;
@@ -306,6 +304,12 @@ void Passenger::editRide() {
             cout << originalRidePtr->getPickupTime() << endl;
             cout << "ID: ";
             cout << originalRidePtr->id << endl;
+            {
+                if (originalRidePtr->getAssignedDriverId() != 0) {
+                    cout << "Driver ID: ";
+                    cout << originalRidePtr->getAssignedDriverId() << endl;
+                }
+            }
             cout << "---------------------------------" << endl;
 
         }
@@ -320,8 +324,8 @@ void Passenger::editRide() {
     cin >> i;
     bool found = false;
 
-    for (Ride* ridePtr : rides) {
-        Ride& ride = *ridePtr;
+    for (Ride *ridePtr: rides) {
+        Ride &ride = *ridePtr;
         if (ride.id == i) {
             found = true;
             cout << "\n\n\n\n";
@@ -330,12 +334,13 @@ void Passenger::editRide() {
                 cout << "*************************************" << endl;
                 cout << "               Ride Edit             " << endl;
                 cout << "*************************************" << endl;
-                cout << "** A: Size of Party:               " << ride.sizeOfParty << endl;
-                cout << "** B: Including Pets:              " << ride.includesPets << endl;
-                cout << "** C: Pickup Location:         " << ride.pickupLocation << endl;
-                cout << "** D: Drop Off Location:       " << ride.dropOffLocation << endl;
+                cout << "** A: Size of Party:               " << ride.getSizeOfParty() << endl;
+                cout << "** B: Including Pets:              " << ride.getIncludesPets() << endl;
+                cout << "** C: Pickup Location:           " << ride.getPickupLocation() << endl;
+                cout << "** D: Drop Off Location:         " << ride.getDropOffLocation() << endl;
                 cout << "** F: Pickup Time:          " << ride.getPickupTime() << endl;
-                cout << "** G: Handicapped:                 " << ride.handicapable << endl;
+                cout << "** G: Handicapped:                 " << ride.getHandicapped() << endl;
+                cout << "** H: Note:                      " << ride.getNote() << endl;
                 cout << "** Q: Quit:                 " << endl;
                 cout << "*************************************" << endl;
                 cout << "*";
@@ -348,7 +353,7 @@ void Passenger::editRide() {
                     case 'a':
                         cout << "Enter Size of Party: " << endl;
                         cin >> i;
-                        ride.sizeOfParty = i;
+                        ride.setSizeOfParty(i);
                         break;
 
                     case 'B': // Including Pets
@@ -361,14 +366,14 @@ void Passenger::editRide() {
                     case 'c':
                         cout << "Enter Pickup Location: " << endl;
                         cin >> str;
-                        ride.pickupLocation = str;
+                        ride.setPickupLocation(str);
                         break;
 
                     case 'D': // Drop Off Location
                     case 'd':
                         cout << "Enter Drop Off Location: " << endl;
                         cin >> str;
-                        ride.dropOffLocation = str;
+                        ride.setDropOffLocation(str);
                         break;
 
                     case 'F': // Pickup Time
@@ -382,10 +387,18 @@ void Passenger::editRide() {
                         ride.setHandicapped();
                         break;
 
+                    case 'H': // Note
+                    case 'h':
+                        cout << "Update Note: " << endl;
+                        cin >> str;
+                        ride.setNote(str);
+                        break;
+
 
                     case 'Q': // Quit
-                        case 'q':
-                            return;
+                    case 'q':
+                        return;
+
                     default:
                         cout << "Invalid Option, please try again." << endl;
                         cin >> option;
@@ -397,7 +410,7 @@ void Passenger::editRide() {
     }
 
 
-    if(!found) {
+    if (!found) {
         cout << "Ride not found." << endl;
     }
 }

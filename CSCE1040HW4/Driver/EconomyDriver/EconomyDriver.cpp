@@ -38,7 +38,7 @@ void EconomyDriver::addEconomyParameters() {
         cargoCapacity = str;
     } else {
         cargoCapacity = "no luggage";
-    };
+    }
 
 
 }
@@ -141,11 +141,7 @@ void EconomyDriver::editInfo() {
                         break;
                     }
                     case 2: {
-                        newDriver = new EconomyDriver;
-                        dynamic_cast<EconomyDriver *>(newDriver)->
-
-                                addEconomyParameters();
-
+                      cout << "You are already this type of vehicle." << endl;
                         break;
                     }
                     case 3: {
@@ -157,7 +153,10 @@ void EconomyDriver::editInfo() {
                         break;
                     }
                     case 4:
-                        cout << "You are already this vehicle." << endl;
+                        newDriver = new LuxuryDriver;
+                        dynamic_cast<LuxuryDriver *>(newDriver)->
+                                addLuxuryParameters();
+
                         break;
                     default:
                         break;
@@ -214,61 +213,61 @@ void EconomyDriver::readEconomyProperties(const string &basicString) {
     dataStream.seekg(0);
 
     getline(dataStream, temp, ',');
-    {/*this line reads the word Driver*/};
+    {/*this line reads the word Driver*/}
 
     getline(dataStream, temp, ',');
     {
         vehicleType = static_cast<VehicleType>(stoi(temp));
 
-    };
+    }
     getline(dataStream, temp, ',');
     {
         firstName = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         lastName = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         id = stoi(temp);
-    };
+    }
     getline(dataStream, temp, ',');
     {
         password = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
-        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; };
-    };
+        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; }
+    }
     getline(dataStream, temp, ',');
     {
-        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; };
-    };
+        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; }
+    }
     getline(dataStream, temp, ',');
     {
         available = true;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         driverRating = stof(temp);
-    };
+    }
 
 
 
     getline(dataStream, temp, ',');
     {
         vehicleCapacity = stoi(temp);
-    };
+    }
     getline(dataStream, temp, ',');
     {
         cargoCapacity = temp;
-    };
+    }
     if (cargoCapacity != "0") {
         getline(dataStream, temp, ',');
         {
             cargoCapacity = temp;
-        };
+        }
     }
 
 

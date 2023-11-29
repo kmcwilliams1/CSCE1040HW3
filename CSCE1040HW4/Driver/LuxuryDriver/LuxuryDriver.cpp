@@ -406,60 +406,60 @@ void LuxuryDriver::readLuxuryProperties(const string &basicString) {
     dataStream.seekg(0);
 
     getline(dataStream, temp, ',');
-    {/*this line reads the word Driver*/};
+    {/*this line reads the word Driver*/}
 
     getline(dataStream, temp, ',');
     {
         vehicleType = static_cast<VehicleType>(stoi(temp));
 
-    };
+    }
     getline(dataStream, temp, ',');
     {
         firstName = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         lastName = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         id = stoi(temp);
-    };
+    }
     getline(dataStream, temp, ',');
     {
         password = temp;
-    };
+    }
     getline(dataStream, temp, ',');
     {
-        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; };
-    };
+        if (temp == "1") { petsAllowed = true; } else { petsAllowed = false; }
+    }
     getline(dataStream, temp, ',');
     {
-        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; };
-    };
+        if (temp == "1") { handicappedCapable = true; } else { handicappedCapable = false; }
+    }
     getline(dataStream, temp, ',');
     {
         available = true;
-    };
+    }
     getline(dataStream, temp, ',');
     {
         driverRating = stof(temp);
-    };
+    }
 
 
     getline(dataStream, temp, ',');
     {
         vehicleCapacity = stoi(temp);
-    };
+    }
     getline(dataStream, temp, ',');
     {
         cargoCapacity = temp;
-    };
+    }
     if (cargoCapacity != "0") {
         getline(dataStream, temp, ',');
         {
             cargoCapacity = temp;
-        };
+        }
     }
     getline(dataStream, temp, ',');
     {

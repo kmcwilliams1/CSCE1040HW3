@@ -17,7 +17,6 @@ add_executable(CSCE1040HW4
         Driver/DriverCollection.h
         Passenger/PassengerCollection.cpp
         Passenger/PassengerCollection.h
-        Passenger/PassengerMenu.h
         Driver/BasicDriver/BasicDriver.cpp
         Driver/BasicDriver/BasicDriver.h
         Driver/EconomyDriver/EconomyDriver.cpp

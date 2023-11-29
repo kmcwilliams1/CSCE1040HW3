@@ -26,6 +26,7 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
         cout << "*      F. Edit Your information     *" << endl;
         cout << "*      -----------------------      *" << endl;
         cout << "*        G. Delete Account          *" << endl;
+        cout << "* H. Delete Cancelled and Completed Rides *" << endl;
         cout << "*             Q. Logout             *" << endl;
         cout << "*************************************" << endl;
         cout << "*";
@@ -53,7 +54,7 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
             case 'd':
             case 'D':// Toggle Availability
             {
-
+                cout << "Current Availability: " << driver->isAvailable() << endl;
                 cout << "Are you available? (Y/N)" << endl;
                 cin >> option;
 
@@ -89,7 +90,16 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
 
             case 'c':
             case 'C':// Get rides
-                driver->getRides();
+                cout << "Which list would you like to view?" << endl;
+                cout << "Complete Ride: A" << endl;
+                cout << "Cancel Ride: B" << endl;
+                if (option == 'A' || option == 'a') {
+                    driver->getCompletedRides();
+                } else if (option == 'B' || option == 'b') {
+                    driver->getCancelledRides();
+                } else {
+                    cout << "Invalid Option" << endl;
+                }
                 break;
 
             case 'e':
@@ -118,6 +128,11 @@ void DriverMenu(Driver *driver, RideCollection *rideCollection, DriverCollection
                     cout << "Account deleted" << endl;
                 }
                 break;
+
+
+            case 'h':
+            case 'H':// Delete past cancelled and completed rides
+                driver->deleteCancelledAndCompletedRides();
 
             case 'q':
             case 'Q':

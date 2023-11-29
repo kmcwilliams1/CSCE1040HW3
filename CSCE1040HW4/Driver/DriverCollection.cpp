@@ -17,9 +17,7 @@ using namespace std;
 Driver *DriverCollection::addDriver() {
 
     auto *newDriver = new Driver;
-    bool handicappedCapable;
     int vehicleType;
-    bool petsAllowed;
     string firstName;
     string lastName;
     vector<Ride> rides;
@@ -193,7 +191,7 @@ void DriverCollection::readDriverProperties(const string &basicString) {
 
 
     getline(dataStream, temp, ',');
-    {/*the string that says "Driver" goes here */};
+    {/*the string that says "Driver" goes here */}
 
     getline(dataStream, temp, ',');
     {
@@ -226,7 +224,7 @@ void DriverCollection::readDriverProperties(const string &basicString) {
             default:
                 break;
         }
-    };
+    }
 }
 
 

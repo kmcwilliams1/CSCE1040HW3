@@ -29,11 +29,10 @@ public:
     void setCargoCapacity(const string &cargo);
 
 
-    void getInfo() const;
+    void getInfo() const override;
+    void editInfo() override;
 
-    void editInfo();
-
-    void writeDriverProperties(ostream &ostream);
+    void writeDriverProperties(ostream &ostream) override;
 };
 
 
