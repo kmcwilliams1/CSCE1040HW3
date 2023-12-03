@@ -10,7 +10,7 @@ Ride* RideCollection::addRide(Ride* newRide) {
     char inputChar;
     char confirm;
 
-    do {
+
         cout << "\n\n\n\n\n\n\n\n\n";
         cout << "********************************" << endl;
         cout << "********************************" << endl;
@@ -108,22 +108,9 @@ Ride* RideCollection::addRide(Ride* newRide) {
             cout << "Has Pets ";
             cout << endl;
             cout << newRide->getPickupTime() << endl;
-
-            cout << "*************************************" << endl;
-            cout << "Confirm ride information (Y/N): ";
-            cin >> confirm;
-
-            if (confirm == 'Y' || confirm == 'y') {
-                this->rides.push_back(newRide);
-                cout << "*************************************" << endl;
-                cout << "Ride Added" << endl;
-            } else {
-                cout << "Ride information not confirmed. Please enter the details again." << endl;
-            }
-
-        }
+                    }
         cout << "\n\n\n";
-    } while (confirm != 'Y' && confirm != 'y');
+
 
     return newRide;
 }
@@ -133,16 +120,17 @@ void RideCollection::assignSchedule(Driver &driver) {
     bool found = false;
 
     for (Ride *currentRide: this->rides) {
-        if (currentRide->rideStatus == Ride::RideStatus::Active &&
-            currentRide->assignedDriverId == 0 &&
-            currentRide->includesPets && driver.petsAllowed &&
-            currentRide->handicapable && driver.handicappedCapable &&
-            currentRide->rating >= driver.driverRating) {
+        if ((currentRide->rideStatus == Ride::RideStatus::Active) &&
+            (currentRide->assignedDriverId == 0) &&
+            ((!currentRide->includesPets || (currentRide->includesPets && driver.petsAllowed)) &&
+             (!currentRide->handicapable || (currentRide->handicapable && driver.handicappedCapable)) &&
+             (currentRide->rating >= driver.driverRating))) {
 
             driver.rides.push_back(currentRide);
             currentRide->setAssignedDriverId(driver.id);
             found = true;
         }
+
     }
 
     if (!found) {
