@@ -1,8 +1,10 @@
 Ride,12,1,first,first,1698121380,first,1,1,18467,1041,4244,0,
 Ride,13,1,third,third,1698121380,blah,1,1,18466,1041,4244,5,
 Ride,14,1,second,second,1648131380,note,1,1,18464,1041,4244,0,
+Ride,12,3,UNT,Discovery,1701714600,none,0,0,16064,2459,0,0,
 
 Passenger,testPassenger,Testtest,1041,1,false,1,4321,18467,18466,18464,
+Passenger,Bob,Smith,2459,0,true,1,6789,16064,
 
 Driver,4,Test,Driver,4244,1234,1,1,1,0,9,1,lots,1,0,1,1,18467,18466,18464,
 

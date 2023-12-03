@@ -46,6 +46,7 @@ void PassengerMenu(Passenger *passenger, RideCollection *rideCollection, Passeng
                 Ride *newRide = new Ride();
                 newRide->setAssignedPassengerId(passenger->id);
                 rideCollection->addRide(newRide);
+                rideCollection->rides.push_back(newRide);
                 passenger->addRide(newRide);
                 break;
             }
@@ -108,8 +109,6 @@ void PassengerMenu(Passenger *passenger, RideCollection *rideCollection, Passeng
                 cout << "Goodbye!" << endl;
                 return;
             }
-
-
 
 
             default:

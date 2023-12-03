@@ -174,6 +174,7 @@ int main() {
                 }
 
                 for (Ride *currentRide : rideCollection.rides) {
+                    cout << currentRide->pickupLocation << endl;
                     currentRide->writeRideProperties(fout);
                 }
                 rideCollection.rides.clear();
@@ -193,9 +194,6 @@ int main() {
 
                 driverCollection.drivers.clear();
 
-
-                delete driver;
-                delete passenger;
 
                 fout << endl;
 
